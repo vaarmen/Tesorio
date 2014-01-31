@@ -10,11 +10,12 @@ class Company(db.Model):
     is_supplier = db.BooleanProperty()
     address = db.PostalAddressProperty()
     tax_id = db.StringProperty()
-    phone = db.PhoneNumberProperty()
-    email = db.EmailProperty()
+    company_phone = db.PhoneNumberProperty()
+    company_email = db.EmailProperty()
 
     contact_person = db.StringProperty()
     contact_phone = db.PhoneNumberProperty()
+    contact_email = db.EmailProperty()
 
     suppliers = db.StringListProperty()
     buyers = db.StringListProperty()
