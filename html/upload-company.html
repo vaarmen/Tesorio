@@ -2,14 +2,14 @@
 {% block title %}Upload Company{% endblock %}
 
 {% block libraries %}
-<link href="css/lib/uniform.default.css" type="text/css" rel="stylesheet" />
-<link href="css/lib/select2.css" type="text/css" rel="stylesheet" />
-<link href="css/lib/bootstrap.datepicker.css" type="text/css" rel="stylesheet" />
-<link href="css/lib/font-awesome.css" type="text/css" rel="stylesheet" />
+<link href="/css/lib/uniform.default.css" type="text/css" rel="stylesheet" />
+<link href="/css/lib/select2.css" type="text/css" rel="stylesheet" />
+<link href="/css/lib/bootstrap.datepicker.css" type="text/css" rel="stylesheet" />
+<link href="/css/lib/font-awesome.css" type="text/css" rel="stylesheet" />
 {% endblock libraries %}
 
 {% block custom_css %}
-<link rel="stylesheet" href="css/compiled/form-wizard.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="/css/compiled/form-wizard.css" type="text/css" media="screen" />
 <style>
   .input-group-addon {
     width: 0;
@@ -44,53 +44,57 @@
             </li>
           </ul>                            
         </div>
+        <div class="alert alert-danger" style="display:none;">
+            <strong>Please make sure to fill out all forms!</strong>
+        </div>
+        <form id="company-form" method="post">
         <div class="step-content">
           <div class="step-pane active" id="step1">
             <div class="row form-wrapper">
               <div class="col-md-8">
-                <form id="step1" method="post">
+
                   <div class="field-box">
                     <label>Company Name:</label>
-                    <input class="form-control" type="text" placeholder="Company Name" required />
+                    <input name="name" class="form-control" type="text" placeholder="Company Name" required />
                   </div>
                   <div class="field-box">
                     <label>Username:</label>
-                    <input class="form-control" type="text" placeholder="Username" required />
+                    <input name="username" class="form-control" type="text" placeholder="Username" required />
                   </div>
                   <div class="field-box">
                     <label>Password:</label>
-                    <input class="form-control" type="password" placeholder="Password" required />
+                    <input name="password" class="form-control" type="password" placeholder="Password" required />
                   </div>
 
                   <div class="field-box">
                     <label>Company Status(?):</label>
                     <label class="checkbox-inline">
-                      <input type="checkbox" id="buyer" value="buyer"> Buyer
+                      <input name="buyer" type="checkbox" id="buyer" value="buyer"> Buyer
                     </label>
                     <label class="checkbox-inline">
-                      <input type="checkbox" id="supplier" value="supplier"> Supplier
+                      <input name="supplier" type="checkbox" id="supplier" value="supplier"> Supplier
                     </label>
                   </div>
-                </form>
+                
               </div>
             </div>
           </div>
           <div class="step-pane" id="step2">
             <div class="row form-wrapper">
               <div class="col-md-8">
-                <form id="step2" method="post">
+
                   <div class="field-box">
                     <label>Address:</label>
-                    <input class="form-control" type="text" placeholder="Address" required />
+                    <input name="address" class="form-control" type="text" placeholder="Address" required />
                   </div>
                   <div class="field-box">
                     <label>City:</label>
-                    <input class="form-control" type="text" placeholder="City" required />
+                    <input name="city" class="form-control" type="text" placeholder="City" required />
                   </div>
                   <div class="field-box">
                     <label>State:</label>
                     <div class="ui-select">
-                      <select>
+                      <select name="state">
                         <option value="" selected>Select a State</option>
                         <option value="AL">Alabama</option> 
                         <option value="AK">Alaska</option> 
@@ -148,64 +152,64 @@
                   </div>
                   <div class="field-box">
                     <label>Postal/ZIP code:</label>
-                    <input class="form-control" type="text" placeholder="Postal/ZIP Code" required />
+                    <input name="zip" class="form-control" type="text" placeholder="Postal/ZIP Code" required />
                   </div>
 
                   <div class="field-box">
                     <label>Tax ID:</label>
-                    <input class="form-control" type="text" placeholder="Tax ID" required />
+                    <input name="tax-id" class="form-control" type="text" placeholder="Tax ID" required />
                   </div>
                   <div class="field-box">
                     <label>Company Email:</label>
-                    <input class="form-control" type="email" placeholder="Company Email" required />
+                    <input name="company-email" class="form-control" type="email" placeholder="Company Email" required />
                   </div>
                   <div class="field-box">
                     <label>Company Phone:</label>
-                    <input class="form-control" type="text" placeholder="Company Phone" required />
+                    <input name="company-phone" class="form-control" type="text" placeholder="Company Phone" required />
                   </div>
-                </form>
+                
               </div>
             </div>
           </div>
           <div class="step-pane" id="step3">
             <div class="row form-wrapper">
               <div class="col-md-8">
-                <form id="step3" method="post">
+
                   <div class="field-box">
                     <label>Primary Contact Name:</label>
-                    <input class="form-control" type="text" placeholder="Primary Contact Name" required />
+                    <input name="contact-name" class="form-control" type="text" placeholder="Primary Contact Name" required />
                   </div>
                   <div class="field-box">
                     <label>Primary Contact Email:</label>
-                    <input class="form-control" type="email" placeholder="Primary Contact Email" required />
+                    <input name="contact-email" class="form-control" type="email" placeholder="Primary Contact Email" required />
                   </div>
                   <div class="field-box">
                     <label>Primary Contact Phone:</label>
-                    <input class="form-control" type="text" placeholder="Primary Contact Phone" required />
+                    <input name="contact-phone" class="form-control" type="text" placeholder="Primary Contact Phone" required />
                   </div>
-                </form>
+                
               </div>
             </div>
           </div>
           <div class="step-pane" id="step4">
             <div class="row form-wrapper payment-info">
               <div class="col-md-8">
-                <form id="step4" method="post">
+
                   <div class="field-box">
                     <label>Cash Committed:</label>
                     <div class="input-group">
                       <span class="input-group-addon">$</span>
-                      <input class="form-control" type="text" placeholder="Cash Committed" required />
+                      <input name="cash-committed" class="form-control" type="text" placeholder="Cash Committed" required />
                     </div> 
                   </div>
                   <div class="field-box">
                     <label>Threshold APR:</label>
                     <div class="input-group">
-                      <input class="form-control" type="text" placeholder="Threshold APR" required />
+                      <input name="apr" class="form-control" type="text" placeholder="Threshold APR" required />
                       <span class="input-group-addon">%</span>
                     </div> 
                   </div>
-                </form>
+                
               </div>
             </div>
           </div>
@@ -223,13 +227,19 @@
         </div>
       </div>
     </div>
-  </div>
+  </div></form>
 </div>
 {% endblock content %}
 
 {% block scripts %}
 <!-- scripts for this page -->
-<script src="js/fuelux.wizard.js"></script>
+<script src="/js/fuelux.wizard.js"></script>
+
+<script type="text/javascript">
+  $('button.btn-finish').on('click', function() {
+    $('.alert-danger').slideDown();
+  });
+</script>
 
 <script type="text/javascript">
 $(function () {

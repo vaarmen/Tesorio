@@ -8,7 +8,7 @@ class Company(db.Model):
     name = db.StringProperty()
     is_buyer = db.BooleanProperty()
     is_supplier = db.BooleanProperty()
-    address = db.PostalAddressProperty()
+    address = db.StringProperty()
     tax_id = db.StringProperty()
     company_phone = db.PhoneNumberProperty()
     company_email = db.EmailProperty()
