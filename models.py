@@ -1,59 +1,59 @@
 from google.appengine.ext import ndb
 
 class Company(ndb.Model):
-    company_key = db.StringProperty()
-    username = db.StringProperty()
-    password = db.StringProperty()
+    company_key = ndb.StringProperty()
+    username = ndb.StringProperty()
+    password = ndb.StringProperty()
 
-    name = db.StringProperty()
-    is_buyer = db.BooleanProperty()
-    is_supplier = db.BooleanProperty()
-    address = db.StringProperty()
-    tax_id = db.StringProperty()
-    company_phone = db.PhoneNumberProperty()
-    company_email = db.EmailProperty()
+    name = ndb.StringProperty()
+    is_buyer = ndb.BooleanProperty()
+    is_supplier = ndb.BooleanProperty()
+    address = ndb.StringProperty()
+    tax_id = ndb.StringProperty()
+    company_phone = ndb.StringProperty()
+    company_email = ndb.StringProperty()
 
-    contact_person = db.StringProperty()
-    contact_phone = db.PhoneNumberProperty()
-    contact_email = db.EmailProperty()
+    contact_person = ndb.StringProperty()
+    contact_phone = ndb.StringProperty()
+    contact_email = ndb.StringProperty()
 
-    suppliers = db.StringListProperty()
-    buyers = db.StringListProperty()
+    suppliers = ndb.StringProperty(repeated=True)
+    buyers = ndb.StringProperty(repeated=True)
 
-    cash_committed = db.FloatProperty()
-    apr = db.FloatProperty()
+    cash_committed = ndb.FloatProperty()
+    apr = ndb.FloatProperty()
 
-    date_submit = db.DateTimeProperty(auto_now_add=True)
+    date_submit = ndb.DateTimeProperty(auto_now_add=True)
 
-class Invoice(ndb.Model):
-    inv_key = db.StringProperty()
-    buyer_key = db.StringProperty()
-    supplier_key = db.StringProperty()
+class Invoice( ndb.Model):
+    inv_key = ndb.StringProperty()
+    buyer_key = ndb.StringProperty()
+    supplier_key = ndb.StringProperty()
 
-    buyer_inv_key = db.StringProperty()
-    supplier_inv_key = db.StringProperty()
+    buyer_inv_key = ndb.StringProperty()
+    supplier_inv_key = ndb.StringProperty()
 
-    amount = db.FloatProperty()
+    amount = ndb.FloatProperty()
 
-    inv_date = db.DateTimeProperty()
-    due_date = db.DateTimeProperty()
+    inv_date = ndb.DateTimeProperty()
+    due_date = ndb.DateTimeProperty()
 
-    po_num = db.StringProperty()
-    description = db.TextProperty()
+    po_num = ndb.StringProperty()
+    description = ndb.TextProperty()
 
-    date_approved = db.DateTimeProperty()
-    date_submit = db.DateTimeProperty(auto_now_add=True)
+    date_approved = ndb.DateTimeProperty()
+    date_submit = ndb.DateTimeProperty(auto_now_add=True)
 
-class Bid(ndb.Model):
-    bid_key = db.StringProperty()
-    inv_key = db.StringProperty()
+class Bid( ndb.Model):
+    bid_key = ndb.StringProperty()
+    inv_key = ndb.StringProperty()
 
-    discount = db.FloatProperty()
+    discount = ndb.FloatProperty()
 
-    days_acc = db.IntegerProperty()
-    date_due = db.DateTimeProperty() # date need cash by
-    amount = db.FloatProperty()
+    days_acc = ndb.IntegerProperty()
+    date_due = ndb.DateTimeProperty() # date need cash by
+    amount = ndb.FloatProperty()
 
-    is_standing_offer = db.BooleanProperty()
+    is_standing_offer = ndb.BooleanProperty()
 
-    date_submit = db.DateTimeProperty(auto_now_add=True)
+    date_submit = ndb.DateTimeProperty(auto_now_add=True)
