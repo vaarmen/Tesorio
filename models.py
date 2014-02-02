@@ -40,7 +40,7 @@ class Invoice(db.Model):
     description = db.TextProperty()
 
     date_approved = db.DateTimeProperty()
-    date_uploaded = db.DateTimeProperty()
+    date_uploaded = db.DateTimeProperty(auto_now_add=True)
 
 class Bid(db.Model):
     bid_key = db.StringProperty()
