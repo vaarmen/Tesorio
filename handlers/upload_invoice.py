@@ -2,11 +2,14 @@ from handler import Handler
 import models
 from datetime import datetime
 
+import logging
+
 class UploadInvoiceHandler(Handler):
     def get(self):
         self.render("/html/upload-invoice.html")
 
     def post(self):
+        # Request form input
         buyer_inv_key = self.request.get("binvoice-key")
         supplier_inv_key = self.request.get("sinvoice-key")
         amount = self.request.get("amount")
@@ -16,6 +19,18 @@ class UploadInvoiceHandler(Handler):
         description = self.request.get("description")
         date_approved = self.request.get("date-approved")
         
+        # Log all form input
+        logging.info("UploadInvoiceHandler POST Method Logs")
+        logging.info("Buyer Invoice Key: " + buyer_inv_key)
+        logging.info("Supplier Invoice Key: " + supplier_inv_key)
+        logging.info("Amount: " + amount)
+        logging.info("Invoice Date: " + inv_date)
+        logging.info("Due Date: " + due_date)
+        logging.info("Purchase Order Number: " + po_num)
+        logging.info("Line Items/Description: " + description)
+        logging.info("Date Approved: " + date_approved)
+
+        # Put form input into model and database
         invoice = models.Invoice()
         invoice.buyer_inv_key = buyer_inv_key
         invoice.supplier_inv_key = supplier_inv_key
