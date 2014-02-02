@@ -38,10 +38,6 @@
               <span class="step">3</span>
               <span class="title">Contact <br> information</span>
             </li>
-            <li data-target="#step4">
-              <span class="step">4</span>
-              <span class="title">Invoice (?) <br> information</span>
-            </li>
           </ul>                            
         </div>
         <div class="alert alert-danger" style="display:none;">
@@ -191,28 +187,6 @@
               </div>
             </div>
           </div>
-          <div class="step-pane" id="step4">
-            <div class="row form-wrapper payment-info">
-              <div class="col-md-8">
-
-                  <div class="field-box">
-                    <label>Cash Committed:</label>
-                    <div class="input-group">
-                      <span class="input-group-addon">$</span>
-                      <input name="cash-committed" class="form-control" type="text" placeholder="Cash Committed" required />
-                    </div> 
-                  </div>
-                  <div class="field-box">
-                    <label>Threshold APR:</label>
-                    <div class="input-group">
-                      <input name="apr" class="form-control" type="text" placeholder="Threshold APR" required />
-                      <span class="input-group-addon">%</span>
-                    </div> 
-                  </div>
-                
-              </div>
-            </div>
-          </div>
         </div>
         <div class="wizard-actions">
           <button type="button" disabled class="btn-glow primary btn-prev"> 
@@ -260,7 +234,7 @@ $(function () {
 
                 if (step.step === 1) {
                   $btnPrev.attr("disabled", "disabled");
-                } else if (step.step === 4) {
+                } else if (step.step === 3) {
                   $btnNext.hide();
                   $btnFinish.show();
                 }
