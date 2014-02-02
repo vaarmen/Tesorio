@@ -1,7 +1,6 @@
 from google.appengine.ext import ndb
 
 class Company(ndb.Model):
-    company_key = ndb.StringProperty()
     username = ndb.StringProperty()
     password = ndb.StringProperty()
 
@@ -26,12 +25,11 @@ class Company(ndb.Model):
     date_submit = ndb.DateTimeProperty(auto_now_add=True)
 
 class Invoice( ndb.Model):
-    inv_key = ndb.StringProperty()
     buyer_key = ndb.StringProperty()
     supplier_key = ndb.StringProperty()
 
     buyer_inv_key = ndb.StringProperty()
-    supplier_inv_key = ndb.StringProperty()
+    supplier_inv_number = ndb.StringProperty()
 
     amount = ndb.FloatProperty()
 
@@ -45,7 +43,6 @@ class Invoice( ndb.Model):
     date_submit = ndb.DateTimeProperty(auto_now_add=True)
 
 class Bid( ndb.Model):
-    bid_key = ndb.StringProperty()
     inv_key = ndb.StringProperty()
 
     discount = ndb.FloatProperty()
