@@ -1,6 +1,6 @@
-from google.appengine.ext import db
+from google.appengine.ext import ndb
 
-class Company(db.Model):
+class Company(ndb.Model):
     company_key = db.StringProperty()
     username = db.StringProperty()
     password = db.StringProperty()
@@ -23,7 +23,9 @@ class Company(db.Model):
     cash_committed = db.FloatProperty()
     apr = db.FloatProperty()
 
-class Invoice(db.Model):
+    date_submit = db.DateTimeProperty(auto_now_add=True)
+
+class Invoice(ndb.Model):
     inv_key = db.StringProperty()
     buyer_key = db.StringProperty()
     supplier_key = db.StringProperty()
@@ -40,9 +42,9 @@ class Invoice(db.Model):
     description = db.TextProperty()
 
     date_approved = db.DateTimeProperty()
-    date_uploaded = db.DateTimeProperty(auto_now_add=True)
+    date_submit = db.DateTimeProperty(auto_now_add=True)
 
-class Bid(db.Model):
+class Bid(ndb.Model):
     bid_key = db.StringProperty()
     inv_key = db.StringProperty()
 
@@ -53,4 +55,5 @@ class Bid(db.Model):
     amount = db.FloatProperty()
 
     is_standing_offer = db.BooleanProperty()
-    date_submit = db.DateTimeProperty()
+
+    date_submit = db.DateTimeProperty(auto_now_add=True)
