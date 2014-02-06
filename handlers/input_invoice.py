@@ -4,9 +4,9 @@ from datetime import datetime
 
 import logging
 
-class UploadInvoiceHandler(Handler):
+class InputInvoiceHandler(Handler):
     def get(self):
-        self.render("/html/upload-invoice.html")
+        self.render("/html/input-invoice.html")
 
     def post(self):
         # Request form input

@@ -3,9 +3,9 @@ import models
 
 import logging
 
-class UploadCompanyHandler(Handler):
+class InputCompanyHandler(Handler):
     def get(self):
-        self.render("/html/upload-company.html")
+        self.render("/html/input-company.html")
 
     def post(self):
         # Request form input
@@ -54,6 +54,7 @@ class UploadCompanyHandler(Handler):
         company = models.Company()
         company.username = username
         company.password = password
+        company.registered = True
         company.name = name
         company.is_buyer = is_buyer
         company.is_supplier = is_supplier
