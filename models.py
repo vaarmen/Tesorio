@@ -26,8 +26,8 @@ class Company(ndb.Model):
     date_submit = ndb.DateTimeProperty(auto_now_add=True)
 
 class Invoice( ndb.Model):
-    buyer_key = ndb.StringProperty()
-    supplier_key = ndb.StringProperty()
+    buyer_id = ndb.StringProperty()
+    supplier_id = ndb.StringProperty()
 
     buyer_inv_key = ndb.StringProperty()
     supplier_inv_number = ndb.StringProperty()
@@ -44,7 +44,7 @@ class Invoice( ndb.Model):
     date_submit = ndb.DateTimeProperty(auto_now_add=True)
 
 class Bid( ndb.Model):
-    inv_key = ndb.StringProperty()
+    inv_id = ndb.StringProperty()
 
     discount = ndb.FloatProperty()
 
