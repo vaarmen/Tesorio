@@ -5,5 +5,6 @@ app = webapp2.WSGIApplication([
     ('/', index.IndexHandler),
     ('/panel/input/company', input_company.InputCompanyHandler),
     ('/panel/input/invoice', input_invoice.InputInvoiceHandler),
-    ('/login', login.LoginHandler)
+    ('/login', login.LoginHandler),
+    ('/logout', logout.LogoutHandler)
 ], debug=True)
