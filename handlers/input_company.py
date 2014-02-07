@@ -1,10 +1,13 @@
 from handler import Handler
+from handler import cookie_validation
 import models
 
 import logging
 
 class InputCompanyHandler(Handler):
     def get(self):
+        cookie = self.request.cookies.get('login')
+        cookie_validation(self, cookie)
         self.render("/html/input-company.html")
 
     def post(self):

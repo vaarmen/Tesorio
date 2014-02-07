@@ -1,4 +1,5 @@
 from handler import Handler
+from handler import cookie_validation
 import models
 from datetime import datetime
 
@@ -6,6 +7,9 @@ import logging
 
 class InputInvoiceHandler(Handler):
     def get(self):
+        cookie = self.request.cookies.get('login')
+        cookie_validation(self, cookie)
+
         self.render("/html/input-invoice.html")
 
     def post(self):
