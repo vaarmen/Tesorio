@@ -11,7 +11,6 @@ class LoginHandler(Handler):
     def post(self):
         username = self.request.get('username')
         password = self.request.get('password')
-        remember = self.request.get('remember-me')
 
         query = Company.query(Company.username == username).get()
         
