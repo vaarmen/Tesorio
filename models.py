@@ -3,6 +3,7 @@ from google.appengine.ext import ndb
 class Company(ndb.Model):
     username = ndb.StringProperty()
     password = ndb.StringProperty()
+    registered = ndb.BooleanProperty()
 
     name = ndb.StringProperty()
     is_buyer = ndb.BooleanProperty()
@@ -16,8 +17,8 @@ class Company(ndb.Model):
     contact_phone = ndb.StringProperty()
     contact_email = ndb.StringProperty()
 
-    suppliers = ndb.StringProperty(repeated=True)
-    buyers = ndb.StringProperty(repeated=True)
+    supplier = ndb.StringProperty(repeated=True)
+    buyer = ndb.StringProperty(repeated=True)
 
     cash_committed = ndb.FloatProperty()
     apr = ndb.FloatProperty()
@@ -48,7 +49,7 @@ class Bid( ndb.Model):
     discount = ndb.FloatProperty()
 
     days_acc = ndb.IntegerProperty()
-    date_due = ndb.DateTimeProperty() # date need cash by
+    date_due = ndb.DateTimeProperty()
     amount = ndb.FloatProperty()
 
     is_standing_offer = ndb.BooleanProperty()
