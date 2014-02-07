@@ -14,6 +14,8 @@ class InputInvoiceHandler(Handler):
 
     def post(self):
         # Request form input
+        buyer_id = self.request.get("buyer-id")
+        supplier_id = self.request.get("supplier-id")
         buyer_inv_key = self.request.get("binvoice-key")
         supplier_inv_number = self.request.get("sinvoice-number")
         amount = self.request.get("amount")
@@ -22,9 +24,22 @@ class InputInvoiceHandler(Handler):
         po_num = self.request.get("purchase-order")
         description = self.request.get("description")
         date_approved = self.request.get("date-approved")
+
+        # Validate buyer_id & supplier_id
+        if not valid_id(buyer_id):
+            logging.error("Invalid Buyer ID while inputting invoice: " + buyer_id)
+            self.write("Invalid Buyer ID: " + buyer_id)
+            return
+
+        if not valid_id(supplier_id):
+            logging.error("Invalid Supplier ID while inputting invoice: " + supplier_id)
+            self.write("Invalid Supplier ID: " + supplier_id)
+            return
         
         # Log all form input
         logging.info("UploadInvoiceHandler POST Method Logs")
+        logging.info("Buyer Tesorio ID: " + buyer_id)
+        logging.info("Supplier Tesorio ID: " + supplier_id)
         logging.info("Buyer Invoice Key: " + buyer_inv_key)
         logging.info("Supplier Invoice Number: " + supplier_inv_number)
         logging.info("Amount: " + amount)
@@ -36,6 +51,8 @@ class InputInvoiceHandler(Handler):
 
         # Put form input into model and database
         invoice = models.Invoice()
+        invoice.buyer_id = buyer_id
+        invoice.supplier_id = supplier_id
         invoice.buyer_inv_key = buyer_inv_key
         invoice.supplier_inv_number = supplier_inv_number
         invoice.amount = float(amount)
@@ -47,4 +64,16 @@ class InputInvoiceHandler(Handler):
 
         invoice.put()
 
-        self.write("Done")
+        self.render("/html/input-invoice.html", success=True)
+
+def valid_id(company_id):
+    if not company_id or company_id == '':
+        return False
+
+    company_id = int(company_id)
+    company = models.Company.get_by_id(company_id)
+
+    if company:
+        return True
+    else:
+        return False

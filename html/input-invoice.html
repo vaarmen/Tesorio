@@ -19,9 +19,27 @@
     <div class="row form-wrapper">
       <!-- left column -->
       <div class="col-md-8">
+        {% if success %}
+        <div class="alert alert-success">Successful Invoice Entry!</div>
+        {% endif %}
+        
         <h1>Input Invoice</h1>
         <br/>
         <form id="invoice-form" method="post">
+          <div class="field-box">
+            <label>Buyer Tesorio ID:</label>
+            <div class="col-md-7">
+              <input name="buyer-id" class="form-control" type="text" placeholder="Buyer Tesorio ID" required />
+            </div>                            
+          </div>
+
+          <div class="field-box">
+            <label>Supplier Tesorio ID:</label>
+            <div class="col-md-7">
+              <input name="supplier-id" class="form-control" type="text" placeholder="Supplier Tesorio ID" required />
+            </div>                            
+          </div>
+
           <div class="field-box">
             <label>Buyer's Invoice Key:</label>
             <div class="col-md-7">
