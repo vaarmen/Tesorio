@@ -35,11 +35,6 @@ class InputInvoiceHandler(Handler):
             logging.error("Invalid Supplier ID while inputting invoice: " + supplier_id)
             self.write("Invalid Supplier ID: " + supplier_id)
             return
-
-        # Format to two decimal floating point
-        if amount:
-            amount = '%.2f' % float(amount)
-            amount = float(amount)
         
         # Log all form input
         logging.info("UploadInvoiceHandler POST Method Logs")
@@ -47,7 +42,7 @@ class InputInvoiceHandler(Handler):
         logging.info("Supplier Tesorio ID: " + supplier_id)
         logging.info("Buyer Invoice Key: " + buyer_inv_key)
         logging.info("Supplier Invoice Number: " + supplier_inv_number)
-        logging.info("Amount: " + str(amount))
+        logging.info("Amount: " + amount)
         logging.info("Invoice Date: " + inv_date)
         logging.info("Due Date: " + due_date)
         logging.info("Purchase Order Number: " + po_num)
@@ -60,7 +55,7 @@ class InputInvoiceHandler(Handler):
         invoice.supplier_id = supplier_id
         invoice.buyer_inv_key = buyer_inv_key
         invoice.supplier_inv_number = supplier_inv_number
-        invoice.amount = amount
+        invoice.amount = float(amount)
         invoice.inv_date = datetime.strptime(inv_date, '%m/%d/%Y')
         invoice.due_date = datetime.strptime(due_date, '%m/%d/%Y')
         invoice.po_num = po_num
