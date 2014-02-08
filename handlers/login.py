@@ -40,7 +40,7 @@ class LoginHandler(Handler):
             # Set cookie
             self.response.set_cookie('login', login_cookie, path='/')
 
-            self.redirect('/panel/input/company')
+            self.redirect('/panel')
 
 def generate_cookie(company_id):
     company_id = str(company_id)
