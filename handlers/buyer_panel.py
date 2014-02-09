@@ -12,7 +12,8 @@ companies = {
 class BuyerPanelHandler(Handler):
     def get(self):
         cookie = self.request.cookies.get('login')
-        cookie_validation(self, cookie)
+        if not cookie_validation(self, cookie):
+            return
 
         company_id = cookie.split("|")[0]
         company_id = int(company_id)

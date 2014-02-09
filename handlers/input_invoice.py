@@ -8,7 +8,8 @@ import logging
 class InputInvoiceHandler(Handler):
     def get(self):
         cookie = self.request.cookies.get('login')
-        cookie_validation(self, cookie)
+        if not cookie_validation(self, cookie):
+            return
 
         self.render("/html/input-invoice.html")
 

@@ -7,7 +7,9 @@ import logging
 class InputCompanyHandler(Handler):
     def get(self):
         cookie = self.request.cookies.get('login')
-        cookie_validation(self, cookie)
+        if not cookie_validation(self, cookie):
+            return
+            
         self.render("/html/input-company.html")
 
     def post(self):
