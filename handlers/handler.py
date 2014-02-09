@@ -6,7 +6,7 @@ import logging
 import hashlib
 
 template_dir = os.path.join(os.path.dirname(__file__), '../')
-jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), autoescape = True)
+jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), autoescape = True, extensions=['jinja2.ext.with_'])
 
 class Handler(webapp2.RequestHandler):
     def write(self, *a, **kw):

@@ -33,7 +33,10 @@
 
 <body>
   {% include "/html/base/navbar.html" %}
+  
+  {% with active_page = active_page|default('home_panel') %}
   {% include "/html/base/sidebar.html" %}
+  {% endwith %}
 
   <!-- main container -->
   {% block content %}{% endblock %}
