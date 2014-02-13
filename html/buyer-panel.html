@@ -155,7 +155,8 @@
 <script type="text/javascript">
 $(document).ready(function() {
     $('table.table').dataTable({
-        "aaSorting": [[ 2, "asc" ]],
+        "sPaginationType": "full_numbers",
+        "aaSorting": [[ 2, "desc" ]],
         "aoColumns": [
         { "sType": "formatted-num" },
         null,
