@@ -1,6 +1,6 @@
 <!-- sidebar -->
 {% set sidebar = [
-    ('/panel', 'home_panel', 'Panel Home', 'icon-home'),
+    ('/panel', 'home_panel', 'Home Panel', 'icon-home'),
     ('/panel/buyer', 'buyer_panel', 'Buyer Panel', 'icon-bar-chart'),
     ('/panel/supplier', 'supplier_panel', 'Supplier Panel', 'icon-bar-chart')
 ] -%}
@@ -8,12 +8,14 @@
 <div id="sidebar-nav">
   <ul id="dashboard-menu">
     {% for href, id, title, icon in sidebar %}
-    <li {% if id == active_page %} class="active">
+    {% if id == active_page %} 
+    <li class="active">
       <div class="pointer">
         <div class="arrow"></div>
         <div class="arrow_border"></div>
       </div>
-      {% else %} >
+      {% else %}
+      <li>
       {% endif %}
       <a href="{{ href|e }}">
         <i class="{{icon}}"></i>
