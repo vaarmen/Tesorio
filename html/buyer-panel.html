@@ -68,6 +68,9 @@
                         <thead>
                             <tr>
                                 <th class="col-md-1">
+                                    View Invoice
+                                </th>
+                                <th class="col-md-1">
                                     Supplier Invoice Number
                                 </th>
                                 <th class="col-md-1">
@@ -112,6 +115,7 @@
                             {% if invoice.recent_bid %}
                             {% set bid = invoice.recent_bid.get() %}
                                 <tr>
+                                    <td><a href="/panel/invoice/{{invoice.key.id()}}">View</a></td>
                                     <td>#{{invoice.supplier_inv_number}}</td>
                                     <td>{{companies[invoice.supplier_id]}}</td>
                                     <td>{{invoice.inv_date.strftime('%m-%d-%Y')}}</td>
@@ -125,9 +129,10 @@
 
                             {% else %}
                                 <tr>
+                                    <td><a href="/panel/invoice/{{invoice.key.id()}}">View</a></td>
                                     <td>#{{invoice.supplier_inv_number}}</td>
                                     <td>{{companies[invoice.supplier_id]}}</td>
-                                    <td>{{invoice.inv_date}}</td>
+                                    <td>{{invoice.inv_date.strftime('%m-%d-%Y')}}</td>
                                     <td>N/A</td>
                                     <td>{{invoice.amount}}</td>
                                     <td>No-Bid</td>
@@ -156,8 +161,9 @@
 $(document).ready(function() {
     $('table.table').dataTable({
         "sPaginationType": "full_numbers",
-        "aaSorting": [[ 2, "desc" ]],
+        "aaSorting": [[ 3, "desc" ]],
         "aoColumns": [
+        null,
         { "sType": "formatted-num" },
         null,
         { "sType": "date-uk" },
