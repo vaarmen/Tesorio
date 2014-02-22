@@ -23,46 +23,18 @@
         text-align: center;
     }
 
-    td.right-align {
-        text-align: right;
+    tr th {
+        text-align: center;
     }
 
-    .content {
-        overflow: visible;
+    td.right-align {
+        text-align: right;
     }
 </style>
 {% endblock custom_css %}
 
 {% block content %}
 <div class="content">
-
-    <!-- upper main stats -->
-    <div id="main-stats">
-        <div class="row stats-row">
-            <div class="col-md-4 col-sm-4 stat">
-                <div class="data">
-                    <span class="number">$500</span>
-                    profit
-                </div>
-                <span class="date">Threshold</span>
-            </div>
-            <div class="col-md-4 col-sm-4 stat">
-                <div class="data">
-                    <span class="number">{{company.apr}} %</span>
-                    apr
-                </div>
-                <span class="date">Threshold</span>
-            </div>
-            <div class="col-md-4 col-sm-4 stat">
-                <div class="data">
-                    <span class="number">{{company.cash_committed|float|format_currency}}</span>
-                    cash committed
-                </div>
-                <span class="date">February 2013</span>
-            </div>
-        </div>
-    </div>
-    <!-- end upper main stats -->
 
     <div id="pad-wrapper">
         <h1>{{company.name}} Supplier Panel</h1>
@@ -80,19 +52,16 @@
                         <thead>
                             <tr>
                                 <th class="col-md-1">
-                                    View Invoice
+                                    Bid Status
                                 </th>
                                 <th class="col-md-1">
+                                    <span class="line"></span>
                                     Supplier Invoice Number
                                 </th>
                                 <th class="col-md-1">
                                     <span class="line"></span>
                                     Company Name
-                                </th>
-                                <th class="col-md-1">
-                                    <span class="line"></span>
-                                    Bid Status
-                                </th>
+                                </th>                               
                                 <th class="col-md-1">
                                     <span class="line"></span>
                                     Invoice Date
@@ -127,9 +96,6 @@
                             {% if invoice.recent_bid %}
                             {% set bid = invoice.recent_bid.get() %}
                                 <tr>
-                                    <td><a href="/panel/invoice/{{invoice.key.id()}}">View Invoice</a></td>
-                                    <td>#{{invoice.supplier_inv_number}}</td>
-                                    <td>{{companies[invoice.buyer_id]}}</td>
                                     <td>
                                         {% if bid.status == 'Pending' %}
                                         <span class="label label-info">Pending</span>
@@ -141,6 +107,8 @@
                                         N/A (Contact Us)
                                         {% endif %}
                                     </td>
+                                    <td><a href="/panel/invoice/{{invoice.key.id()}}">#{{invoice.supplier_inv_number}}</a></td>
+                                    <td>{{companies[invoice.buyer_id]}}</td>                                 
                                     <td>{{invoice.inv_date.strftime('%m-%d-%Y')}}</td>
                                     <td class="right-align">{{invoice.amount|format_currency}}</td>
                                     <td>{{invoice.due_date.strftime('%m-%d-%Y')}}</td>
@@ -151,10 +119,9 @@
 
                             {% else %}
                                 <tr>
-                                    <td><a href="/panel/invoice/{{invoice.key.id()}}">View Invoice</a></td>
-                                    <td>#{{invoice.supplier_inv_number}}</td>
-                                    <td>{{companies[invoice.buyer_id]}}</td>
                                     <td><a href="/panel/invoice/{{invoice.key.id()}}">Offer Bid</a></td>
+                                    <td><a href="/panel/invoice/{{invoice.key.id()}}">#{{invoice.supplier_inv_number}}</a></td>
+                                    <td>{{companies[invoice.buyer_id]}}</td>
                                     <td>{{invoice.inv_date.strftime('%m-%d-%Y')}}</td>
                                     <td class="right-align">{{invoice.amount|format_currency}}</td>
                                     <td>{{invoice.due_date.strftime('%m-%d-%Y')}}</td>
@@ -202,13 +169,12 @@
 $(document).ready(function() {
     $('table.table').dataTable({
         "sPaginationType": "full_numbers",
-        "aaSorting": [[ 4, "desc" ]],
+        "aaSorting": [[ 3, "desc" ]],
         "aoColumns": [
         null,
         { "sType": "formatted-num" },
         null,
         { "sType": "date-uk" },
-        null,
         { "sType": "formatted-num" },
         { "sType": "date-uk" },
         { "sType": "formatted-num" },
