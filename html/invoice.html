@@ -72,8 +72,8 @@
             <h3 class="panel-title">Early Payment Option #1</h3>
           </div>
           <div class="panel-body">
-            <p>1% discount</p>
-            <p>10 days earlier</p>
+            <p>{{ calculate_discount(invoice.amount, parameters.alt_1_percent) | format_currency }}</p>
+            <p>{{ calculate_date(invoice.due_date, parameters.alt_1_days) | format_date }}</p>
           </div>
           {% if supplier %}
           <div class="panel-footer">
@@ -94,8 +94,8 @@
             <h3 class="panel-title">Early Payment Option #2</h3>
           </div>
           <div class="panel-body">
-            <p>2% discount</p>
-            <p>20 days earlier</p>
+            <p>{{ calculate_discount(invoice.amount, parameters.alt_2_percent) | format_currency }}</p>
+            <p>{{ calculate_date(invoice.due_date, parameters.alt_2_days) | format_date }}</p>
           </div>
           {% if supplier %}
           <div class="panel-footer">
@@ -116,8 +116,8 @@
             <h3 class="panel-title">Early Payment Option #3</h3>
           </div>
           <div class="panel-body">
-            <p>3% discount</p>
-            <p>30 days earlier</p>
+            <p>{{ calculate_discount(invoice.amount, parameters.alt_3_percent) | format_currency }}</p>
+            <p>{{ calculate_date(invoice.due_date, parameters.alt_3_days) | format_date }}</p>
           </div>
           {% if supplier %}
           <div class="panel-footer">
