@@ -25,8 +25,10 @@ class Company(ndb.Model):
 
     created = ndb.DateTimeProperty(auto_now_add=True)
 
-class Bid(ndb.Model):
-    inv_id = ndb.StringProperty()
+class Offer(ndb.Model):
+    invoice_ref = ndb.KeyProperty()
+    offer_type = ndb.StringProperty(choices=["Bid", "Ask"])
+    parameters_ref = ndb.KeyProperty()
 
     discount = ndb.FloatProperty()
 
@@ -39,6 +41,21 @@ class Bid(ndb.Model):
     apr = ndb.FloatProperty()
 
     is_standing_offer = ndb.BooleanProperty()
+
+    created = ndb.DateTimeProperty(auto_now_add=True)
+
+class OfferParameters(ndb.Model):
+    buyer_id = ndb.StringProperty()
+    supplier_id = ndb.StringProperty()
+    parameters_type = ndb.StringProperty(choices=["Bid", "Ask"])
+
+    alt_1_percent = ndb.FloatProperty()
+    alt_2_percent = ndb.FloatProperty()
+    alt_3_percent = ndb.FloatProperty()
+
+    alt_1_days = ndb.IntegerProperty()
+    alt_2_days = ndb.IntegerProperty()
+    alt_3_days = ndb.IntegerProperty()
 
     created = ndb.DateTimeProperty(auto_now_add=True)
 
@@ -61,4 +78,5 @@ class Invoice(ndb.Model):
     description = ndb.TextProperty()
 
     date_approved = ndb.DateProperty()
+    
     created = ndb.DateTimeProperty(auto_now_add=True)
