@@ -1,0 +1,20 @@
+cron:
+# - description: daily Company backup
+#   url: /_ah/datastore_admin/backup.create?name=daily_company_backup_&kind=Company
+#   schedule: every 24 hours
+#   target: ah-builtin-python-bundle
+
+# - description: daily Invoice backup
+#   url: /_ah/datastore_admin/backup.create?name=daily_invoice_backup_&kind=Invoice
+#   schedule: every 24 hours
+#   target: ah-builtin-python-bundle
+
+# - description: daily Offer backup
+#   url: /_ah/datastore_admin/backup.create?name=daily_offer_backup_&kind=Offer
+#   schedule: every 24 hours
+#   target: ah-builtin-python-bundle
+
+# - description: daily OfferParameters backup
+#   url: /_ah/datastore_admin/backup.create?name=daily_offer_parameters_backup_&kind=OfferParameters
+#   schedule: every 24 hours
+#   target: ah-builtin-python-bundle
