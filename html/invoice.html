@@ -1,0 +1,169 @@
+{% extends "/html/base/base.html" %}
+{% block title %}Tesorio - Invoice{% endblock %}
+
+
+{% block libraries %}
+<link href="/css/lib/jquery-ui-1.10.2.custom.css" rel="stylesheet" type="text/css" />
+<link href="/css/lib/font-awesome.css" type="text/css" rel="stylesheet" />
+{% endblock libraries %}
+
+{% block custom_css %}
+<link rel="stylesheet" href="/css/compiled/panel.css" type="text/css" media="screen" />
+
+<style>
+  #company-info {
+    border-right: 1px solid #edeef1;
+  }
+
+  .user-profile p {
+    color: #777e86;
+    font-size: 16px;
+  }
+
+  .user-profile h6 {
+    font-weight: 600;
+    font-size: 18px;
+  }
+
+  .panel-body p {
+    color: #000;
+    text-align: center;
+  }
+
+  .panel-title {
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .btn-center {
+    margin: 0 auto;
+    display: block;
+  }
+
+  .btn-flat.gray:hover {
+    background: #7e91aa;
+    border: 1px solid #888e97;
+    opacity: 1.0;
+    cursor: default;
+  }
+
+  .panel-option > .panel-heading, .panel-option > .panel-footer {
+    background-color: #7e91aa;
+  }
+</style>
+{% endblock custom_css %}
+
+{% block content %}
+<div class="content">
+  <div id="pad-wrapper" class="user-profile">
+    {% if invalid %}
+    <h1>Invalid Tesorio Invoice Number: #{{invoice_id}}</h1>
+    {% else %}
+    <h1>Tesorio Invoice #{{invoice_id}}</h1>
+    <h3>Buyer: {{companies[invoice.buyer_id]}}</h3>
+    <h3>Supplier: {{companies[invoice.supplier_id]}}</h3>
+    <hr/>
+
+    <div class="row">
+
+      <div class="col-xs-4">
+        <div class="panel panel-default {% if option =='1' %} panel-option {% endif %}">
+          <div class="panel-heading">
+            <h3 class="panel-title">Early Payment Option #1</h3>
+          </div>
+          <div class="panel-body">
+            <p>1% discount</p>
+            <p>10 days earlier</p>
+          </div>
+          {% if supplier %}
+          <div class="panel-footer">
+            <form method="POST">
+              <input type="hidden" name="discount" value="1">
+              <input type="hidden" name="days-acc" value="10">
+              <input type="hidden" name="option-number" value="1">
+              <button type="submit" class="btn btn-center btn-primary">Accelerate Cash</button>
+            </form>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="col-xs-4">
+        <div class="panel panel-default {% if option =='2' %} panel-option {% endif %}">
+          <div class="panel-heading">
+            <h3 class="panel-title">Early Payment Option #2</h3>
+          </div>
+          <div class="panel-body">
+            <p>2% discount</p>
+            <p>20 days earlier</p>
+          </div>
+          {% if supplier %}
+          <div class="panel-footer">
+            <form method="POST">
+              <input type="hidden" name="discount" value="2">
+              <input type="hidden" name="days-acc" value="20">
+              <input type="hidden" name="option-number" value="2">
+              <button type="submit" class="btn btn-center btn-primary">Accelerate Cash</button>
+            </form>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="col-xs-4">
+        <div class="panel panel-default {% if option =='3' %} panel-option {% endif %}">
+          <div class="panel-heading">
+            <h3 class="panel-title">Early Payment Option #3</h3>
+          </div>
+          <div class="panel-body">
+            <p>3% discount</p>
+            <p>30 days earlier</p>
+          </div>
+          {% if supplier %}
+          <div class="panel-footer">
+            <form method="POST">
+              <input type="hidden" name="discount" value="3">
+              <input type="hidden" name="days-acc" value="30">
+              <input type="hidden" name="option-number" value="3">
+              <button type="submit" class="btn btn-center btn-primary">Accelerate Cash</button>
+            </form>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="row">
+      <div id="company-info" class="col-xs-6">
+        <h6>Supplier Invoice Key</h6>
+        <p>{{invoice.supplier_inv_number}}</p>
+        <br/>
+        <h6>Invoice Amount</h6>
+        <p>${{'%0.2f'| format(invoice.amount|float)}}</p>
+        <br/>
+        <h6>Purchase Order Number</h6>
+        <p>{{invoice.po_num}}</p>
+        <br/>
+        <h6>Invoice Description</h6>
+        <p>{{invoice.description}}</p>
+      </div>
+      <div class="col-xs-6">
+        <h6>Invoice Date</h6>
+        <p>{{invoice.inv_date.strftime('%m-%d-%Y')}}</p>
+        <br/>
+        <h6>Invoice Due Date</h6>
+        <p>{{invoice.due_date.strftime('%m-%d-%Y')}}</p>
+        <br/>
+        <h6>Date Approved</h6>
+        <p>{{invoice.date_approved.strftime('%m-%d-%Y')}}</p>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+{% endblock scripts %}
