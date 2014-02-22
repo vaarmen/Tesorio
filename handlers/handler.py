@@ -8,6 +8,10 @@ import hashlib
 template_dir = os.path.join(os.path.dirname(__file__), '../')
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), autoescape = True, extensions=['jinja2.ext.with_'])
 
+COMPANIES_DICT = {
+    "5629499534213120": "Admin Company"
+}
+
 class Handler(webapp2.RequestHandler):
     def write(self, *a, **kw):
         self.response.out.write(*a, **kw)
@@ -38,3 +42,8 @@ def cookie_validation(self, cookie):
     
 def valid_cookie(company_id, company_hash):
     return company_hash == hashlib.sha1(company_id).hexdigest()
+
+def format_currency(value):
+    return "${:,.2f}".format(value)
+
+jinja_env.filters['format_currency'] = format_currency

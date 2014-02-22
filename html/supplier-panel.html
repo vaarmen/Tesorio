@@ -19,6 +19,14 @@
         font-weight: bold!important;
     }
 
+    tr td {
+        text-align: center;
+    }
+
+    td.right-align {
+        text-align: right;
+    }
+
     .content {
         overflow: visible;
     }
@@ -47,7 +55,7 @@
             </div>
             <div class="col-md-4 col-sm-4 stat">
                 <div class="data">
-                    <span class="number">$ {{'%0.2f'| format(company.cash_committed|float)}}</span>
+                    <span class="number">{{company.cash_committed|float|format_currency}}</span>
                     cash committed
                 </div>
                 <span class="date">February 2013</span>
@@ -134,11 +142,11 @@
                                         {% endif %}
                                     </td>
                                     <td>{{invoice.inv_date.strftime('%m-%d-%Y')}}</td>
-                                    <td>${{'%0.2f'| format(invoice.amount|float)}}</td>
+                                    <td class="right-align">{{invoice.amount|format_currency}}</td>
                                     <td>{{invoice.due_date.strftime('%m-%d-%Y')}}</td>
-                                    <td>{{bid.discount}}%</td>
+                                    <td class="right-align">{{bid.discount}}%</td>
                                     <td>{{bid.days_acc}}</td>
-                                    <td>${{bid.amount}}</td>
+                                    <td class="right-align">{{bid.amount|format_currency}}</td>
                                 </tr>
 
                             {% else %}
@@ -148,7 +156,7 @@
                                     <td>{{companies[invoice.buyer_id]}}</td>
                                     <td><a href="/panel/invoice/{{invoice.key.id()}}">Offer Bid</a></td>
                                     <td>{{invoice.inv_date.strftime('%m-%d-%Y')}}</td>
-                                    <td>${{'%0.2f'| format(invoice.amount|float)}}</td>
+                                    <td class="right-align">{{invoice.amount|format_currency}}</td>
                                     <td>{{invoice.due_date.strftime('%m-%d-%Y')}}</td>
                                     <td>N/A</td>
                                     <td>N/A</td>
