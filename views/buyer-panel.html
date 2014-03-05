@@ -1,4 +1,4 @@
-{% extends "html/base/base.html" %}
+{% extends "/views/base/base.html" %}
 {% block title %}Tesorio - Buyer Panel{% endblock %}
 {% set active_page = "buyer_panel" %}
 
@@ -126,7 +126,7 @@
                                 <tr>
                                     <td><a href="/panel/invoice/{{invoice.key.id()}}">#{{invoice.supplier_inv_number}}</a></td>
                                     <td>{{companies[invoice.supplier_id]}}</td>
-                                    <td>{{invoice.inv_date.strftime('%m-%d-%Y')}}</td>
+                                    <td>{{invoice.inv_date | format_date}}</td>
                                     <td>{{bid.days_acc}}</td>
                                     <td class="right-align">{{invoice.amount|format_currency}}</td>
                                     <td>{{invoice.status}}</td>

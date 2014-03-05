@@ -1,4 +1,4 @@
-{% extends "html/base/base.html" %}
+{% extends "/views/base/base.html" %}
 {% block title %}Tesorio - Home Panel{% endblock %}
 {% set active_page = "home_panel" %}
 
@@ -31,10 +31,6 @@
   <div id="pad-wrapper" class="user-profile">
     <h1>{{company.name}}</h1>
     <hr/>
-    <div class="alert alert-info">
-      <i class="icon-exclamation-sign"></i>
-      If any info below is incorrect, please contact us at contact@tesorio.com
-    </div>
     <div class="row">
       <div id="company-info" class="col-xs-6">
         <h3>Company Info</h3>

@@ -32,10 +32,12 @@
 </head>
 
 <body>
-  {% include "/html/base/navbar.html" %}
+  {% with company=company %}
+  {% include "/views/base/navbar.html" %}
+  {% endwith %}
   
   {% with active_page = active_page|default('home_panel') %}
-  {% include "/html/base/sidebar.html" %}
+  {% include "/views/base/sidebar.html" %}
   {% endwith %}
 
   <!-- main container -->

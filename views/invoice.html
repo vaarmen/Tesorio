@@ -1,4 +1,4 @@
-{% extends "/html/base/base.html" %}
+{% extends "/views/base/base.html" %}
 {% block title %}Tesorio - Invoice{% endblock %}
 
 
@@ -57,33 +57,36 @@
 <div class="content">
   <div id="pad-wrapper" class="user-profile">
     {% if invalid %}
-    <h1>Invalid Tesorio Invoice Number: #{{invoice_id}}</h1>
+    <h1>Invalid Invoice #{{invoice_id}}</h1>
     {% else %}
-    <h1>Tesorio Invoice #{{invoice_id}}</h1>
-    <h3>Buyer: {{companies[invoice.buyer_id]}}</h3>
-    <h3>Supplier: {{companies[invoice.supplier_id]}}</h3>
+    <div style="clear: both;">
+      <h3 style="float: left;">Invoice #{{invoice.supplier_inv_number}}</h3>
+      <h3 style="float: right;">
+        {% if supplier %}
+        Client: {{ get_company_name(invoice.buyer_id) }}
+        {% else %}
+        Supplier: {{ get_company_name(invoice.supplier_id) }}
+        {% endif %}
+      </h3>
+    </div>
+    <br/>
     <hr/>
 
     <div class="row">
 
       <div class="col-xs-4">
         <div class="panel panel-default {% if option =='1' %} panel-option {% endif %}">
-          <div class="panel-heading">
-            <h3 class="panel-title">Early Payment Option #1</h3>
-          </div>
           <div class="panel-body">
             <p>{{ calculate_discount(invoice.amount, parameters.alt_1_percent) | format_currency }}</p>
-            <p>{{ calculate_date(invoice.due_date, parameters.alt_1_days) | format_date }}</p>
+            <p>{{ calculate_date(invoice.due_date, parameters.alt_1_days) | format_date }} February</p>
           </div>
           {% if supplier %}
-          <div class="panel-footer">
             <form method="POST">
               <input type="hidden" name="discount" value="1">
               <input type="hidden" name="days-acc" value="10">
               <input type="hidden" name="option-number" value="1">
               <button type="submit" class="btn btn-center btn-primary">Accelerate Cash</button>
             </form>
-          </div>
           {% endif %}
         </div>
       </div>
