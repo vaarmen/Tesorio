@@ -3,6 +3,8 @@ from handler import cookie_validation
 from models import Company
 from models import Invoice
 
+from lib.decorators import user_required
+
 import logging
 
 companies = {
@@ -10,14 +12,9 @@ companies = {
 }
 
 class SupplierPanelHandler(Handler):
+    @user_required
     def get(self):
-        cookie = self.request.cookies.get('login')
-        if not cookie_validation(self, cookie):
-            return
-
-        company_id = cookie.split("|")[0]
-        company_id = int(company_id)
-        company = Company.get_by_id(company_id)
+        company_id = self.get_company_id()
 
         invoices = Invoice.query(Invoice.supplier_id == str(company_id))
         # Calculate returns
@@ -34,4 +31,4 @@ class SupplierPanelHandler(Handler):
         # Count # of unique suppliers from invoice query
         # The % one is pending and Open BD. Count # of unique suppliers and divide by total # of suppliers
 
-        self.render("/html/supplier-panel.html", company=company, companies=companies, invoices=invoices)
+        self.render("/views/supplier-panel.html", invoices=invoices)

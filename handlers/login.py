@@ -1,46 +1,74 @@
 from handler import Handler
-from models import Company
+from models import User
 import logging
 
 import hashlib
 
+from webapp2_extras.auth import InvalidAuthIdError, InvalidPasswordError
+
+from lib import utils
+
+
 class LoginHandler(Handler):
     def get(self):
-        self.render("/html/login.html")
+        self.render('/views/login.html')
 
     def post(self):
-        username = self.request.get('username')
-        password = self.request.get('password')
+        try:
+            username = self.request.get('username')
+            password = self.request.get('password')
 
-        query = Company.query(Company.username == username).get()
+            user = User.get_by_username(username)
+
+            if not user:
+                self.render('/views/login.html', invalid=True)
+                return
+
+            else:
+                auth_id = user.auth_ids[0]
+
+                password = utils.hashing(password, self.app.config.get('salt'))
+
+                self.auth.get_user_by_password(auth_id, password)
+
+                self.redirect('/panel')
+
+        except (InvalidAuthIdError, InvalidPasswordError), e:
+            self.render('/views/login.html', invalid=True)
+
+    # def post(self):
+    #     username = self.request.get('username')
+    #     password = self.request.get('password')
+
+    #     query = Company.query(Company.username == username).get()
         
-        if not query:
-            logging.error("Error: Invalid username")
-            logging.error("Username: " + username)
-            logging.error("Password: " + password)
-            self.render("/html/login.html", username_error="form-control-error", username=username)
+    #     if not query:
+    #         logging.error("Error: Invalid username")
+    #         logging.error("Username: " + username)
+    #         logging.error("Password: " + password)
+    #         self.render("/views/login.html", username_error="form-control-error", username=username)
 
-        elif not password == query.password:
-            logging.error("Error: Invalid password")
-            logging.error("Username: " + username)
-            logging.error("Password: " + password)
+    #     elif not password == query.password:
+    #         logging.error("Error: Invalid password")
+    #         logging.error("Username: " + username)
+    #         logging.error("Password: " + password)
 
-            self.render("/html/login.html", password_error="form-control-error", username=username)
+    #         self.render("/views/login.html", password_error="form-control-error", username=username)
 
-        # Successful login
-        else:
-            # Generate login cookie
-            login_cookie = generate_cookie(query.key.id())
+    #     # Successful login
+    #     else:
+    #         # Generate login cookie
+    #         login_cookie = generate_cookie(query.key.id())
 
-            logging.info("Successful login")
-            logging.info("Username: " + username)
-            logging.info("Password: " + password)
-            logging.info("Cookie: " + login_cookie)
+    #         logging.info("Successful login")
+    #         logging.info("Username: " + username)
+    #         logging.info("Password: " + password)
+    #         logging.info("Cookie: " + login_cookie)
 
-            # Set cookie
-            self.response.set_cookie('login', login_cookie, path='/')
+    #         # Set cookie
+    #         self.response.set_cookie('login', login_cookie, path='/')
 
-            self.redirect('/panel')
+    #         self.redirect('/panel')
 
 def generate_cookie(company_id):
     company_id = str(company_id)

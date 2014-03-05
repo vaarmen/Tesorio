@@ -11,7 +11,7 @@ class InputInvoiceHandler(Handler):
         if not cookie_validation(self, cookie):
             return
 
-        self.render("/html/input-invoice.html")
+        self.render("/views/input-invoice.html")
 
     def post(self):
         # Request form input
@@ -65,7 +65,7 @@ class InputInvoiceHandler(Handler):
 
         invoice.put()
 
-        self.render("/html/input-invoice.html", success=True)
+        self.render("/views/input-invoice.html", success=True)
 
 def valid_id(company_id):
     if not company_id or company_id == '':

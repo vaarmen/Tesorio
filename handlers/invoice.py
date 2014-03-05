@@ -1,6 +1,5 @@
 from handler import Handler
 from handler import cookie_validation
-from handler import COMPANIES_DICT
 
 from models import Company, Invoice, OfferParameters
 
@@ -24,7 +23,7 @@ class InvoiceHandler(Handler):
 
         if not invoice:
             logging.error("Tried accessing invalid invoice: #" + invoice_id)
-            self.render("/html/invoice.html", invalid=True, invoice_id=invoice_id, company=company)
+            self.render("/views/invoice.html", invalid=True, invoice_id=invoice_id, company=company)
             return
 
         parameters = OfferParameters.query(OfferParameters.buyer_id == invoice.buyer_id, OfferParameters.supplier_id == invoice.supplier_id).get()
@@ -38,20 +37,21 @@ class InvoiceHandler(Handler):
             return
         
         if invoice.supplier_id == company_id:
-            self.render("/html/invoice.html", supplier=True, invoice=invoice, invoice_id=invoice_id, company=company, option=option, parameters=parameters, companies=COMPANIES_DICT)
+            self.render("/views/invoice.html", supplier=True, invoice=invoice, invoice_id=invoice_id, company=company, option=option, parameters=parameters)
 
         elif invoice.buyer_id == company_id:
-            self.render("/html/invoice.html", buyer=True, invoice=invoice, invoice_id=invoice_id, company=company, parameters=parameters, companies=COMPANIES_DICT)
+            self.render("/views/invoice.html", buyer=True, invoice=invoice, invoice_id=invoice_id, company=company, parameters=parameters)
 
         else:
             logging.error("Error: " + company_id + " tried to access invoice #" + invoice_id)     
-            self.render("/html/invoice.html", invalid=True, invoice_id=invoice_id, company=company)
+            self.render("/views/invoice.html", invalid=True, invoice_id=invoice_id, company=company)
 
     def post(self, invoice_id):
         cookie = self.request.cookies.get('login')
         if not cookie_validation(self, cookie):
             return
 
+        ## Do verification on these and offer parameters
         discount = self.request.get('discount')
         days_acc = self.request.get('days-acc')
 

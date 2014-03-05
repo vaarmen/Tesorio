@@ -2,16 +2,17 @@ from handler import Handler
 from handler import cookie_validation
 import models
 
+from lib import utils
+from lib.decorators import user_required
+
 import logging
 
 class InputCompanyHandler(Handler):
+    @user_required
     def get(self):
-        cookie = self.request.cookies.get('login')
-        if not cookie_validation(self, cookie):
-            return
-            
-        self.render("/html/input-company.html")
+        self.render("/views/input-company.html")
 
+    @user_required
     def post(self):
         # Request form input
         username = self.request.get('username')
@@ -23,7 +24,7 @@ class InputCompanyHandler(Handler):
         city = self.request.get('city')
         state = self.request.get('state')
         zip_code = self.request.get('zip')
-        tax_id = self.request.get('tax-id')
+        ein = self.request.get('ein')
         company_phone = self.request.get('company-phone')
         company_email= self.request.get('company-email')
         contact_person = self.request.get('contact-name')
@@ -40,15 +41,17 @@ class InputCompanyHandler(Handler):
         # Construct correct address format
         company_address = address + ", " + city + ", " + state + ", " + zip_code
 
+        # Hash password
+        password = utils.hashing(password, self.app.config.get('salt'))
+
         # Log all form input
         logging.info("UploadCompanyHandler POST Method Logs")
         logging.info("Username: " + username)
-        logging.info("Password:" + password)
         logging.info("Company Name: " + name)
         logging.info("Is Buyer: " + str(is_buyer))
         logging.info("Is Supplier: " + str(is_supplier))
         logging.info("Company Address: " + company_address)
-        logging.info("Tax ID: " + tax_id)
+        logging.info("EIN: " + ein)
         logging.info("Company Phone: " + company_phone)
         logging.info("Company Email: " + company_email)
         logging.info("Contact Person:" + contact_person)
@@ -57,14 +60,12 @@ class InputCompanyHandler(Handler):
         
         # Put form input into model and database
         company = models.Company()
-        company.username = username
-        company.password = password
+        company.ein = ein
         company.registered = True
         company.name = name
         company.is_buyer = is_buyer
         company.is_supplier = is_supplier
         company.address = company_address
-        company.tax_id = tax_id
         company.company_phone = company_phone
         company.company_email = company_email
         company.contact_person = contact_person
@@ -72,5 +73,26 @@ class InputCompanyHandler(Handler):
         company.contact_email = contact_email
 
         company.put()
+
+        # Passing password_raw=password so password will be hashed
+        # Returns a tuple, where first value is BOOL.
+        # If True ok, If False no new user is created
+        unique_properties = ['username']
+        auth_id = "own:%s" % username
+        user = self.auth.store.user_model.create_user(
+            auth_id, unique_properties, password_raw=password,
+            username=username, company=company.key, ip=self.request.remote_addr
+        )
+
+        if not user[0]: #user is a tuple
+            if "username" in str(user[1]):
+                self.write("username already exists")
+                return
+            elif "email" in str(user[1]):
+                self.write("email exists")
+                return
+            else:
+                self.write("user already register")
+                return
 
         self.write("Done")
