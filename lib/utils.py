@@ -9,6 +9,25 @@ from datetime import datetime, timedelta
 import Cookie
 import webapp2
 
+from google.appengine.api import memcache
+
+## For generate_company_map()
+from models import Company
+
+def generate_company_map():
+    """Generates Company ID -> Company Name dictionary"""
+    companies = Company.query()
+    company_map = {}
+
+    for company in companies:
+        logging.info(dir(company))
+        company_map[str(company.key.id())] = company.name
+
+    memcache.set('company_map', company_map)
+
+    return company_map
+
+
 def random_string(size=6, chars=string.ascii_letters + string.digits):
     """ Generate random string """
     return ''.join(random.choice(chars) for _ in range(size))

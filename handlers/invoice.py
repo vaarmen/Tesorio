@@ -1,7 +1,8 @@
 from handler import Handler
-from handler import cookie_validation
 
 from models import Company, Invoice, OfferParameters
+
+from lib.decorators import user_required
 
 import logging
 
@@ -11,14 +12,11 @@ class InvoiceRedirectHandler(Handler):
         self.redirect('/panel')
 
 class InvoiceHandler(Handler):
+    @user_required
     def get(self, invoice_id):
-        cookie = self.request.cookies.get('login')
-        if not cookie_validation(self, cookie):
-            return
-
         option = self.request.get('option')
         invoice = Invoice.get_by_id(int(invoice_id))
-        company_id = cookie.split("|")[0]
+        company_id = str(self.get_company_id())
         company = Company.get_by_id(int(company_id))
 
         if not invoice:
@@ -36,21 +34,18 @@ class InvoiceHandler(Handler):
             self.write("Bad parameters")
             return
         
-        if invoice.supplier_id == company_id:
+        if invoice.supplier_id == str(company_id):
             self.render("/views/invoice.html", supplier=True, invoice=invoice, invoice_id=invoice_id, company=company, option=option, parameters=parameters)
 
-        elif invoice.buyer_id == company_id:
+        elif invoice.buyer_id == str(company_id):
             self.render("/views/invoice.html", buyer=True, invoice=invoice, invoice_id=invoice_id, company=company, parameters=parameters)
 
         else:
-            logging.error("Error: " + company_id + " tried to access invoice #" + invoice_id)     
+            logging.error("Error: " + str(company_id) + " tried to access invoice #" + str(invoice_id))     
             self.render("/views/invoice.html", invalid=True, invoice_id=invoice_id, company=company)
 
+    @user_required
     def post(self, invoice_id):
-        cookie = self.request.cookies.get('login')
-        if not cookie_validation(self, cookie):
-            return
-
         ## Do verification on these and offer parameters
         discount = self.request.get('discount')
         days_acc = self.request.get('days-acc')

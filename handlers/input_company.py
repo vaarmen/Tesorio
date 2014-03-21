@@ -24,7 +24,7 @@ class InputCompanyHandler(Handler):
         city = self.request.get('city')
         state = self.request.get('state')
         zip_code = self.request.get('zip')
-        ein = self.request.get('ein')
+        ein = self.request.get('company-ein')
         company_phone = self.request.get('company-phone')
         company_email= self.request.get('company-email')
         contact_person = self.request.get('contact-name')

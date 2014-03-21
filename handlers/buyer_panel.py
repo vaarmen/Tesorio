@@ -1,6 +1,5 @@
 from handler import Handler
 from handler import cookie_validation
-from handler import COMPANIES_DICT
 from models import Company
 from models import Invoice
 
@@ -12,6 +11,7 @@ class BuyerPanelHandler(Handler):
     @user_required
     def get(self):
         company_id = self.get_company_id()
+        company_map = self.get_company_map
 
         invoices = Invoice.query(Invoice.buyer_id == str(company_id))
         # Calculate returns
@@ -28,4 +28,4 @@ class BuyerPanelHandler(Handler):
         # Count # of unique suppliers from invoice query
         # The % one is pending and Open BD. Count # of unique suppliers and divide by total # of suppliers
 
-        self.render("/views/buyer-panel.html", invoices=invoices)
+        self.render("/views/buyer-panel.html", invoices=invoices, company_map=company_map)

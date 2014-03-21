@@ -3,16 +3,16 @@ from handler import cookie_validation
 import models
 from datetime import datetime
 
+from lib.decorators import user_required
+
 import logging
 
 class InputInvoiceHandler(Handler):
+    @user_required
     def get(self):
-        cookie = self.request.cookies.get('login')
-        if not cookie_validation(self, cookie):
-            return
-
         self.render("/views/input-invoice.html")
 
+    @user_required
     def post(self):
         # Request form input
         buyer_id = self.request.get("buyer-id")

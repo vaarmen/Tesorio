@@ -94,6 +94,18 @@ class Company(ndb.Model):
     created = ndb.DateTimeProperty(auto_now_add=True)
     updated = ndb.DateTimeProperty(auto_now=True)
 
+    @classmethod
+    def get_by_ein(cls, ein):
+        """Returns a company object based on a company EIN
+
+        :param ein:
+            String representing the EIN.
+
+        :returns:
+            A Company object.
+        """
+        return cls.query(cls.ein == ein).get()
+
 class Offer(ndb.Model):
     invoice_ref = ndb.KeyProperty()
     offer_type = ndb.StringProperty(choices=["Bid", "Ask"])

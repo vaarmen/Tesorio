@@ -7,14 +7,11 @@ from lib.decorators import user_required
 
 import logging
 
-companies = {
-	"5649050225344512": "Tesorio Company"
-}
-
 class SupplierPanelHandler(Handler):
     @user_required
     def get(self):
         company_id = self.get_company_id()
+        company_map = self.get_company_map
 
         invoices = Invoice.query(Invoice.supplier_id == str(company_id))
         # Calculate returns
@@ -31,4 +28,4 @@ class SupplierPanelHandler(Handler):
         # Count # of unique suppliers from invoice query
         # The % one is pending and Open BD. Count # of unique suppliers and divide by total # of suppliers
 
-        self.render("/views/supplier-panel.html", invoices=invoices)
+        self.render("/views/supplier-panel.html", invoices=invoices, company_map=company_map)

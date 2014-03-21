@@ -11,7 +11,10 @@ from lib import utils
 
 class LoginHandler(Handler):
     def get(self):
-        self.render('/views/login.html')
+        if self.user:
+            self.redirect('/panel')
+        else:
+            self.render('/views/login.html')
 
     def post(self):
         try:

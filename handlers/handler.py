@@ -12,14 +12,16 @@ from webapp2_extras import sessions
 from webapp2_extras.auth import InvalidAuthIdError
 from webapp2_extras.auth import InvalidPasswordError
 
+## Import config files
 from config import config
+
+from lib.utils import generate_company_map
+
+## Memcache for loading company_map
+from google.appengine.api import memcache
 
 template_dir = os.path.join(os.path.dirname(__file__), '../')
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), autoescape = True, extensions=['jinja2.ext.with_'])
-
-COMPANIES_DICT = {
-    "5629499534213120": "Admin Company"
-}
 
 class Handler(webapp2.RequestHandler):
     @webapp2.cached_property
@@ -82,6 +84,12 @@ class Handler(webapp2.RequestHandler):
     def get_company_id(self):
         """Returns entity id for user company"""
         return self.user.company.id if self.user else None
+
+    @webapp2.cached_property
+    def get_company_map(self):
+        """Returns a dictionary mapping Company ID -> Company Name"""
+        return memcache.get('company_map') or generate_company_map()
+
  
     def display_message(self, message):
         """Utility function to display a template with a simple message."""
@@ -153,7 +161,8 @@ def calculate_date(date, days):
     return date - timedelta(days=days)
 
 def get_company_name(company_id):
-    return COMPANIES_DICT[company_id]
+    companies = memcache.get('company_map') or generate_company_map()
+    return companies[company_id]
 
 jinja_env.filters['format_currency'] = format_currency
 jinja_env.filters['format_date'] = format_date
