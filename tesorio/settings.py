@@ -221,6 +221,7 @@ INSTALLED_APPS = (
 
     # tesorio apps
     'app',
+    'tesorio',
 
 )
 
