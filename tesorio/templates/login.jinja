@@ -6,20 +6,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- bootstrap -->
-  <link href="/css/bootstrap/bootstrap.css" rel="stylesheet" />
-  <link href="/css/bootstrap/bootstrap-overrides.css" type="text/css" rel="stylesheet" />
+  <link href="/media/css/bootstrap/bootstrap.css" type="text/css" rel="stylesheet" />
+  <link href="/media/css/bootstrap/bootstrap-overrides.css" type="text/css" rel="stylesheet" />
 
   <!-- global styles -->
-  <link rel="stylesheet" type="text/css" href="/css/compiled/layout.css" />
-  <link rel="stylesheet" type="text/css" href="/css/compiled/elements.css" />
-  <link rel="stylesheet" type="text/css" href="/css/compiled/icons.css" />
+  <link rel="stylesheet" type="text/css" href="/media/css/compiled/layout.css" />
+  <link rel="stylesheet" type="text/css" href="/media/css/compiled/elements.css" />
+  <link rel="stylesheet" type="text/css" href="/media/css/compiled/icons.css" />
 
   <!-- libraries -->
-  <link rel="stylesheet" type="text/css" href="/css/lib/font-awesome.css" />
+  <link rel="stylesheet" type="text/css" href="/media/css/lib/font-awesome.css" />
 
   <!-- this page specific styles -->
-  <link rel="stylesheet" href="/css/compiled/login.css" type="text/css" media="screen" />
-  <style>
+  <link rel="stylesheet" href="/media/css/compiled/login.css" type="text/css" media="screen" />
+  <style type='text/css'>
     .logo {
       max-width: 400px;
     }
@@ -60,24 +60,63 @@
 
   <div class="login-wrapper">
     <a href="index.html">
-      <img class="logo" src="img/logo.png" alt="logo" />
+      <img class="logo" src="/media/img/logo.png" alt="logo" />
     </a>
 
     <div class="box">
       <div class="content-wrap">
         <h6>Log in</h6>
-        <form id="login-form" method="post">
-          <div class="field-box">
-            <input name="username" id="username" class="form-control {{username_error}}" type="text" value="{{username}}" placeholder="Username" required>
+        <form id="login-form" method="post" action='.'>
+          {% csrf_token %}
+          {% for error in form.non_field_errors() %}
+            <div class="text-error">{{ error }}</div>
+          {% endfor %}
+          {% for field in form.visible_fields() %}
+            <input
+              name="{{ field.name }}"
+              id="{{ field.html_id }}"
+              class="form-control {{ field.error_class }}"
+              type="{{ field.field.widget.input_type }}"
+              value="{{ field.value() }}"
+              placeholder="{{ field.name|title }}"
+              required
+              >
+              {{ field }}
+          {% endfor %}
+          <!-- <div class="field-box">
+            <input
+              name="username"
+              id="username"
+              class="form-control {{ username_error }}"
+              type="text"
+              value="{{ username }}"
+              placeholder="Username"
+              required
+              >
             {% if invalid %}
-              <span class="alert-msg"><i class="icon-remove-sign"></i> Invalid username or password</span>
+              <span class="alert-msg">
+                <i class="icon-remove-sign"></i>
+                Invalid username or password
+              </span>
             {% endif %}
           </div>
           <div class="field-box">
-            <input name="password" id="password" class="form-control {{password_error}}" type="password" placeholder="Password" required>
-          </div>
+            <input
+              name="password"
+              id="password"
+              class="form-control {{password_error}}"
+              type="password"
+              placeholder="Password"
+              required
+              >
+          </div> -->
           <a href="#" class="forgot">Forgot password?</a>
-          <button type="submit" class="btn-glow primary login" href="index.html">Log in</button>
+          <button
+            type="submit"
+            class="btn-glow primary login"
+            href="index.html">
+            Log in
+          </button>
         </form>
       </div>
     </div>
@@ -86,8 +125,8 @@
 
   <!-- scripts -->
   <script src="http://code.jquery.com/jquery-latest.js"></script>
-  <script src="/js/bootstrap.min.js"></script>
-  <script src="/js/theme.js"></script>
+  <script src="/media/js/bootstrap.min.js"></script>
+  <script src="/media/js/theme.js"></script>
 
 </body>
 </html>
