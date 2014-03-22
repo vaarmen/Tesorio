@@ -151,7 +151,6 @@ class Invoice(models.Model):
     buyer = models.ForeignKey(Company, related_name='buyer_invoices')
     supplier = models.ForeignKey(Company, related_name='supplier_invoices')
 
-    ## Possibly change structure to KeyProperty
     buyer_inv_key = models.CharField(max_length=1000)
     supplier_inv_number = models.CharField(max_length=1000)
 
@@ -161,13 +160,13 @@ class Invoice(models.Model):
 
     amount = models.DecimalField(default=0, max_digits=20, decimal_places=4)
 
-    inv_date = models.DateProperty()
-    due_date = models.DateProperty()
+    inv_date = models.DateField()
+    due_date = models.DateField()
 
     po_num = models.CharField(max_length=1000, blank=True)
     description = models.TextField()
 
-    date_approved = models.DateTimeProperty()
+    date_approved = models.DateTimeField()
 
     settings = jsonfield.JSONField(default={})
     history = HistoricalRecords()
