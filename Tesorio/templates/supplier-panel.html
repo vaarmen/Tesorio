@@ -61,7 +61,7 @@
                                 <th class="col-md-1">
                                     <span class="line"></span>
                                     Company Name
-                                </th>                               
+                                </th>
                                 <th class="col-md-1">
                                     <span class="line"></span>
                                     Invoice Date
@@ -108,7 +108,7 @@
                                         {% endif %}
                                     </td>
                                     <td><a href="/panel/invoice/{{invoice.key.id()}}">#{{invoice.supplier_inv_number}}</a></td>
-                                    <td>{{company_map[invoice.buyer_id]}}</td>                                 
+                                    <td>{{company_map[invoice.buyer_id]}}</td>
                                     <td>{{invoice.inv_date.strftime('%m-%d-%Y')}}</td>
                                     <td class="right-align">{{invoice.amount|format_currency}}</td>
                                     <td>{{invoice.due_date.strftime('%m-%d-%Y')}}</td>
@@ -146,7 +146,7 @@
                                 <h4 class="modal-title" id="myModalLabel">Confirm Bid</h4>
                         </div>
                         <div class="modal-body">
-                            
+
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

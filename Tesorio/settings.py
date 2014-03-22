@@ -1,35 +1,97 @@
-# Django settings for Tesorio project.
+# Django settings for tesorio project.
 
-DEBUG = True
+import sys
+import os
+import random
+sys.path.append('deps')
+
+# the below came from http://codespatter.com/2009/04/10/how-to-add-locations-to-python-path-for-reusable-django-apps/
+PROJECT_ROOT = os.path.dirname(__file__)
+sys.path.insert(0, PROJECT_ROOT)
+
+
+
+DEBUG = os.environ.get('SERVER_SOFTWARE', 'Development').startswith('Development')
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    ('Fabio Fleitas', 'cubanfabio@gmail.com'),
+    ('Carlos Vega', 'carlos@tesorio.com'),
 )
 
 MANAGERS = ADMINS
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '',                      # Or path to database file if using sqlite3.
-        # The following settings are not used with sqlite3:
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '',                      # Set to empty string for default.
+SERVER_EMAIL = 'carlos@tesorio.com'  # from http://stackoverflow.com/questions/1400529/does-google-app-engine-with-app-engine-patch-support-emailing-admins-upon-500-er
+DEFAULT_FROM_EMAIL = SERVER_EMAIL  # for password_reset
+EMAIL_BACKEND = 'appengine_emailbackend.EmailBackend'  # from comment in http://stackoverflow.com/a/4180124/
+
+
+if DEBUG:
+    try:
+        # Probably in appengine development server, otherwise manage.py shell
+        app_id = environ['APPLICATION_ID']
+    except:
+        # from http://einaregilsson.com/unit-testing-model-classes-in-google-app-engine/
+        # environ['APPLICATION_ID'] = 'dev~emeraldexam'
+        # datastore_file = '/dev/null'
+        # from google.appengine.api import apiproxy_stub_map,datastore_file_stub
+        # apiproxy_stub_map.apiproxy = apiproxy_stub_map.APIProxyStubMap()
+        # stub = datastore_file_stub.DatastoreFileStub('dev~emeraldexam', datastore_file, '/')
+        # apiproxy_stub_map.apiproxy.RegisterStub('datastore_v3', stub)
+
+        # from above, in the comments...
+        from google.appengine.ext import testbed
+        t = testbed.Testbed()
+        t.activate()
+        t.init_datastore_v3_stub()
+
+
+    from local_settings import DATABASE_NAME, DATABASE_USER
+    # from http://www.joemartaganna.com/web-development/running-django-13-in-google-app-engine-with-google-cloud-sql/
+    # print 'in DEBUG MODE'
+    # sys.path.append('/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/MySQL_python-1.2.4-py2.7.egg-info')
+    # print sys.path
+    SOUTH_DATABASE_ADAPTERS = {
+        'default': "south.db.mysql"
     }
-}
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': DATABASE_NAME,
+            'USER': DATABASE_USER,
+            'HOST': '127.0.0.1', # needed for windows
+            'PORT': '3306', # needed for windows
+        }
+    }
+else:
+    # print 'NOT in DEBUG mode'
+    DATABASE_INSTANCE = 'emeraldexam-sql:emeraldexam-sql-2' # Looks like 'apiproject:sampleinstance'
+    DATABASE_NAME = 'tesoriodb2'
+    BASE_URL = 'http://www.tesorio.com'
+    SOUTH_DATABASE_ADAPTERS = {'default': 'south.db.mysql'}
+    DATABASES = {
+        'default': {
+            'ENGINE': 'google.appengine.ext.django.backends.rdbms',
+            'INSTANCE': DATABASE_INSTANCE,
+            'NAME': DATABASE_NAME,
+        }
+    }
+
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '.tesorio.com',
+    '.tesorio-company.appspot.com',
+    # try uncommenting the below if you run into problems when running DEBUG=False on localhost.
+    # 'localhost'
+]
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
 # In a Windows environment this must be set to your system time zone.
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'America/New_York'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -50,18 +112,20 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
-MEDIA_ROOT = ''
+MEDIA_ROOT = os.path.join(
+    os.path.dirname(__file__), 'tesorio', 'media'
+).replace('\\', '/')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://example.com/media/", "http://media.example.com/"
-MEDIA_URL = ''
+MEDIA_URL = '/media/'
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-STATIC_ROOT = ''
+STATIC_ROOT = 'static/'
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
@@ -86,11 +150,25 @@ STATICFILES_FINDERS = (
 SECRET_KEY = '44(ef9ea3e=lsj8j065#73hp8jiq13&%kyi92*2a@*5s7+usew'
 
 # List of callables that know how to import templates from various sources.
+# TEMPLATE_LOADERS = (
+#     'django.template.loaders.filesystem.Loader',
+#     'django.template.loaders.app_directories.Loader',
+# #     'django.template.loaders.eggs.Loader',
+# )
 TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
+    'django_jinja.loaders.AppLoader',
+    'django_jinja.loaders.FileSystemLoader',
 )
+DEFAULT_JINJA2_TEMPLATE_EXTENSION = '.jinja'
+
+
+# only use the memory file uploader,
+# do not use the file system - not able to do so on
+# google app engine
+# credit: http://stackoverflow.com/a/4319384/1048433
+FILE_UPLOAD_HANDLERS = ('django.core.files.uploadhandler.MemoryFileUploadHandler',)
+FILE_UPLOAD_MAX_MEMORY_SIZE = 2621440  # the django default: 2.5MB
+
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
@@ -102,18 +180,27 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'Tesorio.urls'
+ROOT_URLCONF = 'tesorio.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'Tesorio.wsgi.application'
+WSGI_APPLICATION = 'tesorio.wsgi.application'
 
 TEMPLATE_DIRS = (
+    os.path.join(
+        os.path.dirname(__file__), 'tesorio', 'templates'
+    ).replace('\\', '/'),
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
 )
 
 INSTALLED_APPS = (
+
+    # third parties that must be loaded first
+    'longerusername', # From https://github.com/GoodCloud/django-longer-username
+    'grappelli',
+
+    # other third parties
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -121,9 +208,15 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
+    'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
+    'django.contrib.admindocs',
+
+    # third party apps
+    'password_reset',
+    'south',
+    'django_jinja',
+
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
