@@ -81,6 +81,14 @@ class Person(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    def __unicode__(self):
+        user = self.user
+        return u'{} {}'.format(user.first_name, user.last_name)
+
+    def __str__(self):
+        return str(self.__unicode__().encode('ascii', 'replace'))
+
+
 
 class Company(models.Model):
     name = models.CharField(max_length=254, blank=True)
@@ -95,8 +103,8 @@ class Company(models.Model):
     is_supplier = models.BooleanField(default=False)
 
     # this can be changed to be the reverse, it doesnt make a difference
-    buyers = models.ManyToManyField('self',
-        symmetrical=False, related_name='suppliers')
+    suppliers = models.ManyToManyField('self',
+        symmetrical=False, related_name='buyers', blank=True, null=True)
     cash_commited = models.DecimalField(default=0, max_digits=20, decimal_places=2)
     apr = models.DecimalField(default=0, max_digits=20, decimal_places=5)
 
@@ -104,6 +112,12 @@ class Company(models.Model):
     history = HistoricalRecords()
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    def __unicode__(self):
+        return unicode(self.name)
+
+    def __str__(self):
+        return str(self.__unicode__().encode('ascii', 'replace'))
 
 
 class Offer(models.Model):
@@ -126,6 +140,12 @@ class Offer(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    def __unicode__(self):
+        return u'{} on {}'.format(invoice, date_due)
+
+    def __str__(self):
+        return str(self.__unicode__().encode('ascii', 'replace'))
+
 
 class OfferParameters(models.Model):
     buyer = models.ForeignKey(Company, related_name='buyer_offerparams')
@@ -145,6 +165,12 @@ class OfferParameters(models.Model):
     history = HistoricalRecords()
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    def __unicode__(self):
+        return u'{} to {}'.format(buyer, supplier)
+
+    def __str__(self):
+        return str(self.__unicode__().encode('ascii', 'replace'))
 
 
 class Invoice(models.Model):
@@ -172,3 +198,9 @@ class Invoice(models.Model):
     history = HistoricalRecords()
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    def __unicode__(self):
+        return unicode(supplier_inv_number)
+
+    def __str__(self):
+        return str(self.__unicode__().encode('ascii', 'replace'))

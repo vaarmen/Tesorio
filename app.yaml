@@ -25,6 +25,11 @@ handlers:
   static_dir: tesorio/media/
   secure: optional
 
+# grapelli uses static url, so we just point it to grapelli.
+- url: /static
+  static_dir: tesorio/deps/grappelli/static/
+  secure: optional
+
 # - url: .*
 #   script: main.app
 
