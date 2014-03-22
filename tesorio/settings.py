@@ -217,6 +217,7 @@ INSTALLED_APPS = (
     'password_reset',
     'south',
     'django_jinja',
+    'simple_history',
 
     # tesorio apps
     'app',
