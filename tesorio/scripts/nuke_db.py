@@ -8,12 +8,13 @@ def shell(cmd, *args, **kwargs):
 
 shell('mysql -u root -p < tesorio/scripts/recreate_db.sql')
 
-shell('rm app/migrations/*')
-shell('touch app/migrations/__init__.py')
+# clears/resets the migrations folder (for *totally* starting from scratch)
+# shell('rm app/migrations/*')
+# shell('touch app/migrations/__init__.py')
 
 shell('./manage.py syncdb')
 
-shell('./manage.py schemamigration app --initial')
-# dont need to for longerusername
+# again, only need if you're *totally* starting from scratch.
+# shell('./manage.py schemamigration app --initial')
 
 shell('./manage.py migrate')
