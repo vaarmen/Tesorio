@@ -218,6 +218,9 @@ INSTALLED_APPS = (
     'south',
     'django_jinja',
 
+    # tesorio apps
+    'app',
+
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'

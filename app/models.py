@@ -87,7 +87,7 @@ class Company(models.Model):
     ein = models.CharField(max_length=254, blank=True)
 
     address = models.TextField(blank=True)  # Address class?
-    phone = models.CharField(blank=True)
+    phone = models.CharField(max_length=20, blank=True)
     email = models.EmailField(blank=True)
 
     has_registered = models.BooleanField(default=False)
@@ -107,7 +107,7 @@ class Company(models.Model):
 
 
 class Offer(models.Model):
-    invoice = models.OneToOneField('Invoice')
+    invoice = models.ForeignKey('Invoice')
     offer_type = models.CharField(max_length=254, choices=OFFER_TYPES, default='BID')
     parameters = models.ForeignKey('OfferParameters', related_name='offers')
 
@@ -155,8 +155,8 @@ class Invoice(models.Model):
     supplier_inv_number = models.CharField(max_length=1000)
 
     # Recent bid. Could have been declined or accepted.
-    recent_bid = models.ForeignKey(Offer)
-    status = models.CharField(choices=INVOICE_STATUSES, default='OPEN')
+    current_bid = models.OneToOneField(Offer, related_name='current_invoice')
+    status = models.CharField(max_length=254, choices=INVOICE_STATUSES, default='OPEN')
 
     amount = models.DecimalField(default=0, max_digits=20, decimal_places=4)
 

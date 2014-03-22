@@ -8,12 +8,12 @@ def shell(cmd, *args, **kwargs):
 
 shell('mysql -u root -p < tesorio/scripts/recreate_db.sql')
 
-# shell('rm app/migrations/*')
-# shell('touch tesorio/migrations/__init__.py')
+shell('rm app/migrations/*')
+shell('touch app/migrations/__init__.py')
 
 shell('./manage.py syncdb')
 
-# shell('./manage.py schemamigration app --initial')
+shell('./manage.py schemamigration app --initial')
 # dont need to for longerusername
 
 shell('./manage.py migrate')
