@@ -26,14 +26,6 @@ class IndexView(TesorioTemplateView):
     def get(self, request, *args, **kwargs):
         return self.render()
 
-# class LoginView(TesorioTemplateView):
-#     template_name = 'login.jinja'
-
-#     def get(self, request, *args, **kwargs):
-#         return self.render()
-
-#     def get(self, request, *args, **kwargs):
-#         return self.render()
 
 class LoginView(FormView):
     """
@@ -112,31 +104,22 @@ class LoginView(FormView):
             self.set_test_cookie()
             return self.form_invalid(form)
 
+
 class LogoutView(View):
     def get(self, request, *args, **kwargs):
         auth.logout(request)
         return HttpResponseRedirect('/')
 
-# class Searc hPageView(FormView):
-#     template_name = 'search/search.html'
 
-#     def get(self, request, *args, **kwargs):
-#         self.bookmarks = []
-#         self.show_results = False
-#         form = SearchForm(self.request.GET or None)
-#         if form.is_valid():
-#             self.show_results = True
-#             self.bookmarks = Bookmark.objects.filter(title__icontains=form.cleaned_data['query'])[:10]
+class BuyerDashboard(TesorioTemplateView):
+    template_name = 'buyer_dashboard.jinja'
 
-#         return self.render_to_response(self.get_context_data(form=form))
-
-
-#     def get_context_data(self, **kwargs):
-#         context = super(SearchPageView, self).get_context_data(**kwargs)
-#         context.update({
-#             'show_tags': True,
-#             'show_user': True,
-#             'show_results': self.show_results,
-#             'bookmarks': self.bookmarks
-#         })
-#         return context
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        person = user.person
+        company = person.company
+        invoices = company.buyer_invoices.all()
+        return self.render(
+            company=company,
+            invoices=invoices,
+        )

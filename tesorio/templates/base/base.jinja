@@ -7,13 +7,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- bootstrap -->
-  <link href="/css/bootstrap/bootstrap.css" rel="stylesheet" />
-  <link href="/css/bootstrap/bootstrap-overrides.css" type="text/css" rel="stylesheet" />
+  <link href="/media/css/bootstrap/bootstrap.css" rel="stylesheet" />
+  <link href="/media/css/bootstrap/bootstrap-overrides.css" type="text/css" rel="stylesheet" />
 
   <!-- global styles -->
-  <link rel="stylesheet" type="text/css" href="/css/compiled/layout.css" />
-  <link rel="stylesheet" type="text/css" href="/css/compiled/elements.css" />
-  <link rel="stylesheet" type="text/css" href="/css/compiled/icons.css" />
+  <link rel="stylesheet" type="text/css" href="/media/css/compiled/layout.css" />
+  <link rel="stylesheet" type="text/css" href="/media/css/compiled/elements.css" />
+  <link rel="stylesheet" type="text/css" href="/media/css/compiled/icons.css" />
 
   <!-- libraries -->
   {% block libraries %}{% endblock %}
@@ -32,12 +32,10 @@
 </head>
 
 <body>
-  {% with company=company %}
-  {% include "/views/base/navbar.html" %}
-  {% endwith %}
-  
+  {% include "base/navbar.jinja" %}
+
   {% with active_page = active_page|default('home_panel') %}
-  {% include "/views/base/sidebar.html" %}
+  {% include "base/sidebar.jinja" %}
   {% endwith %}
 
   <!-- main container -->
@@ -46,8 +44,8 @@
 
   <!-- scripts -->
   <script src="http://code.jquery.com/jquery-latest.js"></script>
-  <script src="/js/bootstrap.min.js"></script>
-  <script src="/js/theme.js"></script>
+  <script src="/media/js/bootstrap.min.js"></script>
+  <script src="/media/js/theme.js"></script>
   {% block scripts %}{% endblock %}
 
 </body>

@@ -105,7 +105,7 @@ class Company(models.Model):
     # this can be changed to be the reverse, it doesnt make a difference
     suppliers = models.ManyToManyField('self',
         symmetrical=False, related_name='buyers', blank=True, null=True)
-    cash_commited = models.DecimalField(default=0, max_digits=20, decimal_places=2)
+    cash_committed = models.DecimalField(default=0, max_digits=20, decimal_places=2)
     apr = models.DecimalField(default=0, max_digits=20, decimal_places=5)
 
     settings = jsonfield.JSONField(default={})

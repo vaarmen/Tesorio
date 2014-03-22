@@ -27,6 +27,11 @@ urlpatterns = patterns('',
         name="logout"
     ),
 
+    url(r'^dashboard/buyer/$',
+        views.BuyerDashboard.as_view(),
+        name="buyer_dashboard"
+    ),
+
     url(r'^grappelli/', include('grappelli.urls')),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),

@@ -202,6 +202,7 @@ INSTALLED_APPS = (
     'grappelli',
 
     # other third parties
+    'django.contrib.humanize',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',

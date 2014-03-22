@@ -1,15 +1,15 @@
-{% extends "/views/base/base.html" %}
-{% block title %}Tesorio - Buyer Panel{% endblock %}
-{% set active_page = "buyer_panel" %}
+{% extends "base/base.jinja" %}
+{% block title %}Tesorio - Buyer Dashboard{% endblock %}
+{% set active_page = "buyer_dashboard" %}
 
 {% block libraries %}
-<link href="/css/lib/jquery-ui-1.10.2.custom.css" rel="stylesheet" type="text/css" />
-<link href="/css/lib/font-awesome.css" type="text/css" rel="stylesheet" />
+<link href="/media/css/lib/jquery-ui-1.10.2.custom.css" rel="stylesheet" type="text/css" />
+<link href="/media/css/lib/font-awesome.css" type="text/css" rel="stylesheet" />
 {% endblock libraries %}
 
 {% block custom_css %}
-<link rel="stylesheet" href="/css/compiled/panel.css" type="text/css" media="screen" />
-<link href="/css/lib/jquery.dataTables.css" type="text/css" rel="stylesheet" />
+<link rel="stylesheet" href="/media/css/compiled/panel.css" type="text/css" media="screen" />
+<link href="/media/css/lib/jquery.dataTables.css" type="text/css" rel="stylesheet" />
 <style>
     .line {
         margin-left: 7px;
@@ -48,14 +48,16 @@
             </div>
             <div class="col-md-4 col-sm-4 stat">
                 <div class="data">
-                    <span class="number">{{company.apr}} %</span>
+                    <span class="number">{{ company.apr }} %</span>
                     apr
                 </div>
                 <span class="date">Threshold</span>
             </div>
             <div class="col-md-4 col-sm-4 stat">
                 <div class="data">
-                    <span class="number">{{company.cash_committed|float|format_currency}}</span>
+                    <span class="number">
+                        {{ format_currency(company.cash_committed) }}
+                    </span>
                     cash committed
                 </div>
                 <span class="date">February 2013</span>
@@ -65,7 +67,7 @@
     <!-- end upper main stats -->
 
     <div id="pad-wrapper">
-        <h1>{{company.name}} Buyer Panel</h1>
+        <h1>{{ company.name }} Buyer Dashboard</h1>
 
             <!-- orders table -->
             <div class="table-wrapper orders-table section">
@@ -124,26 +126,52 @@
                             {% if invoice.recent_bid %}
                             {% set bid = invoice.recent_bid.get() %}
                                 <tr>
-                                    <td><a href="/panel/invoice/{{invoice.key.id()}}">#{{invoice.supplier_inv_number}}</a></td>
-                                    <td>{{company_map[invoice.supplier_id]}}</td>
-                                    <td>{{invoice.inv_date | format_date}}</td>
-                                    <td>{{bid.days_acc}}</td>
-                                    <td class="right-align">{{invoice.amount|format_currency}}</td>
-                                    <td>{{invoice.status}}</td>
-                                    <td class="right-align">{{invoice.amount|format_currency}}</td>
-                                    <td class="right-align">{{invoice.amount|format_currency}}</td>
-                                    <td class="right-align">{{bid.apr}}%</td>
+                                    <td>
+                                        <a href="/dashboard/invoice/{{ invoice.id }}">
+                                            #{{ invoice.supplier_inv_number }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        {{ invoice.supplier }}
+                                    </td>
+                                    <td>
+                                        {{ invoice.inv_date }}
+                                    </td>
+                                    <td>
+                                        {{ bid.days_acc }}
+                                    </td>
+                                    <td class="right-align">
+                                        {{ format_currency(invoice.amount) }}
+                                    </td>
+                                    <td>
+                                        {{ invoice.status }}
+                                    </td>
+                                    <td class="right-align">
+                                        {{ format_currency(invoice.amount) }}
+                                    </td>
+                                    <td class="right-align">
+                                        {{ format_currency(invoice.amount) }}
+                                    </td>
+                                    <td class="right-align">
+                                        {{ bid.apr }}%
+                                    </td>
                                 </tr>
 
                             {% else %}
                                 <tr>
-                                    <td><a href="/panel/invoice/{{invoice.key.id()}}">#{{invoice.supplier_inv_number}}</a></td>
-                                    <td>{{company_map[invoice.supplier_id]}}</td>
-                                    <td>{{invoice.inv_date.strftime('%m-%d-%Y')}}</td>
+                                    <td><a href="/dashboard/invoice/{{ invoice.id }}">
+                                        #{{ invoice.supplier_inv_number }}
+                                    </a></td>
+                                    <td>{{ invoice.supplier }}</td>
+                                    <td>{{ invoice.inv_date.strftime('%m-%d-%Y') }}</td>
                                     <td>N/A</td>
-                                    <td class="right-align">{{invoice.amount|format_currency}}</td>
+                                    <td class="right-align">
+                                        {{ format_currency(invoice.amount) }}
+                                    </td>
                                     <td>No-Bid</td>
-                                    <td class="right-align">{{invoice.amount|format_currency}}</td>
+                                    <td class="right-align">
+                                        {{ format_currency(invoice.amount) }}
+                                    </td>
                                     <td>N/A</td>
                                     <td>N/A</td>
                                 </tr>
@@ -160,10 +188,10 @@
 {% endblock content %}
 
 {% block scripts %}
-<script src="/js/jquery-ui-1.10.2.custom.min.js"></script>
-<script src="/js/jquery.dataTables.js"></script>
-<script src="/js/dataTables.formatNumbers.js"></script>
-<script src="/js/dataTables.ukDate.js"></script>
+<script src="/media/js/jquery-ui-1.10.2.custom.min.js"></script>
+<script src="/media/js/jquery.dataTables.js"></script>
+<script src="/media/js/dataTables.formatNumbers.js"></script>
+<script src="/media/js/dataTables.ukDate.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
     $('table.table').dataTable({
