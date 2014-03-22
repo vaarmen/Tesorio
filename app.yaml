@@ -8,6 +8,8 @@ builtins:
 - remote_api: on
 - django_wsgi: on
 
+env_variables:
+    DJANGO_SETTINGS_MODULE: 'tesorio.settings'
 
 handlers:
 - url: /favicon\.ico
@@ -23,8 +25,8 @@ handlers:
   static_dir: tesorio/media/
   secure: optional
 
-- url: .*
-  script: main.app
+# - url: .*
+#   script: main.app
 
 - url: /_ah/devcon/.*
   script: google.appengine.ext.admin.application
