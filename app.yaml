@@ -1,29 +1,37 @@
 application: tesorio-company
-version: 1
+version: 2
 runtime: python27
 api_version: 1
 threadsafe: yes
 
+builtins:
+- remote_api: on
+- django_wsgi: on
+
+
 handlers:
 - url: /favicon\.ico
-  static_files: favicon.ico
+  static_files: tesorio/favicon.ico
   upload: favicon\.ico
 
 # Static folders
-- url: /js
-  static_dir: js
-- url: /css
-  static_dir: css
-- url: /img
-  static_dir: img
+- url: /media
+  static_dir: tesorio/media/
+  secure: optional
 
 - url: .*
   script: main.app
 
+- url: /_ah/devcon/.*
+  script: google.appengine.ext.admin.application
+  login: admin
+
 libraries:
-- name: webapp2
-  version: "2.5.2"
 - name: jinja2
   version: "latest"
+- name: django
+  version: 1.5
+- name: lxml
+  version: 2.3
 - name: pycrypto
   version: "latest"
