@@ -1,7 +1,7 @@
 # Create your views here.
 import urlparse
-from django.views.generic import TemplateView
-from django.contrib.auth import REDIRECT_FIELD_NAME, login
+from django.views.generic import TemplateView, View
+from django.contrib import auth
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponseRedirect
 from django.utils.decorators import method_decorator
@@ -50,9 +50,9 @@ class LoginView(FormView):
 
     """
     form_class = AuthenticationForm
-    redirect_field_name = REDIRECT_FIELD_NAME
+    redirect_field_name = auth.REDIRECT_FIELD_NAME
     template_name = 'login.jinja'
-    # success_url = '/'
+    success_url = '/dashboard/'
 
     @method_decorator(csrf_protect)
     @method_decorator(never_cache)
@@ -64,7 +64,7 @@ class LoginView(FormView):
         The user has provided valid credentials (this was checked in AuthenticationForm.is_valid()). So now we
         can log him in.
         """
-        login(self.request, form.get_user())
+        auth.login(self.request, form.get_user())
         return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
@@ -95,6 +95,8 @@ class LoginView(FormView):
         Same as django.views.generic.edit.ProcessFormView.get(), but adds test cookie stuff
         """
         self.set_test_cookie()
+        if request.user.is_authenticated():
+            return HttpResponseRedirect(self.get_success_url())
         return super(LoginView, self).get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
@@ -110,7 +112,12 @@ class LoginView(FormView):
             self.set_test_cookie()
             return self.form_invalid(form)
 
-# class SearchPageView(FormView):
+class LogoutView(View):
+    def get(self, request, *args, **kwargs):
+        auth.logout(request)
+        return HttpResponseRedirect('/')
+
+# class Searc hPageView(FormView):
 #     template_name = 'search/search.html'
 
 #     def get(self, request, *args, **kwargs):

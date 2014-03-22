@@ -14,12 +14,18 @@ urlpatterns = patterns('',
     # url(r'^$', 'tesorio.views.home', name='home'),
     # url(r'^tesorio/', include('tesorio.foo.urls')),
 
-    url(r'^$', views.IndexView.as_view(), name='home'),
+    url(r'^$',
+        views.IndexView.as_view(),
+        name='home'
+    ),
     url(r'^login/$',
-        views.LoginView.as_view(
-            # form_class=MyCustomAuthFormClass,
-            success_url='/my/custom/success/url/'),
-        name="login"),
+        views.LoginView.as_view(),
+        name="login"
+    ),
+    url(r'^logout/$',
+        views.LogoutView.as_view(),
+        name="logout"
+    ),
 
     url(r'^grappelli/', include('grappelli.urls')),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

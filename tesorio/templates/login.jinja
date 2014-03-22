@@ -72,16 +72,17 @@
             <div class="text-error">{{ error }}</div>
           {% endfor %}
           {% for field in form.visible_fields() %}
-            <input
-              name="{{ field.name }}"
-              id="{{ field.html_id }}"
-              class="form-control {{ field.error_class }}"
-              type="{{ field.field.widget.input_type }}"
-              value="{{ field.value() }}"
-              placeholder="{{ field.name|title }}"
-              required
-              >
-              {{ field }}
+            <div class="field-box">
+              <input
+                name="{{ field.name }}"
+                id="{{ field.html_id }}"
+                class="form-control {{ field.error_class }}"
+                type="{{ field.field.widget.input_type }}"
+                value="{{ field.value()|default("") }}"
+                placeholder="{{ field.name|title }}"
+                required
+                >
+            </div>
           {% endfor %}
           <!-- <div class="field-box">
             <input
