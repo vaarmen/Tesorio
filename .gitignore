@@ -8,4 +8,4 @@
 *.log
 *.DS_Store
 *.pkg
-Tesorio/local_settings.py
+tesorio/local_settings.py

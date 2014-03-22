@@ -14,6 +14,10 @@ handlers:
   static_files: tesorio/favicon.ico
   upload: favicon\.ico
 
+- url: /robot.txt
+  static_files: media/robot.txt
+  upload: media/robot.txt
+
 # Static folders
 - url: /media
   static_dir: tesorio/media/
