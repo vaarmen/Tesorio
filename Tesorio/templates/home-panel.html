@@ -1,0 +1,63 @@
+{% extends "/views/base/base.html" %}
+{% block title %}Tesorio - Home Panel{% endblock %}
+{% set active_page = "home_panel" %}
+
+{% block libraries %}
+<link href="/css/lib/jquery-ui-1.10.2.custom.css" rel="stylesheet" type="text/css" />
+<link href="/css/lib/font-awesome.css" type="text/css" rel="stylesheet" />
+{% endblock libraries %}
+
+{% block custom_css %}
+<link rel="stylesheet" href="/css/compiled/panel.css" type="text/css" media="screen" />
+
+<style>
+  #company-info {
+    border-right: 1px solid #edeef1;
+  }
+
+  .user-profile p {
+    color: #777e86;
+  }
+
+  .user-profile h6 {
+    font-weight: 600;
+    font-size: 14px;
+  }
+</style>
+{% endblock custom_css %}
+
+{% block content %}
+<div class="content">
+  <div id="pad-wrapper" class="user-profile">
+    <h1>{{company.name}}</h1>
+    <hr/>
+    <div class="row">
+      <div id="company-info" class="col-xs-6">
+        <h3>Company Info</h3>
+        <h6>Company Address</h6>
+        <p>{{company.address}}</p>
+        <br/>
+        <h6>Company Phone</h6>
+        <p>{{company.company_phone}}</p>
+        <br/>
+        <h6>Company Email</h6>
+        <p>{{company.company_email}}</p>
+      </div>
+      <div class="col-xs-6">
+        <h3>Contact Information</h3>
+        <h6>Contact Person</h6>
+        <p>{{company.contact_person}}</p>
+        <br/>
+        <h6>Contact Email</h6>
+        <p>{{company.contact_email}}</p>
+        <br/>
+        <h6>Contact Phone</h6>
+        <p>{{company.contact_phone}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+{% endblock scripts %}

@@ -1,0 +1,134 @@
+{% extends "/views/base/base.html" %}
+{% block title %}Tesorio - Input Invoice{% endblock %}
+
+{% block libraries %}
+<link href="/css/lib/uniform.default.css" type="text/css" rel="stylesheet" />
+<link href="/css/lib/select2.css" type="text/css" rel="stylesheet" />
+<link href="/css/lib/bootstrap.datepicker.css" type="text/css" rel="stylesheet" />
+<link href="/css/lib/font-awesome.css" type="text/css" rel="stylesheet" />
+{% endblock libraries %}
+
+{% block custom_css %}
+<link rel="stylesheet" href="/css/compiled/form-showcase.css" type="text/css" media="screen" />
+{% endblock custom_css %}
+
+{% block content %}
+<div class="content">
+
+  <div id="pad-wrapper" class="form-page">
+    <div class="row form-wrapper">
+      <!-- left column -->
+      <div class="col-md-8">
+        {% if success %}
+        <div class="alert alert-success"><i class="icon-ok-sign"></i>Successful Invoice Entry!</div>
+        {% endif %}
+        
+        <h1>Input Invoice</h1>
+        <br/>
+        <form id="invoice-form" method="post">
+          <div class="field-box">
+            <label>Buyer Tesorio ID:</label>
+            <div class="col-md-7">
+              <input name="buyer-id" class="form-control" type="text" placeholder="Buyer Tesorio ID" required />
+            </div>                            
+          </div>
+
+          <div class="field-box">
+            <label>Supplier Tesorio ID:</label>
+            <div class="col-md-7">
+              <input name="supplier-id" class="form-control" type="text" placeholder="Supplier Tesorio ID" required />
+            </div>                            
+          </div>
+
+          <div class="field-box">
+            <label>Buyer's Invoice Key:</label>
+            <div class="col-md-7">
+              <input name="binvoice-key" class="form-control" type="text" placeholder="Buyer's Invoice Key" required />
+            </div>                            
+          </div>
+
+          <div class="field-box">
+            <label>Supplier's Invoice Number:</label>
+            <div class="col-md-7">
+              <input name="sinvoice-number" class="form-control" type="text" placeholder="Supplier's Invoice Number" required />
+            </div>                            
+          </div>
+
+          <div class="field-box">
+            <label>Amount:</label>
+            <div class="input-group col-md-7">
+              <span class="input-group-addon">$</span>
+              <input name="amount" type="text" class="form-control" placeholder="Amount" data-toggle="tooltip" data-trigger="focus" title="Please do not add commas for large numbers" data-placement="top" required />
+            </div>                             
+          </div>
+
+          <div class="field-box">
+            <label>Invoice date:</label>
+            <div class="col-md-7">
+            <input name="invoice-date" type="text" placeholder="Choose date" class="form-control input-datepicker" required />
+            </div>
+          </div>
+
+          <div class="field-box">
+            <label>Due date:</label>
+            <div class="col-md-7">
+            <input name="due-date" type="text" placeholder="Choose date" class="form-control input-datepicker" required />
+            </div>
+          </div>
+
+          <div class="field-box">
+            <label>Purchase Order Number:</label>
+            <div class="col-md-7">
+              <input name="purchase-order" class="form-control" type="text" placeholder="Purchase Order Number" required />
+            </div>                            
+          </div>
+
+          <div class="field-box">
+            <label>Line Items/Description:</label>
+            <div class="col-md-7">
+              <textarea name="description" class="form-control" rows="4"></textarea>
+            </div>
+          </div>
+
+          <div class="field-box">
+            <label>Date approved by buyer:</label>
+            <div class="col-md-7">
+            <input name="date-approved" type="text" placeholder="Choose date" class="form-control input-datepicker" required />
+            </div>
+          </div>
+
+          <button style="float:right;" type="submit" class="btn-glow success btn-finish">
+            Submit
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+<script src="/js/wysihtml5-0.3.0.js"></script>
+<script src="/js/bootstrap.datepicker.js"></script>
+<script src="/js/jquery.uniform.min.js"></script>
+<script src="/js/select2.min.js"></script>
+
+<!-- call this page plugins -->
+<script type="text/javascript">
+$(function () {
+
+            // add uniform plugin styles to html elements
+            $("input:checkbox, input:radio").uniform();
+
+            // select2 plugin for select elements
+            $(".select2").select2({
+              placeholder: "Select a State"
+            });
+
+            // datepicker plugin
+            $('.input-datepicker').datepicker().on('changeDate', function (ev) {
+              $(this).datepicker('hide');
+            });
+          });
+</script>
+{% endblock scripts %}
