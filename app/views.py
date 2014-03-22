@@ -5,6 +5,7 @@ from django.contrib import auth
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponseRedirect
 from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic.edit import FormView
@@ -60,10 +61,9 @@ class LoginView(FormView):
         return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
-        if self.success_url:
-            redirect_to = self.success_url
-        else:
-            redirect_to = self.request.REQUEST.get(self.redirect_field_name, '')
+        redirect_to = self.request.REQUEST.get(
+            self.redirect_field_name,
+            self.success_url)
 
         netloc = urlparse.urlparse(redirect_to)[1]
         if not redirect_to:
@@ -113,6 +113,10 @@ class LogoutView(View):
 
 class BuyerDashboard(TesorioTemplateView):
     template_name = 'buyer_dashboard.jinja'
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(BuyerDashboard, self).dispatch(*args, **kwargs)
 
     def get(self, request, *args, **kwargs):
         user = request.user

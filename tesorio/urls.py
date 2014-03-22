@@ -22,7 +22,15 @@ urlpatterns = patterns('',
         views.LoginView.as_view(),
         name="login"
     ),
+    url(r'^accounts/login/$',
+        views.LoginView.as_view(),
+        name="login"
+    ),
     url(r'^logout/$',
+        views.LogoutView.as_view(),
+        name="logout"
+    ),
+    url(r'^accounts/logout/$',
         views.LogoutView.as_view(),
         name="logout"
     ),
