@@ -1,32 +1,19 @@
 # Create your views here.
 from django.views.generic import TemplateView
 
-class BaseView(TemplateView):
+class TesorioTemplateView(TemplateView):
     def render(self, **kwargs):
         return self.render_to_response(self.get_context_data(**kwargs))
 
     def get_context_data(self, **kwargs):
-        context = super(BaseView, self).get_context_data(**kwargs)
+        context = super(TesorioTemplateView, self).get_context_data(**kwargs)
         return context
 
-class IndexView(BaseView):
+class IndexView(TesorioTemplateView):
     template_name = "index.jinja"
 
     def get(self, request, *args, **kwargs):
         return self.render()
-
-# class IndexView(TemplateView):
-#     template_name = "index.jinja"
-
-#     def get(self, request, *args, **kwargs):
-#         return self.render_to_response(self.get_context_data(lol="what is this"))
-
-#     def get_context_data(self, **kwargs):
-
-#         context = super(IndexView, self).get_context_data(**kwargs)
-#         # context['first_names'] = ['Nathan', 'Richard']
-
-#         return context
 
 
 # class SearchPageView(FormView):
