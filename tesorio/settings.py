@@ -3,7 +3,7 @@
 import sys
 import os
 import random
-sys.path.append('deps')
+sys.path.append('tesorio/deps')
 
 # the below came from http://codespatter.com/2009/04/10/how-to-add-locations-to-python-path-for-reusable-django-apps/
 PROJECT_ROOT = os.path.dirname(__file__)
