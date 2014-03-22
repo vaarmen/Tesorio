@@ -9,8 +9,6 @@ sys.path.append('tesorio/deps')
 PROJECT_ROOT = os.path.dirname(__file__)
 sys.path.insert(0, PROJECT_ROOT)
 
-
-
 DEBUG = os.environ.get('SERVER_SOFTWARE', 'Development').startswith('Development')
 TEMPLATE_DEBUG = DEBUG
 
@@ -21,9 +19,12 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-SERVER_EMAIL = 'carlos@tesorio.com'  # from http://stackoverflow.com/questions/1400529/does-google-app-engine-with-app-engine-patch-support-emailing-admins-upon-500-er
-DEFAULT_FROM_EMAIL = SERVER_EMAIL  # for password_reset
-EMAIL_BACKEND = 'appengine_emailbackend.EmailBackend'  # from comment in http://stackoverflow.com/a/4180124/
+# from http://stackoverflow.com/questions/1400529/does-google-app-engine-with-app-engine-patch-support-emailing-admins-upon-500-er
+SERVER_EMAIL = 'carlos@tesorio.com'
+# for password_reset
+DEFAULT_FROM_EMAIL = SERVER_EMAIL
+# from comment in http://stackoverflow.com/a/4180124/
+EMAIL_BACKEND = 'appengine_emailbackend.EmailBackend'
 
 
 if DEBUG:
