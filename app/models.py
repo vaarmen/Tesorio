@@ -141,7 +141,7 @@ class Offer(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
-        return u'{} on {}'.format(invoice, date_due)
+        return u'{} on {}'.format(self.invoice, self.date_due)
 
     def __str__(self):
         return str(self.__unicode__().encode('ascii', 'replace'))
@@ -167,7 +167,7 @@ class OfferParameters(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
-        return u'{} to {}'.format(buyer, supplier)
+        return u'{} to {}'.format(self.buyer, self.supplier)
 
     def __str__(self):
         return str(self.__unicode__().encode('ascii', 'replace'))
