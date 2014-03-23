@@ -1,6 +1,5 @@
 # Create your views here.
 import urlparse
-from django.views.generic import TemplateView, View
 from django.contrib import auth
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponseRedirect
@@ -8,7 +7,15 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
+
+# django views
+from django.views.generic import TemplateView, View
 from django.views.generic.edit import FormView
+from django.views.generic.detail import DetailView
+
+# model imports
+from models import Invoice
+from models import OfferParameters
 
 
 class TesorioTemplateView(TemplateView):
@@ -18,6 +25,7 @@ class TesorioTemplateView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(TesorioTemplateView, self).get_context_data(**kwargs)
         context['request'] = self.request
+        context['company_name'] = self.request.user.person.company.name if self.request.user.is_authenticated() else None
         return context
 
 
@@ -61,9 +69,7 @@ class LoginView(FormView):
         return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
-        redirect_to = self.request.REQUEST.get(
-            self.redirect_field_name,
-            self.success_url)
+        redirect_to = self.request.GET.get('next') or self.success_url
 
         netloc = urlparse.urlparse(redirect_to)[1]
         if not redirect_to:
@@ -144,3 +150,32 @@ class SupplierDashboard(TesorioTemplateView):
             company=company,
             invoices=invoices,
         )
+
+class InvoiceView(DetailView):
+    template_name = "invoice.jinja"
+    model = Invoice
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(InvoiceView, self).dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(InvoiceView, self).get_context_data(**kwargs)
+
+        invoice = self.object
+        parameters = OfferParameters.objects.get(buyer=invoice.buyer, supplier=invoice.supplier)
+        user = self.request.user
+
+        context['invoice'] = invoice
+        context['parameters'] = parameters
+        
+        company = self.request.user.person.company
+
+        if invoice.buyer == company:
+            context['buyer'] = True
+        elif invoice.supplier == company:
+            context['supplier'] = True
+        else:
+            context['invalid'] = True
+
+        return context

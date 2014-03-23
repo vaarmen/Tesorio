@@ -43,6 +43,11 @@ urlpatterns = patterns('',
         views.SupplierDashboard.as_view(),
         name="supplier_dashboard"
     ),
+    url(r'^dashboard/invoice/(?P<pk>\d+)/$', 
+        views.InvoiceView.as_view(), 
+        name='invoice'
+    ),
+
 
     url(r'^grappelli/', include('grappelli.urls')),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
