@@ -1,13 +1,13 @@
 # from https://github.com/niwibe/django-jinja/blob/master/docs/differences.rst
 # <someapp>/templatetags/<anyfile>.py
 from django_jinja import library
-
 lib = library.Library()
+
+# python libs
+from datetime import timedelta
 
 @lib.global_function
 def calculate_discount(amount, discount):
-    logging.info(amount)
-    logging.info(discount)
     return (100 - discount)/100 * amount
 
 @lib.global_function
@@ -21,3 +21,7 @@ def format_currency(value):
 @lib.filter
 def format_date(date):
     return date.strftime('%m-%d-%Y')
+
+@lib.filter
+def format_date_formal(date):
+    return date.strftime('%A, %B %d, %Y')
