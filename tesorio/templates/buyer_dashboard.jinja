@@ -56,7 +56,7 @@
             <div class="col-md-4 col-sm-4 stat">
                 <div class="data">
                     <span class="number">
-                        {{ format_currency(company.cash_committed) }}
+                        {{ company.cash_committed|format_currency }}
                     </span>
                     cash committed
                 </div>
@@ -141,16 +141,16 @@
                                         {{ bid.days_acc }}
                                     </td>
                                     <td class="right-align">
-                                        {{ format_currency(invoice.amount) }}
+                                        {{ invoice.amount|format_currency }}
                                     </td>
                                     <td>
                                         {{ invoice.status }}
                                     </td>
                                     <td class="right-align">
-                                        {{ format_currency(invoice.amount) }}
+                                        {{ invoice.amount|format_currency }}
                                     </td>
                                     <td class="right-align">
-                                        {{ format_currency(invoice.amount) }}
+                                        {{ invoice.amount|format_currency }}
                                     </td>
                                     <td class="right-align">
                                         {{ bid.apr }}%
@@ -166,11 +166,11 @@
                                     <td>{{ invoice.inv_date.strftime('%m-%d-%Y') }}</td>
                                     <td>N/A</td>
                                     <td class="right-align">
-                                        {{ format_currency(invoice.amount) }}
+                                        {{ invoice.amount|format_currency }}
                                     </td>
                                     <td>No-Bid</td>
                                     <td class="right-align">
-                                        {{ format_currency(invoice.amount) }}
+                                        {{ invoice.amount|format_currency }}
                                     </td>
                                     <td>N/A</td>
                                     <td>N/A</td>

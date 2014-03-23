@@ -5,5 +5,11 @@ from django_jinja import library
 lib = library.Library()
 
 @lib.global_function
+def calculate_discount(amount, discount):
+    logging.info(amount)
+    logging.info(discount)
+    return (100 - discount)/100 * amount
+
+@lib.filter
 def format_currency(value):
     return "${:,.2f}".format(float(value))
