@@ -39,6 +39,10 @@ urlpatterns = patterns('',
         views.BuyerDashboard.as_view(),
         name="buyer_dashboard"
     ),
+    url(r'^dashboard/supplier/$',
+        views.SupplierDashboard.as_view(),
+        name="supplier_dashboard"
+    ),
 
     url(r'^grappelli/', include('grappelli.urls')),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

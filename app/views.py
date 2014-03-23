@@ -127,3 +127,20 @@ class BuyerDashboard(TesorioTemplateView):
             company=company,
             invoices=invoices,
         )
+
+class SupplierDashboard(TesorioTemplateView):
+    template_name = 'supplier_dashboard.jinja'
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(SupplierDashboard, self).dispatch(*args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        person = user.person
+        company = person.company
+        invoices = company.supplier_invoices.all()
+        return self.render(
+            company=company,
+            invoices=invoices,
+        )

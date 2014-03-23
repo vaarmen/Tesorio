@@ -1,15 +1,15 @@
-{% extends "/views/base/base.html" %}
-{% block title %}Tesorio - Supplier Panel{% endblock %}
-{% set active_page = "supplier_panel" %}
+{% extends "base/base.jinja" %}
+{% block title %}Tesorio - Supplier Dashboard{% endblock %}
+{% set active_page = "supplier_dashboard" %}
 
 {% block libraries %}
-<link href="/css/lib/jquery-ui-1.10.2.custom.css" rel="stylesheet" type="text/css" />
-<link href="/css/lib/font-awesome.css" type="text/css" rel="stylesheet" />
+<link href="/media/css/lib/jquery-ui-1.10.2.custom.css" rel="stylesheet" type="text/css" />
+<link href="/media/css/lib/font-awesome.css" type="text/css" rel="stylesheet" />
 {% endblock libraries %}
 
 {% block custom_css %}
-<link rel="stylesheet" href="/css/compiled/panel.css" type="text/css" media="screen" />
-<link href="/css/lib/jquery.dataTables.css" type="text/css" rel="stylesheet" />
+<link rel="stylesheet" href="/media/css/compiled/panel.css" type="text/css" media="screen" />
+<link href="/media/css/lib/jquery.dataTables.css" type="text/css" rel="stylesheet" />
 <style>
     .line {
         margin-left: 7px;
@@ -37,7 +37,7 @@
 <div class="content">
 
     <div id="pad-wrapper">
-        <h1>{{company.name}} Supplier Panel</h1>
+        <h1>{{ company.name }} - Supplier Dashboard</h1>
 
             <!-- orders table -->
             <div class="table-wrapper orders-table section">
@@ -107,24 +107,58 @@
                                         N/A (Contact Us)
                                         {% endif %}
                                     </td>
-                                    <td><a href="/panel/invoice/{{invoice.key.id()}}">#{{invoice.supplier_inv_number}}</a></td>
-                                    <td>{{company_map[invoice.buyer_id]}}</td>
-                                    <td>{{invoice.inv_date.strftime('%m-%d-%Y')}}</td>
-                                    <td class="right-align">{{invoice.amount|format_currency}}</td>
-                                    <td>{{invoice.due_date.strftime('%m-%d-%Y')}}</td>
-                                    <td class="right-align">{{bid.discount}}%</td>
-                                    <td>{{bid.days_acc}}</td>
-                                    <td class="right-align">{{bid.amount|format_currency}}</td>
+                                    <td>
+                                        <a href="/dashboard/invoice/{{ invoice.id }}">
+                                            #{{ invoice.supplier_inv_number }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        {{ invoice.buyer }}
+                                    </td>
+                                    <td>
+                                        {{invoice.inv_date.strftime('%m-%d-%Y')}}
+                                    </td>
+                                    <td class="right-align">
+                                        {{ format_currency(invoice.amount) }}
+                                    </td>
+                                    <td>
+                                        {{ invoice.due_date.strftime('%m-%d-%Y') }}
+                                    </td>
+                                    <td class="right-align">
+                                        {{ bid.discount }}%
+                                    </td>
+                                    <td>
+                                        {{ bid.days_accelerated }}
+                                    </td>
+                                    <td class="right-align">
+                                        {{ format_currency(bid.amount) }}
+                                    </td>
                                 </tr>
 
                             {% else %}
                                 <tr>
-                                    <td><a href="/panel/invoice/{{invoice.key.id()}}">Offer Bid</a></td>
-                                    <td><a href="/panel/invoice/{{invoice.key.id()}}">#{{invoice.supplier_inv_number}}</a></td>
-                                    <td>{{company_map[invoice.buyer_id]}}</td>
-                                    <td>{{invoice.inv_date.strftime('%m-%d-%Y')}}</td>
-                                    <td class="right-align">{{invoice.amount|format_currency}}</td>
-                                    <td>{{invoice.due_date.strftime('%m-%d-%Y')}}</td>
+                                    <td>
+                                        <a href="/dashboard/invoice/{{ invoice.id }}">
+                                            Offer Bid
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="/dashboard/invoice/{{ invoice.id }}">
+                                            #{{ invoice.supplier_inv_number }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        {{ invoice.buyer }}
+                                    </td>
+                                    <td>
+                                        {{ invoice.inv_date.strftime('%m-%d-%Y')}}
+                                    </td>
+                                    <td class="right-align">
+                                        {{ format_currency(invoice.amount) }}
+                                    </td>
+                                    <td>
+                                        {{ invoice.due_date.strftime('%m-%d-%Y') }}
+                                    </td>
                                     <td>N/A</td>
                                     <td>N/A</td>
                                     <td>N/A</td>
@@ -161,10 +195,10 @@
 {% endblock content %}
 
 {% block scripts %}
-<script src="/js/jquery-ui-1.10.2.custom.min.js"></script>
-<script src="/js/jquery.dataTables.js"></script>
-<script src="/js/dataTables.formatNumbers.js"></script>
-<script src="/js/dataTables.ukDate.js"></script>
+<script src="/media/js/jquery-ui-1.10.2.custom.min.js"></script>
+<script src="/media/js/jquery.dataTables.js"></script>
+<script src="/media/js/dataTables.formatNumbers.js"></script>
+<script src="/media/js/dataTables.ukDate.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
     $('table.table').dataTable({

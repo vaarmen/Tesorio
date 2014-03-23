@@ -181,7 +181,7 @@ class Invoice(models.Model):
     supplier_inv_number = models.CharField(max_length=1000)
 
     # Recent bid. Could have been declined or accepted.
-    current_bid = models.OneToOneField(Offer, related_name='current_invoice')
+    current_bid = models.OneToOneField(Offer, related_name='current_invoice', blank=True, null=True)
     status = models.CharField(max_length=254, choices=INVOICE_STATUSES, default='OPEN')
 
     amount = models.DecimalField(default=0, max_digits=20, decimal_places=4)
@@ -190,7 +190,7 @@ class Invoice(models.Model):
     due_date = models.DateField()
 
     po_num = models.CharField(max_length=1000, blank=True)
-    description = models.TextField()
+    description = models.TextField(blank=True, default="")
 
     date_approved = models.DateTimeField()
 
@@ -200,7 +200,7 @@ class Invoice(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
-        return unicode(supplier_inv_number)
+        return unicode(self.supplier_inv_number)
 
     def __str__(self):
         return str(self.__unicode__().encode('ascii', 'replace'))
