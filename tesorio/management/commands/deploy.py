@@ -13,7 +13,7 @@ def shell(cmd, *args, **kwargs):
 
 shell('git commit --allow-empty -m "Deploying to Production at `date`"')
 
-appcfg_update_cmd = 'appcfg.py update . --backends --oauth2'
+appcfg_update_cmd = 'appcfg.py update . --oauth2'
 print '-> About to run', appcfg_update_cmd
 shell(appcfg_update_cmd)
 
