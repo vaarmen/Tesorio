@@ -38,6 +38,9 @@
   {% include "base/sidebar.jinja" %}
   {% endwith %}
 
+  <div style="position:fixed; left:10%; right:10%; top:10%; z-index: 1000;">
+    {{ bootstrap_messages(request, messages) }}
+  </div>
   <!-- main container -->
   {% block content %}{% endblock %}
   <!-- end main container -->

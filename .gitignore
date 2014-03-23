@@ -9,3 +9,4 @@
 *.DS_Store
 *.pkg
 tesorio/local_settings.py
+tesorio/credentials.py

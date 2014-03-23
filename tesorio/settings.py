@@ -3,6 +3,10 @@
 import sys
 import os
 import random
+try:
+    import credentials
+except:
+    raise Exception('You need to create a credentials.py file in Tesorio/tesorio. ask Fabio')
 sys.path.append('tesorio/deps')
 
 # the below came from http://codespatter.com/2009/04/10/how-to-add-locations-to-python-path-for-reusable-django-apps/
@@ -17,6 +21,13 @@ ADMINS = (
     ('Carlos Vega', 'carlos@tesorio.com'),
 )
 
+# This is used for password_reset and other times django's internal send_mail is called
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = credentials.SENDGRID_USER
+EMAIL_HOST_PASSWORD = credentials.SENDGRID_PASS
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
 MANAGERS = ADMINS
 
 # from http://stackoverflow.com/questions/1400529/does-google-app-engine-with-app-engine-patch-support-emailing-admins-upon-500-er
@@ -26,6 +37,7 @@ DEFAULT_FROM_EMAIL = SERVER_EMAIL
 # from comment in http://stackoverflow.com/a/4180124/
 EMAIL_BACKEND = 'appengine_emailbackend.EmailBackend'
 
+GRAPPELLI_ADMIN_TITLE = 'Tesorio'
 
 if DEBUG:
     try:
@@ -66,7 +78,7 @@ if DEBUG:
     }
 else:
     # print 'NOT in DEBUG mode'
-    DATABASE_INSTANCE = 'emeraldexam-sql:emeraldexam-sql-2' # Looks like 'apiproject:sampleinstance'
+    DATABASE_INSTANCE = 'tesorio-company:tesorio-sql-2' # Looks like 'apiproject:sampleinstance'
     DATABASE_NAME = 'tesoriodb2'
     BASE_URL = 'http://www.tesorio.com'
     SOUTH_DATABASE_ADAPTERS = {'default': 'south.db.mysql'}
@@ -110,6 +122,15 @@ USE_L10N = True
 
 # If you set this to False, Django will not use timezone-aware datetimes.
 USE_TZ = True
+
+LOGIN_URL = '/login/'  # default is /accounts/login/
+LOGOUT_URL = '/logout/'
+LOGIN_REDIRECT_URL = '/dashboard/'
+
+# this is for setting how long a session cookie is active by default
+SESSION_COOKIE_AGE = 3600 * 2  # 2h
+SESSION_COOKIE_SECURE = False  # change this when switched over to https
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
@@ -198,7 +219,7 @@ TEMPLATE_DIRS = (
 INSTALLED_APPS = (
 
     # third parties that must be loaded first
-    'longerusername', # From https://github.com/GoodCloud/django-longer-username
+    'longerusername',  # From https://github.com/GoodCloud/django-longer-username
     'grappelli',
 
     # other third parties
@@ -215,10 +236,11 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
 
     # third party apps
-    'password_reset',
+    # 'password_reset',
     'south',
     'django_jinja',
     'simple_history',
+    'bootstrap3',
 
     # tesorio apps
     'app',

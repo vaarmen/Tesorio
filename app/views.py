@@ -1,6 +1,6 @@
 # Create your views here.
 import urlparse
-from django.contrib import auth
+from django.contrib import auth, messages
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponseRedirect
 from django.utils.decorators import method_decorator
@@ -14,8 +14,7 @@ from django.views.generic.edit import FormView
 from django.views.generic.detail import DetailView
 
 # model imports
-from models import Invoice
-from models import OfferParameters
+from models import Invoice, OfferParameters
 
 
 class TesorioTemplateView(TemplateView):
@@ -31,6 +30,7 @@ class TesorioTemplateView(TemplateView):
 
 class IndexView(TesorioTemplateView):
     template_name = "index.jinja"
+
 
     def get(self, request, *args, **kwargs):
         return self.render()
@@ -117,6 +117,30 @@ class LogoutView(View):
         return HttpResponseRedirect('/')
 
 
+class HomeDashboard(TesorioTemplateView):
+    template_name = 'home_dashboard.jinja'
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(HomeDashboard, self).dispatch(*args, **kwargs)
+
+    def not_registered(self, request, *args, **kwargs):
+        self.template_name = 'registration.jinja'
+        return self.render()
+
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        person = user.person
+        company = person.company
+
+        if not company.has_registered:
+            return self.not_registered(request, *args, **kwargs)
+
+        return self.render(
+            company=company,
+        )
+
+
 class BuyerDashboard(TesorioTemplateView):
     template_name = 'buyer_dashboard.jinja'
 
@@ -125,6 +149,7 @@ class BuyerDashboard(TesorioTemplateView):
         return super(BuyerDashboard, self).dispatch(*args, **kwargs)
 
     def get(self, request, *args, **kwargs):
+        # messages.info(request, 'hi fabio')
         user = request.user
         person = user.person
         company = person.company
@@ -133,6 +158,7 @@ class BuyerDashboard(TesorioTemplateView):
             company=company,
             invoices=invoices,
         )
+
 
 class SupplierDashboard(TesorioTemplateView):
     template_name = 'supplier_dashboard.jinja'
@@ -151,6 +177,7 @@ class SupplierDashboard(TesorioTemplateView):
             invoices=invoices,
         )
 
+
 class InvoiceView(DetailView):
     template_name = "invoice.jinja"
     model = Invoice
@@ -163,13 +190,15 @@ class InvoiceView(DetailView):
         context = super(InvoiceView, self).get_context_data(**kwargs)
 
         invoice = self.object
-        parameters = OfferParameters.objects.get(buyer=invoice.buyer, supplier=invoice.supplier)
+        parameters = OfferParameters.objects.get(
+            buyer=invoice.buyer,
+            supplier=invoice.supplier)
         user = self.request.user
 
         context['invoice'] = invoice
         context['parameters'] = parameters
-        
-        company = self.request.user.person.company
+
+        company = user.person.company
 
         if invoice.buyer == company:
             context['buyer'] = True
@@ -178,4 +207,4 @@ class InvoiceView(DetailView):
         else:
             context['invalid'] = True
 
-        return context
+        return contex

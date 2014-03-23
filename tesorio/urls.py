@@ -7,6 +7,12 @@ admin.autodiscover()
 # import views
 from app import views
 
+import django_jinja.views
+
+handler403 = django_jinja.views.PermissionDenied.as_view()
+handler404 = django_jinja.views.PageNotFound.as_view()
+handler500 = django_jinja.views.ServerError.as_view()
+
 # from django.views.generic import TemplateView
 
 urlpatterns = patterns('',
@@ -22,19 +28,28 @@ urlpatterns = patterns('',
         views.LoginView.as_view(),
         name="login"
     ),
-    url(r'^accounts/login/$',
-        views.LoginView.as_view(),
-        name="login"
-    ),
     url(r'^logout/$',
         views.LogoutView.as_view(),
         name="logout"
     ),
-    url(r'^accounts/logout/$',
-        views.LogoutView.as_view(),
-        name="logout"
+    url(r'^password/reset/',
+        'django.contrib.auth.views.password_reset',
+        name='password_reset'
+    ),
+    url(r'^logout/$',
+        'django.contrib.auth.views.password_reset_done',
+        name='password_reset_done'
+    ),
+    url(r'^password/reset/confirm/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$',
+        'django.contrib.auth.views.password_reset_confirm',
+        {'post_reset_redirect': '/logout/'}
     ),
 
+
+    url(r'^dashboard/$',
+        views.HomeDashboard.as_view(),
+        name="home_dashboard"
+    ),
     url(r'^dashboard/buyer/$',
         views.BuyerDashboard.as_view(),
         name="buyer_dashboard"
@@ -43,8 +58,8 @@ urlpatterns = patterns('',
         views.SupplierDashboard.as_view(),
         name="supplier_dashboard"
     ),
-    url(r'^dashboard/invoice/(?P<pk>\d+)/$', 
-        views.InvoiceView.as_view(), 
+    url(r'^dashboard/invoice/(?P<pk>\d+)/$',
+        views.InvoiceView.as_view(),
         name='invoice'
     ),
 

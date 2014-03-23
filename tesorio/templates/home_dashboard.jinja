@@ -1,14 +1,14 @@
-{% extends "/views/base/base.html" %}
-{% block title %}Tesorio - Home Panel{% endblock %}
-{% set active_page = "home_panel" %}
+{% extends "base/base.jinja" %}
+{% block title %}Tesorio - Home Dashboard{% endblock %}
+{% set active_page = "home_dashboard" %}
 
 {% block libraries %}
-<link href="/css/lib/jquery-ui-1.10.2.custom.css" rel="stylesheet" type="text/css" />
-<link href="/css/lib/font-awesome.css" type="text/css" rel="stylesheet" />
+<link href="/media/css/lib/jquery-ui-1.10.2.custom.css" rel="stylesheet" type="text/css" />
+<link href="/media/css/lib/font-awesome.css" type="text/css" rel="stylesheet" />
 {% endblock libraries %}
 
 {% block custom_css %}
-<link rel="stylesheet" href="/css/compiled/panel.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="/media/css/compiled/panel.css" type="text/css" media="screen" />
 
 <style>
   #company-info {
