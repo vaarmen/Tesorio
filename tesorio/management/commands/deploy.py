@@ -1,11 +1,16 @@
 #!/usr/bin/env python
 #
 # Author: Alex Rattray (rattray.alex@gmail.com)
+import sys
 import subprocess
 from django.core.management.base import BaseCommand, CommandError
 
+
+sys.path.insert(0, '/usr/local/google_appengine/')
+
 def shell(cmd, *args, **kwargs):
   return subprocess.call(cmd, shell=True, *args, **kwargs)
+
 
 class Command(BaseCommand):
     # args = '<poll_id poll_id ...>'
