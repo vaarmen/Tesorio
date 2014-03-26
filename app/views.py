@@ -207,4 +207,4 @@ class InvoiceView(DetailView):
         else:
             context['invalid'] = True
 
-        return contex
+        return context
