@@ -13,7 +13,7 @@ sys.path.append('tesorio/deps')
 PROJECT_ROOT = os.path.dirname(__file__)
 sys.path.insert(0, PROJECT_ROOT)
 
-DEBUG = os.environ.get('SERVER_SOFTWARE', 'Development').startswith('Development')
+DEBUG = not os.environ.get('SERVER_SOFTWARE', 'Development').startswith('Development')
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -39,7 +39,7 @@ EMAIL_BACKEND = 'appengine_emailbackend.EmailBackend'
 
 GRAPPELLI_ADMIN_TITLE = 'Tesorio'
 
-if DEBUG:
+if not DEBUG:
     try:
         # Probably in appengine development server, otherwise manage.py shell
         app_id = environ['APPLICATION_ID']
@@ -97,7 +97,8 @@ ALLOWED_HOSTS = [
     '.tesorio.com',
     '.tesorio-company.appspot.com',
     # try uncommenting the below if you run into problems when running DEBUG=False on localhost.
-    # 'localhost'
+    'localhost:8080',
+    'localhost'
 ]
 
 # Local time zone for this installation. Choices can be found here:

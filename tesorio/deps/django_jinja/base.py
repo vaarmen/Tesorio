@@ -18,6 +18,9 @@ from django.template.context import BaseContext
 from django.template.loaders import app_directories
 from django.utils.importlib import import_module
 
+# this is alex!
+from silent_undefined import SilentUndefined
+
 try:
     from django.utils import six
 except ImportError:
@@ -240,6 +243,7 @@ class Environment(Environment):
 
 
 initial_params = {
+    'undefined': SilentUndefined,  # ALEX ADDED THIS LINE
     'autoescape': JINJA2_AUTOESCAPE,
     'loader': FileSystemLoader(tuple(settings.TEMPLATE_DIRS) +
                                app_directories.app_template_dirs),
