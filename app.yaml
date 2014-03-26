@@ -28,22 +28,26 @@ handlers:
 # Static folders
 - url: /media
   static_dir: tesorio/media/
-  secure: always
+  # secure: always
+  secure: optional
 
 # grapelli uses static url, so we just point it to grapelli.
 - url: /static
   static_dir: tesorio/deps/grappelli/static/
-  secure: always
+  # secure: always
+  secure: optional
 
 - url: /_ah/devcon/.*
   script: google.appengine.ext.admin.application
   login: admin
-  secure: always
+  # secure: always
+  secure: optional
 
 # serve django this way instead of django_wsgi: on so that we can require ssl
 - url: /.*
   script: google.appengine.ext.django.main.app
-  secure: always
+  # secure: always
+  secure: optional
 
 libraries:
 - name: jinja2
