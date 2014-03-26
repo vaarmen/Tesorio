@@ -80,7 +80,7 @@ else:
     # print 'NOT in DEBUG mode'
     DATABASE_INSTANCE = 'tesorio-company:tesorio-sql-2' # Looks like 'apiproject:sampleinstance'
     DATABASE_NAME = 'tesoriodb2'
-    BASE_URL = 'http://www.tesorio.com'
+    BASE_URL = 'https://www.tesorio.com'
     SOUTH_DATABASE_ADAPTERS = {'default': 'south.db.mysql'}
     DATABASES = {
         'default': {
