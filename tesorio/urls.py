@@ -32,10 +32,7 @@ urlpatterns = patterns('',
         views.LogoutView.as_view(),
         name="logout"
     ),
-    url(r'^password/reset/',
-        'django.contrib.auth.views.password_reset',
-        name='password_reset'
-    ),
+    # this is only used for url-reversing, and must follow the other logout
     url(r'^logout/$',
         'django.contrib.auth.views.password_reset_done',
         name='password_reset_done'
@@ -43,6 +40,10 @@ urlpatterns = patterns('',
     url(r'^password/reset/confirm/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$',
         'django.contrib.auth.views.password_reset_confirm',
         {'post_reset_redirect': '/logout/'}
+    ),
+    url(r'^password/reset/',
+        'django.contrib.auth.views.password_reset',
+        name='password_reset'
     ),
 
 
