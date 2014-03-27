@@ -67,6 +67,7 @@
       <div class="content-wrap">
         <h6>Register your Company</h6>
         <form id="registration-form" method="post" action='.'>
+          {% csrf_token %}
           {{ bootstrap_form(form)|safe }}
           <button type="submit"
             class="btn-glow primary login">
