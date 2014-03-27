@@ -7,6 +7,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
+from django.core.exceptions import PermissionDenied
 
 # django views
 from django.views.generic import TemplateView, View
@@ -15,6 +16,15 @@ from django.views.generic.detail import DetailView
 
 # model imports
 from models import Invoice, OfferParameters
+
+
+class CompanyNotRegistered(PermissionDenied):
+    pass
+
+
+def check_company_registered(company):
+    if not company.has_registered:
+        raise CompanyNotRegistered()
 
 
 class TesorioTemplateView(TemplateView):
@@ -117,6 +127,30 @@ class LogoutView(View):
         return HttpResponseRedirect('/')
 
 
+class RegistrationView(FormView):
+    template_name = 'registration.jinja'
+    form_class = AuthenticationForm
+    success_url = '/dashboard/'
+    redirect_field_name = auth.REDIRECT_FIELD_NAME
+
+    def get_success_url(self):
+        redirect_to = self.request.GET.get('next') or self.success_url
+
+        netloc = urlparse.urlparse(redirect_to)[1]
+        if not redirect_to:
+            redirect_to = settings.LOGIN_REDIRECT_URL
+        # Security check -- don't allow redirection to a different host.
+        elif netloc and netloc != self.request.get_host():
+            redirect_to = settings.LOGIN_REDIRECT_URL
+        return redirect_to
+
+    @method_decorator(csrf_protect)
+    @method_decorator(never_cache)
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(RegistrationView, self).dispatch(*args, **kwargs)
+
+
 class HomeDashboard(TesorioTemplateView):
     template_name = 'home_dashboard.jinja'
 
@@ -133,8 +167,8 @@ class HomeDashboard(TesorioTemplateView):
         person = user.person
         company = person.company
 
-        if not company.has_registered:
-            return self.not_registered(request, *args, **kwargs)
+        try: check_company_registered(company)
+        except: return HttpResponseRedirect('/register/')
 
         return self.render(
             company=company,
@@ -153,6 +187,10 @@ class BuyerDashboard(TesorioTemplateView):
         user = request.user
         person = user.person
         company = person.company
+
+        try: check_company_registered(company)
+        except: return HttpResponseRedirect('/register/')
+
         invoices = company.buyer_invoices.all()
         return self.render(
             company=company,
@@ -171,6 +209,10 @@ class SupplierDashboard(TesorioTemplateView):
         user = request.user
         person = user.person
         company = person.company
+
+        try: check_company_registered(company)
+        except: return HttpResponseRedirect('/register/')
+
         invoices = company.supplier_invoices.all()
         return self.render(
             company=company,
