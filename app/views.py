@@ -11,11 +11,16 @@ from django.core.exceptions import PermissionDenied
 
 # django views
 from django.views.generic import TemplateView, View
-from django.views.generic.edit import FormView
+from django.views.generic.edit import FormView, UpdateView
 from django.views.generic.detail import DetailView
 
-# model imports
-from models import Invoice, OfferParameters
+# tesorio imports
+import forms
+from models import (
+    Invoice,
+    Company,
+    OfferParameters
+)
 
 
 class CompanyNotRegistered(PermissionDenied):
@@ -127,11 +132,24 @@ class LogoutView(View):
         return HttpResponseRedirect('/')
 
 
-class RegistrationView(FormView):
+class RegistrationView(UpdateView):
     template_name = 'registration.jinja'
-    form_class = AuthenticationForm
+    # model = Company
+    form_class = forms.RegistrationForm
+    fields = [
+        'name',
+        'ein',
+        'address',
+    ]
+    # form_class = AuthenticationForm
     success_url = '/dashboard/'
     redirect_field_name = auth.REDIRECT_FIELD_NAME
+
+    def get_object(self):
+        user = self.request.user
+        person = user.person
+        company = person.company
+        return company
 
     def get_success_url(self):
         redirect_to = self.request.GET.get('next') or self.success_url
