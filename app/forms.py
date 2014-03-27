@@ -12,5 +12,8 @@ class RegistrationForm(forms.ModelForm):
             'name',
             'ein',
             'address',
-            # 'reporter'
+            'phone',
+            'email',
+            # 'email',
+
         ]
