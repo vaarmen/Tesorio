@@ -6,6 +6,11 @@ from app.models import (
 
 
 class RegistrationForm(forms.ModelForm):
+    # todo: test that django does, indeed, work server-side ;-P
+    accept_tos = forms.BooleanField(
+        required=True,
+        label="I accept the Terms of Service."
+    )
     class Meta:
         model = Company
         fields = [
@@ -14,6 +19,4 @@ class RegistrationForm(forms.ModelForm):
             'address',
             'phone',
             'email',
-            # 'email',
-
         ]
