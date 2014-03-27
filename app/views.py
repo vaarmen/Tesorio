@@ -168,7 +168,7 @@ class HomeDashboard(TesorioTemplateView):
         company = person.company
 
         try: check_company_registered(company)
-        except: return HttpResponseRedirect('/register/')
+        except: return HttpResponseRedirect('/registration/')
 
         return self.render(
             company=company,
@@ -189,7 +189,7 @@ class BuyerDashboard(TesorioTemplateView):
         company = person.company
 
         try: check_company_registered(company)
-        except: return HttpResponseRedirect('/register/')
+        except: return HttpResponseRedirect('/registration/')
 
         invoices = company.buyer_invoices.all()
         return self.render(
@@ -211,7 +211,7 @@ class SupplierDashboard(TesorioTemplateView):
         company = person.company
 
         try: check_company_registered(company)
-        except: return HttpResponseRedirect('/register/')
+        except: return HttpResponseRedirect('/registration/')
 
         invoices = company.supplier_invoices.all()
         return self.render(

@@ -47,6 +47,10 @@ urlpatterns = patterns('',
     ),
 
 
+    url(r'^registration/$',
+        views.RegistrationView.as_view(),
+        name="registration"
+    ),
     url(r'^dashboard/$',
         views.HomeDashboard.as_view(),
         name="home_dashboard"
