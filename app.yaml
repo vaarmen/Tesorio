@@ -15,6 +15,9 @@ env_variables:
   DJANGO_SETTINGS_MODULE: 'tesorio.settings'
 
 handlers:
+- url: /_ah/warmup
+  script: tesorio_warmup.startup
+
 - url: /favicon\.ico
   static_files: tesorio/favicon.ico
   upload: favicon\.ico
