@@ -16,6 +16,7 @@ from django.views.generic.detail import DetailView
 
 # tesorio imports
 import forms
+import utils
 from models import (
     Invoice,
     Company,
@@ -24,7 +25,6 @@ from models import (
 
 # logging
 import logging
-
 
 class CompanyNotRegistered(PermissionDenied):
     pass
@@ -206,6 +206,15 @@ class BuyerDashboard(TesorioTemplateView):
 
     def get(self, request, *args, **kwargs):
         # messages.info(request, 'hi fabio')
+        logging.debug('1')
+        logging.info('2')
+        logging.warning('3')
+        try:
+            broken * 2
+        except:
+            logging.exception('bad math!')
+        logging.error('4')
+        logging.critical('5')
         user = request.user
         person = user.person
         company = person.company
