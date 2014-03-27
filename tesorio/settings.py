@@ -13,7 +13,7 @@ sys.path.append('tesorio/deps')
 PROJECT_ROOT = os.path.dirname(__file__)
 sys.path.insert(0, PROJECT_ROOT)
 
-DEBUG = not os.environ.get('SERVER_SOFTWARE', 'Development').startswith('Development')
+DEBUG = os.environ.get('SERVER_SOFTWARE', 'Development').startswith('Development')
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -39,7 +39,7 @@ EMAIL_BACKEND = 'appengine_emailbackend.EmailBackend'
 
 GRAPPELLI_ADMIN_TITLE = 'Tesorio'
 
-if not DEBUG:
+if DEBUG:
     try:
         # Probably in appengine development server, otherwise manage.py shell
         app_id = environ['APPLICATION_ID']
