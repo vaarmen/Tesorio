@@ -22,6 +22,9 @@ from models import (
     OfferParameters
 )
 
+# logging
+import logging
+
 
 class CompanyNotRegistered(PermissionDenied):
     pass
@@ -134,14 +137,7 @@ class LogoutView(View):
 
 class RegistrationView(UpdateView):
     template_name = 'registration.jinja'
-    # model = Company
     form_class = forms.RegistrationForm
-    fields = [
-        'name',
-        'ein',
-        'address',
-    ]
-    # form_class = AuthenticationForm
     success_url = '/dashboard/'
     redirect_field_name = auth.REDIRECT_FIELD_NAME
 
@@ -161,6 +157,14 @@ class RegistrationView(UpdateView):
         elif netloc and netloc != self.request.get_host():
             redirect_to = settings.LOGIN_REDIRECT_URL
         return redirect_to
+
+    def form_valid(self, form):
+        # Update has_registered on company to True
+        company = self.get_object()
+        company.has_registered = True
+        company.save()
+
+        return super(RegistrationView, self).form_valid(form)
 
     @method_decorator(csrf_protect)
     @method_decorator(never_cache)
