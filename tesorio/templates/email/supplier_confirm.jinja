@@ -4,7 +4,7 @@
 {% endblock header %}
 
 {% block body %}
-{{ text_body }}
+{{ text_body|safe }}
 {% endblock body %}
 
 {% block callout %}

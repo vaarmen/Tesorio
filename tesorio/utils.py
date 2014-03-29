@@ -1,5 +1,7 @@
 import logging
+import pprint
 from django.utils.html import strip_tags
+from django.template import loader
 
 import sendgrid
 
@@ -44,7 +46,7 @@ def email_offer_confirmation(offer):
     offer_params = offer.parameters
     buyer = offer_params.buyer
     supplier = offer_params.supplier
-    email_context = locals()  # todo: be less lazy.
+    context = locals()  # todo: be less lazy.
 
     # send to buyer
     text_body = loader.render_to_string('email/buyer_confirm.txt', context)
@@ -56,7 +58,7 @@ def email_offer_confirmation(offer):
             supplier=supplier),
         html=html_body,
         text=text_body,
-        from_email='Tesorio Confirmation <carlos@tesorio.com>'
+        from_email='carlos@tesorio.com'
     )
     status, msg = sg.send(message)
     logging.debug(safe_format('sent message: {},\n status: {}, msg: {}',
@@ -72,32 +74,32 @@ def email_offer_confirmation(offer):
             buyer=buyer),
         html=html_body,
         text=text_body,
-        from_email='Tesorio Confirmation <carlos@tesorio.com>'
+        from_email='carlos@tesorio.com'
     )
     status, msg = sg.send(message)
     logging.debug(safe_format('sent message: {},\n status: {}, msg: {}',
         message, status, msg))
 
-    util.email_admins('Offer Confirmations Sent',
-        safe_format('main details: {}', email_context))
-
+    email_admins('Offer Confirmations Sent',
+        safe_format('main details: {}', context))
+    return
 
 
 def email_admins(subject, body):
     message = sendgrid.Mail(
-        to=[u"{0} <{1}>".format(*admin) for admin in settings.ADMINS],
+        to=[admin[1] for admin in settings.ADMINS],
         subject=subject,
         text=body,
-        from_email='Tesorio Reporter <noreply@tesorio.com>'
+        from_email='noreply@tesorio.com'
         )
     status, msg = sg.send(message)
-    logging.debug(safe_format('message: {},\n status: {}, msg: {}',
+    logging.debug(safe_format('mailed admins: \n\n message: {},\n status: {}, msg: {}',
         message, status, msg))
 
 
 
 def update(instance, **kwargs):
-      '''Updates model instance with SQL UPDATE query.
+    '''Updates model instance with SQL UPDATE query.
       Useful for updating only certain fields.
       Args:
       instance: eg; prof_alex
