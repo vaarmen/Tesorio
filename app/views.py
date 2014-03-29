@@ -1,5 +1,4 @@
 # Create your views here.
-import urlparse
 from django.contrib import auth, messages
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponseRedirect
@@ -23,8 +22,10 @@ from models import (
     OfferParameters
 )
 
-# logging
+# stdlib
 import logging
+import urlparse
+
 
 class CompanyNotRegistered(PermissionDenied):
     pass
@@ -36,6 +37,7 @@ def check_company_registered(company):
 
 
 class TesorioTemplateView(TemplateView):
+
     def render(self, **kwargs):
         return self.render_to_response(self.get_context_data(**kwargs))
 
