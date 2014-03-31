@@ -1,0 +1,222 @@
+{% extends "base/base.jinja" %}
+{% block title %}Tesorio - Supplier Dashboard{% endblock %}
+{% set active_page = "supplier_dashboard" %}
+
+{% block libraries %}
+<link href="/media/css/lib/jquery-ui-1.10.2.custom.css" rel="stylesheet" type="text/css" />
+<link href="/media/css/lib/font-awesome.css" type="text/css" rel="stylesheet" />
+{% endblock libraries %}
+
+{% block custom_css %}
+<link rel="stylesheet" href="/media/css/compiled/panel.css" type="text/css" media="screen" />
+<link href="/media/css/lib/jquery.dataTables.css" type="text/css" rel="stylesheet" />
+<style>
+    .line {
+        margin-left: 7px;
+    }
+
+    th {
+        font-weight: bold!important;
+    }
+
+    tr td {
+        text-align: center;
+    }
+
+    tr th {
+        text-align: center;
+    }
+
+    td.right-align {
+        text-align: right;
+    }
+</style>
+{% endblock custom_css %}
+
+{% block content %}
+<div class="content">
+
+    <div id="pad-wrapper">
+        <h1>{{ company.name }} - Supplier Dashboard</h1>
+
+            <!-- orders table -->
+            <div class="table-wrapper orders-table section">
+                <div class="row head">
+                    <div class="col-md-12">
+                        <h4>Invoices</h4>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="col-md-1">
+                                    Bid Status
+                                </th>
+                                <th class="col-md-1">
+                                    <span class="line"></span>
+                                    Supplier Invoice Number
+                                </th>
+                                <th class="col-md-1">
+                                    <span class="line"></span>
+                                    Company Name
+                                </th>
+                                <th class="col-md-1">
+                                    <span class="line"></span>
+                                    Invoice Date
+                                </th>
+                                <th class="col-md-1">
+                                    <span class="line"></span>
+                                    Invoice Amount
+                                </th>
+                                <th class="col-md-1">
+                                    <span class="line"></span>
+                                    Due Date
+                                </th>
+                                <th class="col-md-1">
+                                    <span class="line"></span>
+                                    Discount %
+                                </th>
+                                <th class="col-md-1">
+                                    <span class="line"></span>
+                                    Days Accelerated
+                                </th>
+                                <th class="col-md-1">
+                                    <span class="line"></span>
+                                    Amount to be Paid
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <!-- row -->
+                            {% for invoice in invoices %}
+
+                            {% if invoice.recent_bid %}
+                            {% set bid = invoice.recent_bid.get() %}
+                                <tr>
+                                    <td>
+                                        {% if bid.status == 'Pending' %}
+                                        <span class="label label-info">Pending</span>
+                                        {% elif bid.status == 'Accepted' %}
+                                        <span class="label label-success">Accepted</span>
+                                        {% elif bid.status == 'Declined' %}
+                                        <span class="label label-danger">Declined</span>
+                                        {% else %}
+                                        N/A (Contact Us)
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <a href="/dashboard/invoice/{{ invoice.id }}">
+                                            #{{ invoice.supplier_inv_number }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        {{ invoice.buyer }}
+                                    </td>
+                                    <td>
+                                        {{invoice.inv_date.strftime('%m-%d-%Y')}}
+                                    </td>
+                                    <td class="right-align">
+                                        {{ invoice.amount|format_currency }}
+                                    </td>
+                                    <td>
+                                        {{ invoice.due_date.strftime('%m-%d-%Y') }}
+                                    </td>
+                                    <td class="right-align">
+                                        {{ bid.discount }}%
+                                    </td>
+                                    <td>
+                                        {{ bid.days_accelerated }}
+                                    </td>
+                                    <td class="right-align">
+                                        {{ bid.amount|format_currency }}
+                                    </td>
+                                </tr>
+
+                            {% else %}
+                                <tr>
+                                    <td>
+                                        <a href="/dashboard/invoice/{{ invoice.id }}">
+                                            Offer Bid
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="/dashboard/invoice/{{ invoice.id }}">
+                                            #{{ invoice.supplier_inv_number }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        {{ invoice.buyer }}
+                                    </td>
+                                    <td>
+                                        {{ invoice.inv_date.strftime('%m-%d-%Y')}}
+                                    </td>
+                                    <td class="right-align">
+                                        {{ invoice.amount|format_currency }}
+                                    </td>
+                                    <td>
+                                        {{ invoice.due_date.strftime('%m-%d-%Y') }}
+                                    </td>
+                                    <td>N/A</td>
+                                    <td>N/A</td>
+                                    <td>N/A</td>
+                                </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- end orders table -->
+
+            <!-- Modal -->
+            <div class="modal fade" id="bid-confirmation-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title" id="myModalLabel">Confirm Bid</h4>
+                        </div>
+                        <div class="modal-body">
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+</div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+<script src="/media/js/jquery-ui-1.10.2.custom.min.js"></script>
+<script src="/media/js/jquery.dataTables.js"></script>
+<script src="/media/js/dataTables.formatNumbers.js"></script>
+<script src="/media/js/dataTables.ukDate.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('table.table').dataTable({
+        "sPaginationType": "full_numbers",
+        "aaSorting": [[ 3, "desc" ]],
+        "aoColumns": [
+        null,
+        { "sType": "formatted-num" },
+        null,
+        { "sType": "date-uk" },
+        { "sType": "formatted-num" },
+        { "sType": "date-uk" },
+        { "sType": "formatted-num" },
+        { "sType": "formatted-num" },
+        { "sType": "formatted-num" }
+        ]
+    });
+});
+</script>
+
+{% endblock scripts %}

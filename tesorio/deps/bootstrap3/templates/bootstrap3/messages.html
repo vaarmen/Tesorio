@@ -1,6 +1,19 @@
+
 {% for message in messages %}
-    <div class="alert{% if message.tags %} alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}{% endif %} alert-dismissable">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        {{ message|safe }}
-    </div>
+
+    <script type="text/javascript">
+		$(document).ready(function() {
+			
+			pageSetUp();
+
+			$.smallBox({
+				title : "Notification",
+				content : "{{ message|safe }}",
+				color : "#296191",
+				icon : "fa fa-bell swing animated",
+			});
+
+		});
+		</script>
+
 {% endfor %}

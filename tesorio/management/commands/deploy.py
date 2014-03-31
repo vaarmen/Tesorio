@@ -29,7 +29,7 @@ class Command(BaseCommand):
         self.stdout.write('-> About to migrate prod')
         try:
             # todo: get this from app.yaml
-            version_id = '2'
+            version_id = '3'
             shell('''
                 export SERVER_SOFTWARE='Production';
                 export CURRENT_VERSION_ID='{}.local';

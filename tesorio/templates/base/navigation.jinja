@@ -1,0 +1,48 @@
+		<!-- Note: This width of the aside area can be adjusted through LESS variables -->
+		<aside id="left-panel">
+
+			<!-- User info -->
+			<div class="login-info">
+				<span> <!-- User image size is adjusted inside CSS, it should stay as it --> 
+					
+					<a href="javascript:void(0);" id="show-shortcut">
+						<img src="/media/img/avatars/sunny.png" alt="me" class="online" /> 
+						<span>
+							{{ person_name }}
+						</span>
+						<i class="fa fa-angle-down"></i>
+					</a> 
+					
+				</span>
+			</div>
+			<!-- end user info -->
+
+			<nav>
+				<!-- NOTE: Notice the gaps after each icon usage <i></i>..
+				Please note that these links work a bit different than
+				traditional hre="" links. See documentation for details.
+				-->
+
+				{% set sidebar = [
+				('/dashboard/', 'home_dashboard', 'Home Dashboard', 'fa-home'),
+				('/dashboard/buyer/', 'buyer_dashboard', 'Buyer Dashboard', 'fa-table'),
+				('/dashboard/supplier/', 'supplier_dashboard', 'Supplier Dashboard', 'fa-table')
+				] -%}
+
+				<ul>
+					{% for href, id, title, icon in sidebar %}
+						{% if id == active_page %}
+						<li class="active">
+						{% else %}
+						<li>
+						{% endif %}
+
+						<a href="{{ href|e }}" title="{{ title|e }}"><i class="fa fa-lg fa-fw {{icon}}"></i> <span class="menu-item-parent">{{ title|e }}</span></a>
+						</li>
+					{% endfor %}
+				</ul>
+
+			</nav>
+			<span class="minifyme"> <i class="fa fa-arrow-circle-left hit"></i> </span>
+
+		</aside>

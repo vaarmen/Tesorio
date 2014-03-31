@@ -44,7 +44,13 @@ class TesorioTemplateView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(TesorioTemplateView, self).get_context_data(**kwargs)
         context['request'] = self.request
-        context['company_name'] = self.request.user.person.company.name if self.request.user.is_authenticated() else None
+
+        if self.request.user.is_authenticated():
+            user = self.request.user
+            person = user.person
+            context['company_name'] = person.company
+            context['person_name'] = user.first_name + "." + user.last_name
+
         return context
 
 
@@ -187,6 +193,8 @@ class HomeDashboard(TesorioTemplateView):
         return self.render()
 
     def get(self, request, *args, **kwargs):
+        # messages.info(request, 'Hello there!')
+
         user = request.user
         person = user.person
         company = person.company
@@ -263,6 +271,16 @@ class InvoiceView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(InvoiceView, self).get_context_data(**kwargs)
+
+        # base context (could not inherit from TesorioTemplateView)
+        context['request'] = self.request
+
+        if self.request.user.is_authenticated():
+            user = self.request.user
+            person = user.person
+            context['company_name'] = person.company
+            context['person_name'] = user.first_name + "." + user.last_name
+        # end base
 
         invoice = self.object
         parameters = OfferParameters.objects.get(

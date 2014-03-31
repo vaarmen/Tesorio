@@ -1,171 +1,154 @@
 {% extends "base/base.jinja" %}
-{% block title %}Tesorio - Invoice{% endblock %}
+{% block title %}Invoice{% endblock %}
+{% set active_page = "home_dashboard" %}
 
-{% block libraries %}
-<link href="/media/css/lib/jquery-ui-1.10.2.custom.css" rel="stylesheet" type="text/css" />
-<link href="/media/css/lib/font-awesome.css" type="text/css" rel="stylesheet" />
-{% endblock libraries %}
+			{% block content %}
+			<div id="content">
 
-{% block custom_css %}
-<link rel="stylesheet" href="/media/css/compiled/panel.css" type="text/css" media="screen" />
+				<!-- widget grid -->
+				<section id="widget-grid" class="">
+				
+					<!-- row -->
+					<div class="row">
+				
+						<!-- NEW WIDGET START -->
+						<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				
+							<!-- Widget ID (each widget will need unique ID)-->
+							<div class="jarviswidget well jarviswidget-color-darken" id="wid-id-0" data-widget-sortable="false" data-widget-deletebutton="false" data-widget-editbutton="false" data-widget-colorbutton="false">
+								<!-- widget options:
+								usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+				
+								data-widget-colorbutton="false"
+								data-widget-editbutton="false"
+								data-widget-togglebutton="false"
+								data-widget-deletebutton="false"
+								data-widget-fullscreenbutton="false"
+								data-widget-custombutton="false"
+								data-widget-collapsed="true"
+								data-widget-sortable="false"
+				
+								-->
+								<header>
+									<span class="widget-icon"> <i class="fa fa-barcode"></i> </span>
+									<h2>Item #44761 </h2>
+				
+								</header>
+				
+								<!-- widget div-->
+								<div>
+				
+									<!-- widget edit box -->
+									<div class="jarviswidget-editbox">
+										<!-- This area used as dropdown edit box -->
+				
+									</div>
+									<!-- end widget edit box -->
+				
+									<!-- widget content -->
+									<div class="widget-body no-padding">
+				
+										<div class="widget-body-toolbar">
+				
+											<div class="row">
+				
+												<div class="col-sm-4">
+				
+													<div class="input-group">
+														<input class="form-control" type="text" placeholder="Type invoice number or date...">
+														<div class="input-group-btn">
+															<button class="btn btn-default" type="button">
+																<i class="fa fa-search"></i> Search
+															</button>
+														</div>
+													</div>
+												</div>
+				
+											</div>
+				
+										</div>
+				
+										<div class="padding-10">
+											<br>
+											<div class="pull-left">
+												<img src="/media/img/logo-blacknwhite.png" width="150" height="32" alt="invoice icon">
+												
+												<address>
+													<h4 class="semi-bold">{{ invoice.buyer }}</h4>
+													{{ invoice.buyer.address }}
+													<br>
+													<abbr title="Phone">P:</abbr> {{ invoice.buyer.phone }}
+												</address>
+											</div>
+											<div class="pull-right">
+												<h1 class="font-400">invoice #{{ invoice.supplier_inv_number }}</h1>
+											</div>
+											<div class="clearfix"></div>
+											<br>
+											<br>
+											<div class="row">
+												<div class="col-sm-8">
+													<h4 class="semi-bold">{{ invoice.supplier }}</h4>
+													<address>
+														{{ invoice.supplier.address }}
+														<br>
+														<abbr title="Phone">P:</abbr> {{ invoice.supplier.phone }}
+													</address>
+												</div>
+												<div class="col-sm-4">
+													
+													<div>
+														<div class="font-md">
+															<strong>INVOICE DATE :</strong>
+															<span class="pull-right"> <i class="fa fa-calendar"></i> {{ invoice.inv_date| format_date }} </span>
+														</div>
+				
+													</div>
+													<br>
+													<div class="well well-sm  bg-color-darken txt-color-white no-border">
+														<div class="fa-lg">
+															Total Due :
+															<span class="pull-right"> {{ invoice.amount|format_currency }} </span>
+														</div>
+				
+													</div>
+													<br>
+													<br>
+												</div>
+											</div>
+				
+										</div>
+				
+									</div>
+									<!-- end widget content -->
+				
+								</div>
+								<!-- end widget div -->
+				
+							</div>
+							<!-- end widget -->
+				
+						</article>
+						<!-- WIDGET END -->
+				
+					</div>
+				
+					<!-- end row -->
+				
+				</section>
+				<!-- end widget grid -->
 
-<style>
-  #company-info {
-    border-right: 1px solid #edeef1;
-  }
+			</div>
+			{% endblock content %}		
 
-  .user-profile p {
-    color: #777e86;
-    font-size: 16px;
-  }
+		{% block scripts %}
+		<script type="text/javascript">
+		$(document).ready(function() {		
+			pageSetUp();
+		})
+		</script>
+		{% endblock scripts %}
 
-  .user-profile h6 {
-    font-weight: 600;
-    font-size: 18px;
-  }
+	</body>
 
-  .panel-body p {
-    color: #000;
-    text-align: center;
-  }
-
-  .panel-title {
-    font-weight: bold;
-    text-align: center;
-  }
-
-  .btn-center {
-    margin: 0 auto;
-    display: block;
-  }
-
-  .btn-flat.gray:hover {
-    background: #7e91aa;
-    border: 1px solid #888e97;
-    opacity: 1.0;
-    cursor: default;
-  }
-
-  .panel-option > .panel-heading, .panel-option > .panel-footer {
-    background-color: #7e91aa;
-  }
-</style>
-{% endblock custom_css %}
-
-{% block content %}
-<div class="content">
-  <div id="pad-wrapper" class="user-profile">
-    {% if invalid %}
-    <h1>Invalid Invoice #{{ invoice.id }}</h1>
-    {% else %}
-    <div style="clear: both;">
-      <h3 style="float: left;">Invoice #{{ invoice.supplier_inv_number }}</h3>
-      <h3 style="float: right;">
-        {% if supplier %}
-        Client: {{ invoice.buyer }}
-        {% else %}
-        Supplier: {{ invoice.supplier }}
-        {% endif %}
-      </h3>
-    </div>
-    <br/>
-    <hr/>
-
-    <div class="row">
-
-      <div class="col-xs-4">
-        <div class="panel panel-default {% if option =='1' %} panel-option {% endif %}">
-          <div class="panel-body">
-            <p>{{ calculate_discount(invoice.amount, parameters.alt_1_percent)|format_currency }}</p>
-            <p>{{ calculate_date(invoice.due_date, parameters.alt_1_days)|format_date_formal }}</p>
-          </div>
-          {% if supplier %}
-            <form method="POST">
-              <input type="hidden" name="discount" value="1">
-              <input type="hidden" name="days-acc" value="10">
-              <input type="hidden" name="option-number" value="1">
-              <button type="submit" class="btn btn-center btn-primary">Accelerate Cash</button>
-            </form>
-          {% endif %}
-        </div>
-      </div>
-
-      <div class="col-xs-4">
-        <div class="panel panel-default {% if option =='2' %} panel-option {% endif %}">
-          <div class="panel-heading">
-            <h3 class="panel-title">Early Payment Option #2</h3>
-          </div>
-          <div class="panel-body">
-            <p>{{ calculate_discount(invoice.amount, parameters.alt_2_percent)|format_currency }}</p>
-            <p>{{ calculate_date(invoice.due_date, parameters.alt_2_days)|format_date_formal }}</p>
-          </div>
-          {% if supplier %}
-          <div class="panel-footer">
-            <form method="POST">
-              <input type="hidden" name="discount" value="2">
-              <input type="hidden" name="days-acc" value="20">
-              <input type="hidden" name="option-number" value="2">
-              <button type="submit" class="btn btn-center btn-primary">Accelerate Cash</button>
-            </form>
-          </div>
-          {% endif %}
-        </div>
-      </div>
-
-      <div class="col-xs-4">
-        <div class="panel panel-default {% if option =='3' %} panel-option {% endif %}">
-          <div class="panel-heading">
-            <h3 class="panel-title">Early Payment Option #3</h3>
-          </div>
-          <div class="panel-body">
-            <p>{{ calculate_discount(invoice.amount, parameters.alt_3_percent)|format_currency }}</p>
-            <p>{{ calculate_date(invoice.due_date, parameters.alt_3_days)|format_date_formal }}</p>
-          </div>
-          {% if supplier %}
-          <div class="panel-footer">
-            <form method="POST">
-              <input type="hidden" name="discount" value="3">
-              <input type="hidden" name="days-acc" value="30">
-              <input type="hidden" name="option-number" value="3">
-              <button type="submit" class="btn btn-center btn-primary">Accelerate Cash</button>
-            </form>
-          </div>
-          {% endif %}
-        </div>
-      </div>
-    </div>
-
-    <hr/>
-
-    <div class="row">
-      <div id="company-info" class="col-xs-6">
-        <h6>Supplier Invoice Key</h6>
-        <p>{{invoice.supplier_inv_number}}</p>
-        <br/>
-        <h6>Invoice Amount</h6>
-        <p>${{ invoice.amount|format_currency }}</p>
-        <br/>
-        <h6>Purchase Order Number</h6>
-        <p>{{invoice.po_num}}</p>
-        <br/>
-        <h6>Invoice Description</h6>
-        <p>{{invoice.description}}</p>
-      </div>
-      <div class="col-xs-6">
-        <h6>Invoice Date</h6>
-        <p>{{ invoice.inv_date|format_date }}</p>
-        <br/>
-        <h6>Invoice Due Date</h6>
-        <p>{{ invoice.due_date|format_date }}</p>
-        <br/>
-        <h6>Date Approved</h6>
-        <p>{{invoice.date_approved|format_date}}</p>
-      </div>
-    </div>
-    {% endif %}
-  </div>
-</div>
-{% endblock content %}
-
-{% block scripts %}
-{% endblock scripts %}
+</html>
