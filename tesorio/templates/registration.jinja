@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html class="login-bg">
+<head>
+  <title>Tesorio - Login</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- bootstrap -->
+  <link href="/media/css/bootstrap/bootstrap.css" type="text/css" rel="stylesheet" />
+  <link href="/media/css/bootstrap/bootstrap-overrides.css" type="text/css" rel="stylesheet" />
+
+  <!-- global styles -->
+  <link rel="stylesheet" type="text/css" href="/media/css/compiled/layout.css" />
+  <link rel="stylesheet" type="text/css" href="/media/css/compiled/elements.css" />
+  <link rel="stylesheet" type="text/css" href="/media/css/compiled/icons.css" />
+
+  <!-- libraries -->
+  <link rel="stylesheet" type="text/css" href="/media/css/lib/font-awesome.css" />
+
+  <!-- this page specific styles -->
+  <link rel="stylesheet" href="/media/css/compiled/login.css" type="text/css" media="screen" />
+  <style type='text/css'>
+    .logo {
+      max-width: 400px;
+    }
+
+    @media (max-width: 480px) {
+      .logo {
+        max-width: 100%;
+      }
+    }
+
+    .form-control-error {
+      border-color: #c73939!important;
+    }
+
+    .field-box {
+      margin-bottom: 18px;
+    }
+
+    #username, #password {
+      margin-bottom: 0;
+    }
+
+    .alert-msg {
+      color: #c73939;
+    }
+  </style>
+
+  <!-- open sans font -->
+  <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css' />
+
+  <!--[if lt IE 9]>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+
+
+
+  <div class="login-wrapper">
+    <a href="index.html">
+      <img class="logo" src="/media/img/logo.png" alt="logo" />
+    </a>
+
+    <div class="box">
+      <div class="content-wrap">
+        <h6>Register your Company</h6>
+        <div class="well " style="text-align:left; max-height:200px; overflow:scroll;">
+          <h5>Terms of Service</h5>
+          <hr>
+          <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut purus turpis, eleifend at elit in, blandit pretium justo. Integer placerat enim vel cursus vestibulum. Integer at turpis eu augue aliquet aliquam. Curabitur euismod in neque ut bibendum. Nunc a pulvinar lorem. Etiam mollis scelerisque orci et malesuada. Sed a sem varius, interdum massa vitae, condimentum nibh. Proin ac ullamcorper dui, vel posuere purus. Sed quis ligula vitae sem sodales cursus. Vivamus in orci non tortor pretium convallis eu eget erat. Fusce non adipiscing dolor.</p>
+          <p>          Etiam commodo placerat libero eget sollicitudin. Proin mollis dapibus erat, ut vestibulum mi dictum eget. Nulla luctus neque sit amet est luctus consectetur. Mauris et diam arcu. Nunc elementum vitae orci a vulputate. Integer ac dignissim lacus. Proin vel porta augue. Duis convallis urna eget tincidunt venenatis. Praesent lacinia, metus sed viverra imperdiet, ipsum lectus tincidunt mi, in tincidunt risus mi a tellus.</p>
+          <p>          Donec id quam vel quam rutrum lacinia vel eu massa. In cursus facilisis eleifend. Suspendisse id lacinia ipsum. Pellentesque elementum interdum neque, vitae bibendum lectus posuere at. Donec mauris enim, laoreet eget odio et, consequat rutrum felis. Integer condimentum eu enim vitae auctor. Nunc nunc quam, cursus eleifend auctor id, ullamcorper a nunc.</p>
+          <p>          Nulla at orci vitae turpis luctus consectetur in non mauris. Fusce ac sem ut ante vehicula sodales at ut tellus. Vivamus pretium velit a tortor lobortis auctor. Phasellus at mi fermentum, feugiat nibh id, suscipit tellus. Sed imperdiet turpis sapien, eget tempus tortor eleifend ut. Donec elementum euismod elit, nec adipiscing lacus interdum at. Aliquam nulla lorem, aliquet quis metus id, blandit egestas quam. Donec nec erat ante. Sed vitae imperdiet urna. Duis mattis mi nisi, non ultricies nunc sodales eget. Curabitur sagittis magna tristique, blandit massa non, adipiscing dui. Sed pellentesque eros eros. Proin diam sapien, egestas eu sollicitudin sit amet, imperdiet id nisl.</p>
+          <p>          Mauris auctor odio tincidunt pharetra suscipit. Sed euismod magna vel urna ullamcorper sagittis. Donec ut lectus ullamcorper, suscipit nulla a, ullamcorper nisl. Integer vestibulum lacus at odio tincidunt ultricies. Etiam et pretium eros. Sed tempus est sem, eu dictum sem dictum in. Integer eget sagittis diam, aliquet vestibulum arcu. Morbi a tortor sapien. Sed non elementum magna. Nulla viverra vel magna sit amet commodo. Curabitur feugiat adipiscing velit, non porta dui varius a. Ut porta vulputate lacinia. In tristique scelerisque justo, eu venenatis erat porta vitae.
+        </div>
+        <form id="registration-form" method="post" action='.'>
+          {% csrf_token %}
+          {{ bootstrap_form(form)|safe }}
+          <button type="submit"
+            class="btn-glow primary login">
+            Complete Registration
+          </button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- scripts -->
+  <script src="//code.jquery.com/jquery-latest.js"></script>
+  <script src="/media/js/bootstrap.min.js"></script>
+  <script src="/media/js/theme.js"></script>
+
+</body>
+</html>

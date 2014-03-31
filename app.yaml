@@ -1,29 +1,73 @@
 application: tesorio-company
-version: 1
+version: 2
 runtime: python27
 api_version: 1
 threadsafe: yes
 
+builtins:
+- remote_api: on
+# - django_wsgi: on
+
+inbound_services:
+- warmup
+
+env_variables:
+  DJANGO_SETTINGS_MODULE: 'tesorio.settings'
+
 handlers:
+- url: /_ah/warmup
+  script: tesorio_warmup.startup
+
 - url: /favicon\.ico
-  static_files: favicon.ico
+  static_files: tesorio/favicon.ico
   upload: favicon\.ico
+  secure: optional
+
+- url: /robot.txt
+  static_files: media/robot.txt
+  upload: media/robot.txt
+  secure: optional
 
 # Static folders
-- url: /js
-  static_dir: js
-- url: /css
-  static_dir: css
-- url: /img
-  static_dir: img
+- url: /media
+  static_dir: tesorio/media/
+  # secure: always
+  secure: optional
 
-- url: .*
-  script: main.app
+# grapelli uses static url, so we just point it to grapelli.
+- url: /static
+  static_dir: tesorio/deps/grappelli/static/
+  # secure: always
+  secure: optional
+
+- url: /_ah/devcon/.*
+  script: google.appengine.ext.admin.application
+  login: admin
+  # secure: always
+  secure: optional
+
+# serve django this way instead of django_wsgi: on so that we can require ssl
+- url: /.*
+  script: google.appengine.ext.django.main.app
+  # secure: always
+  secure: optional
 
 libraries:
-- name: webapp2
-  version: "2.5.2"
 - name: jinja2
   version: "latest"
+- name: django
+  version: 1.5
+- name: lxml
+  version: 2.3
 - name: pycrypto
   version: "latest"
+
+skip_files:
+# defaults
+- ^(.*/)?#.*#$
+- ^(.*/)?.*~$
+- ^(.*/)?.*\.py[co]$
+- ^(.*/)?.*/RCS/.*$
+- ^(.*/)?\..*$
+# custom
+- ^(.*/)?.*scss$

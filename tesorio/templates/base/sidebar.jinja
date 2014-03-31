@@ -1,0 +1,28 @@
+<!-- sidebar -->
+{% set sidebar = [
+    ('/dashboard/', 'home_dashboard', 'Home Dashboard', 'icon-home'),
+    ('/dashboard/buyer/', 'buyer_dashboard', 'Buyer Dashboard', 'icon-bar-chart'),
+    ('/dashboard/supplier/', 'supplier_dashboard', 'Supplier Dashboard', 'icon-bar-chart')
+] -%}
+
+<div id="sidebar-nav">
+  <ul id="dashboard-menu">
+    {% for href, id, title, icon in sidebar %}
+    {% if id == active_page %}
+    <li class="active">
+      <div class="pointer">
+        <div class="arrow"></div>
+        <div class="arrow_border"></div>
+      </div>
+      {% else %}
+      <li>
+      {% endif %}
+      <a href="{{ href|e }}">
+        <i class="{{icon}}"></i>
+        <span>{{ title|e }}</span>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+<!-- end sidebar -->

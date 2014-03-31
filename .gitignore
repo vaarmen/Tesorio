@@ -1,2 +1,12 @@
 *.pyc
-config.py
+*.com
+*.pyo
+*.swp
+*.o
+*.[Oo]bj
+*.opensdf
+*.log
+*.DS_Store
+*.pkg
+tesorio/local_settings.py
+tesorio/credentials.py

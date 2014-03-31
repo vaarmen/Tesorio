@@ -1,0 +1,26 @@
+<!-- navbar -->
+<header class="navbar navbar-inverse" role="banner">
+  <div class="navbar-header">
+    <button class="navbar-toggle" type="button" data-toggle="collapse" id="menu-toggler">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="/dashboard/">
+      <img src="/media/img/logo-white.png" alt="Tesorio Logo" style="max-width:100px;" />
+      <!-- {{ company_name }} -->
+    </a>
+  </div>
+  <ul class="nav navbar-nav pull-right hidden-xs">
+    <li class="settings hidden-xs hidden-sm">
+      <a style="font-size: 14px;">Welcome, {{ request.user.first_name }} {{ request.user.last_name }}</a>
+    </li>
+    <li class="settings hidden-xs hidden-sm">
+      <a href="/logout" role="button">
+        Logout
+      </a>
+    </li>
+  </ul>
+</header>
+<!-- end navbar -->
