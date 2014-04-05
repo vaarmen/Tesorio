@@ -1051,10 +1051,10 @@ function setup_widgets_desktop() {
 			},
 			rtl : false, // best not to toggle this!
 			onChange : function() {
-				
+
 			},
 			onSave : function() {
-				
+
 			},
 			ajaxnav : $.navAsAjax // declears how the localstorage should be saved
 
