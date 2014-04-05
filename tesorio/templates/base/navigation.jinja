@@ -5,12 +5,11 @@
 			<div class="login-info">
 				<span> <!-- User image size is adjusted inside CSS, it should stay as it --> 
 					
-					<a href="javascript:void(0);" id="show-shortcut">
-						<img src="/media/img/avatars/sunny.png" alt="me" class="online" /> 
+					<a>
+						<img src="/media/img/avatars/male.png" alt="me" class="online" /> 
 						<span>
 							{{ person_name }}
 						</span>
-						<i class="fa fa-angle-down"></i>
 					</a> 
 					
 				</span>
@@ -25,9 +24,24 @@
 
 				{% set sidebar = [
 				('/dashboard/', 'home_dashboard', 'Home Dashboard', 'fa-home'),
-				('/dashboard/buyer/', 'buyer_dashboard', 'Buyer Dashboard', 'fa-table'),
-				('/dashboard/supplier/', 'supplier_dashboard', 'Supplier Dashboard', 'fa-table')
 				] -%}
+
+				{% if company.is_buyer %}
+					{{ sidebar.extend(
+						(
+							('/dashboard/buyer/', 'buyer_dashboard', 'Buyer Dashboard', 'fa-table'),
+							('/dashboard/upload/', 'upload', 'Upload', 'fa-cloud'),
+						)
+					) -}}
+				{% endif %}
+
+				{% if company.is_supplier %}
+					{{ sidebar.extend(
+						(
+							('/dashboard/supplier/', 'supplier_dashboard', 'Supplier Dashboard', 'fa-table'),
+						)
+					) -}}
+				{% endif %}
 
 				<ul>
 					{% for href, id, title, icon in sidebar %}

@@ -17,7 +17,7 @@ DEBUG = os.environ.get('SERVER_SOFTWARE', 'Development').startswith('Development
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    ('Fabio Fleitas', 'cubanfabio@gmail.com'),
+    ('Fabio Fleitas', 'fabio@tesorio.com'),
     ('Carlos Vega', 'carlos@tesorio.com'),
 )
 
