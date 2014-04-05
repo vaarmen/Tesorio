@@ -96,6 +96,18 @@ def email_admins(subject, body):
     logging.debug(safe_format('mailed admins: \n\n message: {},\n status: {}, msg: {}',
         message, status, msg))
 
+def email_file(upload, company_name):
+    message = sendgrid.Mail(
+        to=[admin[1] for admin in settings.ADMINS],
+        subject=company_name + " file upload",
+        text="See attachment",
+        from_email='noreply@tesorio.com'
+        )
+
+    message.add_attachment_stream(upload.name, upload.file.getvalue())
+    status, msg = sg.send(message)
+    logging.debug(safe_format('mailed admins: \n\n message: {},\n status: {}, msg: {}',
+        message, status, msg))
 
 
 def update(instance, **kwargs):

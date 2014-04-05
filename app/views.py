@@ -1,7 +1,7 @@
 # Create your views here.
 from django.contrib import auth, messages
 from django.contrib.auth.forms import AuthenticationForm
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseNotFound, HttpResponse
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import never_cache
@@ -48,7 +48,7 @@ class TesorioTemplateView(TemplateView):
         if self.request.user.is_authenticated():
             user = self.request.user
             person = user.person
-            context['company_name'] = person.company
+            context['company'] = person.company
             context['person_name'] = user.first_name + "." + user.last_name
 
         return context
@@ -261,32 +261,25 @@ class SupplierDashboard(TesorioTemplateView):
         )
 
 
-class InvoiceView(DetailView):
-    template_name = "invoice.jinja"
-    model = Invoice
+class InvoiceView(TesorioTemplateView):
+    template_name = 'invoice.jinja'
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(InvoiceView, self).dispatch(*args, **kwargs)
 
-    def get_context_data(self, **kwargs):
-        context = super(InvoiceView, self).get_context_data(**kwargs)
+    def get(self, request, *args, **kwargs):
 
-        # base context (could not inherit from TesorioTemplateView)
-        context['request'] = self.request
-
-        if self.request.user.is_authenticated():
-            user = self.request.user
-            person = user.person
-            context['company_name'] = person.company
-            context['person_name'] = user.first_name + "." + user.last_name
-        # end base
-
-        invoice = self.object
+        invoice_id = kwargs['pk']
+        invoice = Invoice.objects.get(
+            pk=invoice_id
+        )
         parameters = OfferParameters.objects.get(
             buyer=invoice.buyer,
             supplier=invoice.supplier)
         user = self.request.user
+
+        context = {}
 
         context['invoice'] = invoice
         context['parameters'] = parameters
@@ -299,5 +292,65 @@ class InvoiceView(DetailView):
             context['supplier'] = True
         else:
             context['invalid'] = True
+            return HttpResponseNotFound()
 
-        return context
+        return self.render(**context)
+
+class UploadView(TesorioTemplateView):
+    template_name = 'upload.jinja'
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(UploadView, self).dispatch(*args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        return self.render()
+
+    def post(self, request, *args, **kwargs):
+        upload_file = request.FILES['file']
+        company_name = request.user.person.company.name
+
+        utils.email_file(upload_file, company_name)
+
+        return HttpResponse()
+
+# class InvoiceViewOld(DetailView):
+#     template_name = "invoice.jinja"
+#     model = Invoice
+
+#     @method_decorator(login_required)
+#     def dispatch(self, *args, **kwargs):
+#         return super(InvoiceView, self).dispatch(*args, **kwargs)
+
+#     def get_context_data(self, **kwargs):
+#         context = super(InvoiceView, self).get_context_data(**kwargs)
+
+#         # base context (could not inherit from TesorioTemplateView)
+#         context['request'] = self.request
+
+#         if self.request.user.is_authenticated():
+#             user = self.request.user
+#             person = user.person
+#             context['company_name'] = person.company
+#             context['person_name'] = user.first_name + "." + user.last_name
+#         # end base
+
+#         invoice = self.object
+#         parameters = OfferParameters.objects.get(
+#             buyer=invoice.buyer,
+#             supplier=invoice.supplier)
+#         user = self.request.user
+
+#         context['invoice'] = invoice
+#         context['parameters'] = parameters
+
+#         company = user.person.company
+
+#         if invoice.buyer == company:
+#             context['buyer'] = True
+#         elif invoice.supplier == company:
+#             context['supplier'] = True
+#         else:
+#             context['invalid'] = True
+
+#         return context

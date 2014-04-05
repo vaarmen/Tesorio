@@ -67,6 +67,10 @@ urlpatterns = patterns('',
         views.InvoiceView.as_view(),
         name='invoice'
     ),
+    url(r'^dashboard/upload/$',
+        views.UploadView.as_view(),
+        name='upload'
+    ),
 
 
     url(r'^grappelli/', include('grappelli.urls')),
