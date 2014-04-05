@@ -27,20 +27,20 @@
 				] -%}
 
 				{% if company.is_buyer %}
-					{{ sidebar.extend(
+					{% do sidebar.extend(
 						(
 							('/dashboard/buyer/', 'buyer_dashboard', 'Buyer Dashboard', 'fa-table'),
 							('/dashboard/upload/', 'upload', 'Upload', 'fa-cloud'),
 						)
-					) -}}
+					) -%}
 				{% endif %}
 
 				{% if company.is_supplier %}
-					{{ sidebar.extend(
+					{% do sidebar.extend(
 						(
 							('/dashboard/supplier/', 'supplier_dashboard', 'Supplier Dashboard', 'fa-table'),
 						)
-					) -}}
+					) -%}
 				{% endif %}
 
 				<ul>
