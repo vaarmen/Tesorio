@@ -33,7 +33,7 @@
 			{% set date3 = calculate_date(due_date, parameters.alt_3_days) %}
 
 				<!-- modal confirmation -->
-				{% if not invalid_date(date1) %}
+				{% if not invalid_offer_date(date1) %}
 				<div id="modal-option-1" class="modal fade">
 					<div class="modal-dialog">
 						<div class="modal-content">
@@ -69,7 +69,7 @@
 				</div>
 				{% endif %}
 
-				{% if not invalid_date(date2) %}
+				{% if not invalid_offer_date(date2) %}
 				<div id="modal-option-2" class="modal fade">
 					<div class="modal-dialog">
 						<div class="modal-content">
@@ -105,7 +105,7 @@
 				</div>
 				{% endif %}
 
-				{% if not invalid_date(date3) %}
+				{% if not invalid_offer_date(date3) %}
 				<div id="modal-option-3" class="modal fade">
 					<div class="modal-dialog">
 						<div class="modal-content">
@@ -268,7 +268,7 @@
 														<button 
 														type="button" 
 														class="
-														{% if invalid_date(date1) %}
+														{% if invalid_offer_date(date1) %}
 														disabled
 														{% endif %} 
 														btn btn-labeled btn-success btn-offer btn-center
@@ -297,7 +297,7 @@
 														<button 
 														type="button" 
 														class="
-														{% if invalid_date(date2) %}
+														{% if invalid_offer_date(date2) %}
 														disabled
 														{% endif %} 
 														btn btn-labeled btn-success btn-offer btn-center
@@ -328,7 +328,7 @@
 															<button 
 															type="button" 
 															class="
-															{% if invalid_date(date3) %}
+															{% if invalid_offer_date(date3) %}
 															disabled
 															{% endif %} 
 															btn btn-labeled btn-success btn-offer btn-center

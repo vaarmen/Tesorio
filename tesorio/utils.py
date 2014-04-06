@@ -8,6 +8,9 @@ import sendgrid
 import settings
 import credentials
 
+# python libs
+from datetime import date
+
 sg = sendgrid.SendGridClient(
     credentials.SENDGRID_USER,
     credentials.SENDGRID_PASS
@@ -41,6 +44,10 @@ if settings.DEBUG:
 
 logging.getLogger().setLevel(logging.DEBUG)
 
+
+def invalid_offer_date(date):
+    # https://github.com/FabioFleitas/Tesorio/issues/2
+    return date.today() >= date
 
 def email_offer_confirmation(offer):
     offer_params = offer.parameters

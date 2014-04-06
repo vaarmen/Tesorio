@@ -6,6 +6,8 @@ lib = library.Library()
 # python libs
 from datetime import timedelta, date
 
+import utils
+
 @lib.global_function
 def calculate_discount(amount, discount):
     return (100 - discount)/100 * amount
@@ -27,6 +29,6 @@ def format_date_formal(date):
     return date.strftime('%A, %B %d, %Y')
 
 @lib.global_function
-def invalid_date(date):
+def invalid_offer_date(date):
 	# https://github.com/FabioFleitas/Tesorio/issues/2
-	return date.today() >= date
+	return utils.invalid_offer_date(date)
