@@ -4,7 +4,7 @@ from django_jinja import library
 lib = library.Library()
 
 # python libs
-from datetime import timedelta
+from datetime import timedelta, date
 
 @lib.global_function
 def calculate_discount(amount, discount):
@@ -25,3 +25,8 @@ def format_date(date):
 @lib.filter
 def format_date_formal(date):
     return date.strftime('%A, %B %d, %Y')
+
+@lib.global_function
+def invalid_date(date):
+	# https://github.com/FabioFleitas/Tesorio/issues/2
+	return date.today() >= date

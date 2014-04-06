@@ -1,6 +1,5 @@
 {% extends "base/base.jinja" %}
 {% block title %}Invoice{% endblock %}
-{% set active_page = "home_dashboard" %}
 
 {% block custom_css %}
 <style type="text/css">
@@ -20,7 +19,21 @@
 			{% block content %}
 			<div id="content">
 
+			{# Set jinja2 variables #}
+			{% set amount = invoice.amount %}
+			{% set due_date = invoice.due_date %}
+
+			{% set discount1 = calculate_discount(amount, parameters.alt_1_percent) %}
+			{% set date1 = calculate_date(due_date, parameters.alt_1_days) %}
+
+			{% set discount2 = calculate_discount(amount, parameters.alt_2_percent) %}
+			{% set date2 = calculate_date(due_date, parameters.alt_2_days) %}
+
+			{% set discount3 = calculate_discount(amount, parameters.alt_3_percent) %}
+			{% set date3 = calculate_date(due_date, parameters.alt_3_days) %}
+
 				<!-- modal confirmation -->
+				{% if not invalid_date(date1) %}
 				<div id="modal-option-1" class="modal fade">
 					<div class="modal-dialog">
 						<div class="modal-content">
@@ -36,9 +49,9 @@
 								<input type="hidden" name="days-acc" value="{{parameters.alt_1_days}}">
 
 								<div class="modal-body">
-									{{ calculate_discount(invoice.amount, parameters.alt_1_percent)|format_currency }}
+									{{ discount1|format_currency }}
 									<br>
-									{{ calculate_date(invoice.due_date, parameters.alt_1_days)|format_date_formal }}
+									{{ date1|format_date_formal }}
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-danger" data-dismiss="modal">
@@ -54,7 +67,9 @@
 						</div>
 					</div>
 				</div>
+				{% endif %}
 
+				{% if not invalid_date(date2) %}
 				<div id="modal-option-2" class="modal fade">
 					<div class="modal-dialog">
 						<div class="modal-content">
@@ -88,7 +103,9 @@
 						</div>
 					</div>
 				</div>
+				{% endif %}
 
+				{% if not invalid_date(date3) %}
 				<div id="modal-option-3" class="modal fade">
 					<div class="modal-dialog">
 						<div class="modal-content">
@@ -122,6 +139,7 @@
 						</div>
 					</div>
 				</div>
+				{% endif %}
 
 				<!-- end modal confirmation -->
 
@@ -242,12 +260,19 @@
 													<div class="well">
 														<h4>Option #1</h4>
 														<p>
-															{{ calculate_discount(invoice.amount, parameters.alt_1_percent)|format_currency }}
+															{{ discount1|format_currency }}
 															<br>
-															{{ calculate_date(invoice.due_date, parameters.alt_1_days)|format_date_formal }}
+															{{ date1|format_date_formal }}
 														</p>
 
-														<button type="button" class="btn btn-labeled btn-success btn-offer btn-center"
+														<button 
+														type="button" 
+														class="
+														{% if invalid_date(date1) %}
+														disabled
+														{% endif %} 
+														btn btn-labeled btn-success btn-offer btn-center
+														"
 														data-toggle="modal" 
 														data-target="#modal-option-1"
 														>
@@ -269,7 +294,15 @@
 															{{ calculate_date(invoice.due_date, parameters.alt_2_days)|format_date_formal }}
 														</p>
 
-														<button type="button" class="btn btn-labeled btn-success btn-offer btn-center"
+														<button 
+														type="button" 
+														class="
+														{% if invalid_date(date2) %}
+														disabled
+														{% endif %} 
+														btn btn-labeled btn-success btn-offer btn-center
+														"
+
 														data-toggle="modal" 
 														data-target="#modal-option-2"
 														>
@@ -291,10 +324,19 @@
 															{{ calculate_date(invoice.due_date, parameters.alt_3_days)|format_date_formal }}
 														</p>
 
-														<button type="button" class="btn btn-labeled btn-success btn-offer btn-center"
-														data-toggle="modal" 
-														data-target="#modal-option-3"
-														>
+														
+															<button 
+															type="button" 
+															class="
+															{% if invalid_date(date3) %}
+															disabled
+															{% endif %} 
+															btn btn-labeled btn-success btn-offer btn-center
+															"
+
+															data-toggle="modal" 
+															data-target="#modal-option-3"
+															>
 															<span class="btn-label">
 																<i class="glyphicon glyphicon-ok"></i>
 															</span>
