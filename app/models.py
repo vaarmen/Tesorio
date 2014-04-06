@@ -128,7 +128,7 @@ class Offer(models.Model):
     discount = models.DecimalField(default=0, max_digits=11, decimal_places=10)
 
     days_accelerated = models.IntegerField()
-    date_due = models.DateTimeField()
+    date_due = models.DateField()
 
     amount = models.DecimalField(default=0, max_digits=20, decimal_places=4)
     status = models.CharField(max_length=254, choices=OFFER_STATUSES)
