@@ -103,8 +103,8 @@
 											<tbody>
 												{% for invoice in invoices %}
 
-												{% if invoice.recent_bid %}
-												{% set bid = invoice.recent_bid.get() %}
+												{% if invoice.current_bid %}
+												{% set bid = invoice.current_bid %}
 												<tr>
 													<td>
 														<a href="/dashboard/invoice/{{ invoice.id }}">
@@ -118,19 +118,31 @@
 														{{ invoice.inv_date }}
 													</td>
 													<td>
-														{{ bid.days_acc }}
+														{{ bid.days_accelerated }}
 													</td>
 													<td class="right-align">
 														{{ invoice.amount|format_currency }}
 													</td>
 													<td>
-														{{ invoice.status }}
+														{% if invoice.status == 'PENDING' %}
+														<span class="label label-info">PENDING</span>
+														{% elif invoice.status == 'CLEARED' %}
+														<span class="label label-success">CLEARED</span>
+														{% elif invoice.status == 'CANCELED' %}
+														<span class="label label-danger">CANCELED</span>
+														{% elif invoice.status == 'OPEN' %}
+														<span class="label label-primary">OPEN</span>
+														{% elif invoice.status == 'EXPIRED' %}
+														<span class="label label-default">EXPIRED</span>
+														{% else %}
+														N/A
+														{% endif %}
 													</td>
 													<td class="right-align">
-														{{ invoice.amount|format_currency }}
+														{{ bid.amount|format_currency }}
 													</td>
 													<td class="right-align">
-														{{ invoice.amount|format_currency }}
+														{{ bid.profit|format_currency }}
 													</td>
 													<td class="right-align">
 														{{ bid.apr }}%

@@ -104,18 +104,18 @@
 												
 												{% for invoice in invoices %}
 
-												{% if invoice.recent_bid %}
-												{% set bid = invoice.recent_bid.get() %}
+												{% if invoice.current_bid %}
+												{% set bid = invoice.current_bid %}
 												<tr>
 													<td>
-														{% if bid.status == 'Pending' %}
-														<span class="label label-info">Pending</span>
-														{% elif bid.status == 'Accepted' %}
-														<span class="label label-success">Accepted</span>
-														{% elif bid.status == 'Declined' %}
-														<span class="label label-danger">Declined</span>
+														{% if bid.status == 'PENDING' %}
+														<span class="label label-info">PENDING</span>
+														{% elif bid.status == 'CLEARED' %}
+														<span class="label label-success">CLEARED</span>
+														{% elif bid.status == 'DECLINED' %}
+														<span class="label label-danger">DECLINED</span>
 														{% else %}
-														N/A (Contact Us)
+														N/A
 														{% endif %}
 													</td>
 													<td>

@@ -19,7 +19,8 @@ import utils
 from models import (
     Invoice,
     Company,
-    OfferParameters
+    OfferParameters,
+    Offer
 )
 
 # stdlib
@@ -264,12 +265,12 @@ class SupplierDashboard(TesorioTemplateView):
 class InvoiceView(TesorioTemplateView):
     template_name = 'invoice.jinja'
 
+    @method_decorator(csrf_protect)
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(InvoiceView, self).dispatch(*args, **kwargs)
 
     def get(self, request, *args, **kwargs):
-
         invoice_id = kwargs['pk']
         invoice = Invoice.objects.get(
             pk=invoice_id
@@ -296,6 +297,76 @@ class InvoiceView(TesorioTemplateView):
         else:
             context['invalid'] = True
             return HttpResponseRedirect('/dashboard/') ## change later
+
+        return self.render(**context)
+
+    def post(self, request, *args, **kwargs):
+        invoice_id = kwargs['pk']
+        invoice = Invoice.objects.get(
+            pk=invoice_id
+        )
+        parameters = OfferParameters.objects.get(
+            buyer=invoice.buyer,
+            supplier=invoice.supplier)
+        user = self.request.user
+
+        context = {}
+
+        context['invoice'] = invoice
+        context['parameters'] = parameters
+
+        company = user.person.company
+
+        if invoice.buyer == company:
+            context['buyer'] = True
+        elif invoice.supplier == company:
+            context['supplier'] = True
+        else:
+            context['invalid'] = True
+            return HttpResponseRedirect('/dashboard/') ## change later
+
+        # POST data
+        option = request.POST.get('option')
+        percent = request.POST.get('percent')
+        days_acc = request.POST.get('days-acc')
+
+        if utils.valid_offer(invoice, parameters, option, percent, days_acc):
+            messages.info(request, "Good offer")
+
+            # fix this later
+            if option == '1':
+                percent_param = parameters.alt_1_percent
+                days_acc_param = parameters.alt_1_days
+            elif option == '2':
+                percent_param = parameters.alt_2_percent
+                days_acc_param = parameters.alt_2_days
+            elif option == '3':
+                percent_param = parameters.alt_3_percent
+                days_acc_param = parameters.alt_3_days
+
+            discount_amount = utils.calculate_discount(invoice.amount, percent_param)
+
+            # create new offer model object
+            offer = Offer()
+            offer.invoice = invoice
+            offer.parameters = parameters
+            offer.discount = percent_param
+            offer.days_accelerated = days_acc_param
+            offer.date_due = utils.calculate_date(invoice.due_date, days_acc_param)
+            offer.amount = discount_amount
+            offer.status = 'CLEARED'
+            offer.profit = utils.calculate_profit(invoice.amount, discount_amount)
+            offer.apr = utils.calculate_apr(percent_param, days_acc_param)
+            offer.save()
+
+            invoice.current_bid = offer
+            invoice.status = 'CLEARED'
+            invoice.save()
+
+
+        else:
+            messages.error(request, "Bad offer")
+
 
         return self.render(**context)
 

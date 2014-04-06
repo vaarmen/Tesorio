@@ -9,7 +9,7 @@ import settings
 import credentials
 
 # python libs
-from datetime import date
+from datetime import date, timedelta
 
 sg = sendgrid.SendGridClient(
     credentials.SENDGRID_USER,
@@ -44,10 +44,52 @@ if settings.DEBUG:
 
 logging.getLogger().setLevel(logging.DEBUG)
 
+def calculate_discount(amount, discount):
+    return (100 - discount)/100 * amount
+
+def calculate_date(date, days):
+    return date - timedelta(days=days)
+
+def calculate_profit(original_amount, discount_amount):
+    return original_amount - discount_amount
+
+def calculate_apr(discount, days_accelerated):
+    return discount
+    # return (365 / days_accelerated) * discount
 
 def invalid_offer_date(date):
     # https://github.com/FabioFleitas/Tesorio/issues/2
     return date.today() >= date
+
+def valid_offer(invoice, offer_params, option, percent, days_acc):
+    # verify arguments
+    if not invoice or not offer_params or not option or not percent or not days_acc:
+        return False
+
+    if option == '1':
+        percent_check = offer_params.alt_1_percent
+        days_acc_check = offer_params.alt_1_days
+    elif option == '2':
+        percent_check = offer_params.alt_2_percent
+        days_acc_check = offer_params.alt_2_days
+    elif option == '3':
+        percent_check = offer_params.alt_3_percent
+        days_acc_check = offer_params.alt_3_days
+    else:
+        return False
+
+    # verify arguments to offer_params
+    if not percent == unicode(percent_check) or not days_acc == unicode(days_acc_check):
+        return False
+
+    # verify invalid_offer_date
+    date = calculate_date(invoice.due_date, days_acc_check)
+    if invalid_offer_date(date):
+        return False
+
+    ## verify apr
+
+    return True
 
 def email_offer_confirmation(offer):
     offer_params = offer.parameters
