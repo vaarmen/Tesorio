@@ -10,11 +10,11 @@ import utils
 
 @lib.global_function
 def calculate_discount(amount, discount):
-    return (100 - discount)/100 * amount
+    return utils.calculate_discount(amount, discount)
 
 @lib.global_function
 def calculate_date(date, days):
-    return date - timedelta(days=days)
+    return utils.calculate_date(date, days)
 
 @lib.filter
 def format_currency(value):
