@@ -279,10 +279,13 @@ class InvoiceView(TesorioTemplateView):
             supplier=invoice.supplier)
         user = self.request.user
 
+        option = request.GET.get('option')
+
         context = {}
 
         context['invoice'] = invoice
         context['parameters'] = parameters
+        context['option'] = option
 
         company = user.person.company
 
@@ -292,7 +295,7 @@ class InvoiceView(TesorioTemplateView):
             context['supplier'] = True
         else:
             context['invalid'] = True
-            return HttpResponseNotFound()
+            return HttpResponseRedirect('/dashboard/') ## change later
 
         return self.render(**context)
 

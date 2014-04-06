@@ -2,8 +2,128 @@
 {% block title %}Invoice{% endblock %}
 {% set active_page = "home_dashboard" %}
 
+{% block custom_css %}
+<style type="text/css">
+	.btn-center {
+		margin: 0 auto;
+		display: block;
+	}
+
+	.btn-danger {
+		background-color: #a90329 !important;
+		border-color: #900323 !important;
+	}
+</style>
+{% endblock custom_css %}
+
+
 			{% block content %}
 			<div id="content">
+
+				<!-- modal confirmation -->
+				<div id="modal-option-1" class="modal fade">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+								<h4 class="modal-title">Offer Confirmation</h4>
+							</div>
+							<form method="post" action=".">
+								{% csrf_token %}
+
+								<input type="hidden" name="option" value="1">
+								<input type="hidden" name="percent" value="{{parameters.alt_1_percent}}">
+								<input type="hidden" name="days-acc" value="{{parameters.alt_1_days}}">
+
+								<div class="modal-body">
+									{{ calculate_discount(invoice.amount, parameters.alt_1_percent)|format_currency }}
+									<br>
+									{{ calculate_date(invoice.due_date, parameters.alt_1_days)|format_date_formal }}
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-danger" data-dismiss="modal">
+										<i class="fa fa-times"></i>
+										Close
+									</button>
+									<button type="submit" class="btn btn-success">
+										<i class="fa fa-check"></i>
+										Confirm
+									</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+
+				<div id="modal-option-2" class="modal fade">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+								<h4 class="modal-title">Offer Confirmation</h4>
+							</div>
+							<form method="post" action=".">
+								{% csrf_token %}
+
+								<input type="hidden" name="option" value="2">
+								<input type="hidden" name="percent" value="{{parameters.alt_2_percent}}">
+								<input type="hidden" name="days-acc" value="{{parameters.alt_2_days}}">
+
+								<div class="modal-body">
+									{{ calculate_discount(invoice.amount, parameters.alt_2_percent)|format_currency }}
+									<br>
+									{{ calculate_date(invoice.due_date, parameters.alt_2_days)|format_date_formal }}
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-danger" data-dismiss="modal">
+										<i class="fa fa-times"></i>
+										Close
+									</button>
+									<button type="submit" class="btn btn-success">
+										<i class="fa fa-check"></i>
+										Confirm
+									</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+
+				<div id="modal-option-3" class="modal fade">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+								<h4 class="modal-title">Offer Confirmation</h4>
+							</div>
+							<form method="post" action=".">
+								{% csrf_token %}
+
+								<input type="hidden" name="option" value="3">
+								<input type="hidden" name="percent" value="{{parameters.alt_3_percent}}">
+								<input type="hidden" name="days-acc" value="{{parameters.alt_3_days}}">
+
+								<div class="modal-body">
+									{{ calculate_discount(invoice.amount, parameters.alt_3_percent)|format_currency }}
+									<br>
+									{{ calculate_date(invoice.due_date, parameters.alt_3_days)|format_date_formal }}
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-danger" data-dismiss="modal">
+										<i class="fa fa-times"></i>
+										Close
+									</button>
+									<button type="submit" class="btn btn-success">
+										<i class="fa fa-check"></i>
+										Confirm
+									</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+
+				<!-- end modal confirmation -->
 
 				<!-- widget grid -->
 				<section id="widget-grid" class="">
@@ -116,6 +236,75 @@
 													<br>
 												</div>
 											</div>
+
+											<div class="row">
+												<div class="col-sm-4">
+													<div class="well">
+														<h4>Option #1</h4>
+														<p>
+															{{ calculate_discount(invoice.amount, parameters.alt_1_percent)|format_currency }}
+															<br>
+															{{ calculate_date(invoice.due_date, parameters.alt_1_days)|format_date_formal }}
+														</p>
+
+														<button type="button" class="btn btn-labeled btn-success btn-offer btn-center"
+														data-toggle="modal" 
+														data-target="#modal-option-1"
+														>
+															<span class="btn-label">
+																<i class="glyphicon glyphicon-ok"></i>
+															</span>
+															Accelerate Cash
+														</button>
+														
+
+													</div>
+												</div>
+												<div class="col-sm-4">
+													<div class="well">
+														<h4>Option #2</h4>
+														<p>
+															{{ calculate_discount(invoice.amount, parameters.alt_2_percent)|format_currency }}
+															<br>
+															{{ calculate_date(invoice.due_date, parameters.alt_2_days)|format_date_formal }}
+														</p>
+
+														<button type="button" class="btn btn-labeled btn-success btn-offer btn-center"
+														data-toggle="modal" 
+														data-target="#modal-option-2"
+														>
+															<span class="btn-label">
+																<i class="glyphicon glyphicon-ok"></i>
+															</span>
+															Accelerate Cash
+														</button>
+														
+
+													</div>
+												</div>
+												<div class="col-sm-4">
+													<div class="well">
+														<h4>Option #3</h4>
+														<p>
+															{{ calculate_discount(invoice.amount, parameters.alt_3_percent)|format_currency }}
+															<br>
+															{{ calculate_date(invoice.due_date, parameters.alt_3_days)|format_date_formal }}
+														</p>
+
+														<button type="button" class="btn btn-labeled btn-success btn-offer btn-center"
+														data-toggle="modal" 
+														data-target="#modal-option-3"
+														>
+															<span class="btn-label">
+																<i class="glyphicon glyphicon-ok"></i>
+															</span>
+															Accelerate Cash
+														</button>
+														
+
+													</div>
+												</div>
+											</div>
 				
 										</div>
 				
@@ -143,10 +332,19 @@
 
 		{% block scripts %}
 		<script type="text/javascript">
-		$(document).ready(function() {		
-			pageSetUp();
-		})
+			$(document).ready(function() {		
+				pageSetUp();
+			})
 		</script>
+
+		{% if option %}
+			<script type="text/javascript">
+				$(document).ready(function() {
+					$('#modal-option-{{option}}').modal();
+				});
+			</script>
+		{% endif %}
+
 		{% endblock scripts %}
 
 	</body>
