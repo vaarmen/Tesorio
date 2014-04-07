@@ -85,7 +85,6 @@
 										<div class="padding-10">
 											<br>
 											<div class="pull-left">
-												<img src="/media/img/logo-blacknwhite.png" width="150" height="32" alt="invoice icon">
 												
 												<address>
 													<h4 class="semi-bold">{{ invoice.buyer }}</h4>
@@ -131,7 +130,7 @@
 												</div>
 											</div>
 
-											{% if company.is_supplier %}
+											{% if company.is_supplier and not invoice.status == 'CLEARED' %}
 
 											{# Set jinja2 variables #}
 											{% set amount = invoice.amount %}
