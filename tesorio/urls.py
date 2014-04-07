@@ -9,7 +9,8 @@ from app import views
 
 import django_jinja.views
 
-handler403 = django_jinja.views.PermissionDenied.as_view()
+# handler403 = django_jinja.views.PermissionDenied.as_view()
+handler403 = django_jinja.views.PageNotFound.as_view() # for now
 handler404 = django_jinja.views.PageNotFound.as_view()
 handler500 = django_jinja.views.ServerError.as_view()
 
