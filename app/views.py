@@ -168,7 +168,7 @@ class RegistrationView(UpdateView):
         return redirect_to
 
     def form_valid(self, form):
-        # Update has_registered on company to True
+        # update has_registered on company to True
         company = self.get_object()
         company.has_registered = True
         company.save()
@@ -216,16 +216,6 @@ class BuyerDashboard(TesorioTemplateView):
         return super(BuyerDashboard, self).dispatch(*args, **kwargs)
 
     def get(self, request, *args, **kwargs):
-        # messages.info(request, 'hi fabio')
-        logging.debug('1')
-        logging.info('2')
-        logging.warning('3')
-        try:
-            broken * 2
-        except:
-            logging.exception('bad math!')
-        logging.error('4')
-        logging.critical('5')
         user = request.user
         person = user.person
         company = person.company
@@ -362,6 +352,13 @@ class InvoiceView(TesorioTemplateView):
             invoice.current_bid = offer
             invoice.status = 'CLEARED'
             invoice.save()
+
+            ## fix this
+            # utils.email_offer_confirmation(offer)
+
+            ### need to send messages to respective parties
+            ### perhaps have in Offer field
+            ### the Person who did the offer
 
 
         else:
