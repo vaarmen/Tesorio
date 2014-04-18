@@ -1,72 +1,528 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Tesorio | A Marketplace for Working Capital</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />	
+	<title>Tesorio | Trade Working Capital. Trade Smart.</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <link href='//fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+	<!-- stylesheets -->
+	<link rel="stylesheet" type="text/css" href="/media/css2/compiled/theme_tesorio.css">
+	<link rel="stylesheet" type="text/css" href="/media/css2/vendor/animate.css">
+	<link rel="stylesheet" type="text/css" href="/media/css2/vendor/font-awesome.min.css">
 
-        <style type="text/css">
-            #logo {
-                max-width: 100%;
-            }
+	<!-- javascript -->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="/media/js2/bootstrap/bootstrap.min.js"></script>
+	<script src="/media/js2/theme.js"></script>
 
-            .container {
-                max-width: 500px;
-                margin: 50px auto;
-            }
+	<!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
 
-            .content {
-                margin: 0 auto;
-                max-width: 80%;
-            }
+    <style type="text/css">
+		
+  		#home #hero {
+			background-image: none;
+			background: #2b5a8f;
+			top: -60px;
+  			padding-top: 110px;}
+		
+	
+		
+		#home #hero h1.hero-text {
+			text-transform: none;
+		 	-webkit-animation-duration: 2s; }
+		
+		#home #hero .sub-text {
+	     	-webkit-animation-duration: 2s;
+    		width: 100%; }
+		
+		#home #hero .cta {    	
+			margin-top: 20px; }
 
-            p, h2, h1 {
-                color: rgb(72, 72, 72);
-                text-align: center;
-                font-family: 'Open Sans', sans-serif;
-                font-size: 24px;
-            }
+		#home #hero .cta-text {
+		    -webkit-font-smoothing: antialiased;
+		    width: 100%;
+		    margin-top: 20px;
+		    font-family: "Lato", "Helvetica Neue", Arial;
+		    color: #fff;
+		    font-weight: 400;
+		    font-size: 18px;
+		    line-height: 28px;
+		    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);}
 
-            h1 {
-                font-size: 40px;
-            }
+    	#home #hero .cta-button {
+        -webkit-animation-delay: 0.6s;
+        -moz-animation-delay: 0.6s;
+        -o-animation-delay: 0.6s;
+        -ms-animation-delay: 0.6s;
+        animation-delay: 0.6s;
+        margin-top: 15px; }
+        @media (max-width: 767px) {
+        #home #hero .cta-button {
+            text-align: center; } }
+        #home #hero .cta-button a {
+          position: relative;
+          margin: 0px 30px 0 0;
+          padding: 7px 25px;
+          letter-spacing: 0.3px;
+          font-family: "Lato", "Helvetica Neue", Arial;
+          border: 2px solid rgba(255, 255, 255, 0.8);
+          background: rgba(0, 0, 0, 0); }
+          #home #hero .cta-button a:hover {
+            color: #252525;
+            background: #fff;
+            <!--padding-right: 45px; #creates the button that expands right)--> }
+            #home #hero .cta-button a:hover .fa {
+              opacity: 1; }
+          #home #hero .cta-button a .fa {
+            opacity: 0;
+            font-size: 13px;
+            position: absolute;
+            color: #252525;
+            top: 16px;
+            right: 20px;
+            -webkit-transition: all 0.15s linear;
+            -moz-transition: all 0.15s linear;
+            -ms-transition: all 0.15s linear;
+            -o-transition: all 0.15s linear;
+            transition: all 0.15s linear; }
+          @media (max-width: 767px) {
+            #home #hero .cta-button a {
+              font-size: 14px;
+              padding: 10px 25px;
+              margin: 0px 15px 15px 0px; } }
 
-            @media (max-width: 600px) {
-                h1 {
-                    font-size: 20px;
-                }
-            }
+            
+            #home #clients {
+			box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.75); 
+			  background: #2b5a8f;
+			  background-size: cover;
+			  margin-top: 120px;
+			  position: relative;
+			  padding: 65px 0 80px;
+			  text-align: center; }
 
-            body {
-                margin: 0;
-                border-top: 35px solid rgba(44,55,66,1);
-            }
-        </style>
-    </head>
+			#footer-white {
+			    padding-top: 0px;}
 
-    <body>
-        <div class="content">
-            <div class="container">
-                <img
-                    alt="Tesorio"
-                    id="logo"
-                    src="/media/img/logo-phrase.png"
-                />
-                <br><br>
-                <hr>
+			#footer-white .credits {
+    			margin-top: 12px;}
+    		#footer-white .credits .col-md-12 {
+      			padding-top: 20px;}
 
-                <p>
-                    A cloud-based marketplace for companies
-                    to finance each other's day-to-day capital needs.
-                </p>
-                <p>Coming soon!</p>
-                <p>
-                    <a href="mailto:contact@tesorio.com">contact@tesorio.com</a>
-                </p>
-            </div>
-        </div>
-    </body>
+      		#home .logos {
+			    margin-top: 16px; }
+			    #home .logos img {
+			      margin: 0 16px; 
+			  		max-width: 150px}
+			      @media (max-width: 767px) {
+			        #home .logos img {
+			          margin: 0 auto;
+			          display: block;
+			          margin-bottom: 15px; } }
 
+    </style>
+
+</head>
+<body id="home">
+	<header class="navbar navbar-inverse white" role="banner" style="
+			height: 70px;">
+  		<div class="container">
+    		<div class="navbar-header">
+		      	<button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+		      	</button>
+    
+	      			<div class="logos">
+						<a href="/"><img src="/media/images2/logos/tesorio-logo-black.png"; style="max width: 200px"></a>
+	    			</div>
+			</div>
+
+    		<nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+      			<ul class="nav navbar-nav navbar-right">
+    				<li style="margin:16px">
+          				<a href="/login/" class="signup visible-md visible-lg" style="width: 90px">Log In</a>
+      				</li>
+    <!--  				<li class="">
+        				<a href="index.html" class=""> <!--replace with link to section of website, i.e. it jumps to a part of the page-->
+ 	<!--      					Home
+          					<i class="fa fa-chevron-down"></i>
+          				</a>
+        			</li>
+        			<li class="">
+        				<a href="index.html" class=""> <!--replace with link to section of website, i.e. it jumps to a part of the page-->
+     <!--	  					Buyers
+          					<i class="fa fa-chevron-down"></i>
+          				</a>
+        			</li>
+        			<li class="">
+        				<a href="index.html" class=""> <!--replace with link to section of website, i.e. it jumps to a part of the page-->
+     <!--     					Suppliers
+          					<i class="fa fa-chevron-down"></i>
+          				</a>
+        			</li>
+        			<li class="">
+        				<a href="index.html" class="#"> <!--replace with link to section of website, i.e. it jumps to a part of the page-->
+     <!--     					How It Works
+          					<i class="fa fa-chevron-down"></i>
+          				</a>
+        			</li>
+        			<li class="">
+        				<a href="index.html" class="#"> <!--replace with link to section of website, i.e. it jumps to a part of the page-->
+     <!--     					About
+          					<i class="fa fa-chevron-down"></i>
+          				</a>
+        			</li>
+        			<!-- # Dropdown menu code in case we want to use it later
+        			<li class="dropdown">
+        				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          					More pages 
+          					<i class="fa fa-chevron-down"></i>
+          				</a>
+          				<ul class="dropdown-menu">
+							<li><a href="aboutus.html">About us</a></li>
+							<li><a href="contactus.html">Contact us</a></li>
+							<li><a href="gallery.html">Gallery</a></li>
+							<li><a href="portfolio.html">Portfolio</a></li>
+							<li><a href="portfolio-item.html">Portfolio Item</a></li>
+							<li><a href="invoice.html">Invoice page</a></li>
+							<li><a href="timeline.html">Timeline Page</a></li>
+							<li><a href="docs.html">API Documentation</a></li>
+							<li><a href="support.html">Support</a></li>
+							<li><a href="coming-soon.html">Coming Soon</a></li>
+							<li><a href="status.html">Status</a></li>
+							<li><a href="signup.html">Sign Up &amp; Sign In</a></li>
+							<li><a href="signup-rotate.html">Sign Up Miscellaneous</a></li>
+							<li><a href="404.html">404 Page</a></li>
+				        </ul>
+        			</li>
+    				-->
+        			<!-- # Sign-up button in case we want to use it 
+        			<li>
+          				<a href="signup.html" class="signup visible-md visible-lg">Sign up free</a>
+        			</li>
+    -->
+    			</ul
+    		</nav>
+  		</div>
+	</header>
+	<div id="hero">
+		<div class="container">
+			<h1 class="hero-text animated fadeInDown">
+				Trade working capital. Trade smart.<br />	
+				</h1>
+			<p class="sub-text animated fadeInDown">
+				Tesorio gives companies the tools to adjust payment terms dynamically </br>
+				and tap into liquidity trapped in their balance sheets.
+			</p>
+			<div class="cta animated fadeInDown">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-wrapper">
+							<p class="cta-text"> Ready to Unlock Value?</p>
+							<form method="post" class="formy" role="form">
+								{% csrf_token %}
+							  	<div class="form-group">
+								    <input name="name" type="text" class="form-control" placeholder="Name">
+								</div>
+								<div class="form-group">
+								    <input name="email" type="email" class="form-control" placeholder="Email">
+								</div>
+					   			<div>
+					   				<select name="type" class="form-control">
+									  <option value="None">How can Tesorio help you?</option>
+									  <option value="Buyer">Earn Returns | Buyers</option>
+									  <option value="Supplier">Increase Liquidity | Suppliers</option>
+									</select>
+								  	<div class="cta-button">
+								  		<button class="button-outline">Learn More</button>
+									</div>
+							
+						  		</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="img"></div>
+		</div>
+	</div>
+	<div id="features">
+		<div class="container">
+			<div class="row header">
+				<div class="col-md-12">
+					<h2>Tesorio brings simplicity and foresight to cash flow management.</h2>
+					<p>Our proprietary algorithm potentiates early payment discounts to get returns to buyers and money to suppliers.</p>
+				</div>
+			</div>
+			<div class="row feature">
+				<div class="col-md-6 info">
+					<h4>Buyers earn multiples above market rates on </br>
+						excess cash by financing their suppliers.</h4>
+					<p>
+						Tesorio’s platform helps automate and negotiate early payment discount offers. We leverage existing customer-supplier relationships to provide seamless implementation and fluid supplier onboarding so buyers can focus on enjoying returns.
+					</p>
+				</div>
+				<div class="col-md-6 image">
+					<img src="/media/images2/buyer-panel.png" class="img-responsive" alt="feature1" style="width:370px"/>
+				</div>
+			</div>
+			<div class="divider"></div>
+			<div class="row feature backwards">
+				<div class="col-md-6 info">
+					<h4>Suppliers benefit from better self-financing by turning working capital to cash with accelerated payments.</h4>
+					<p>
+						Suppliers get access to credit without the paperwork, processing and fees involved with bank financing and other alternatives, such as factoring.
+					</p>
+				</div>
+				<div class="col-md-6 image">
+					<img src="/media/images2/supplier-panel.png" class="img-responsive" alt="feature2" style="width:370px"/>
+				</div>
+			</div>
+		</div>		
+	</div>
+
+	<!--<div id="pricing">
+		<div class="container">
+			<div class="row header">
+				<div class="col-md-12">
+					<h3>Free trial. No contract. Cancel when you want.</h3>
+					<p>All plans include a 7-day free trial</p>
+				</div>
+			</div>
+			<div class="row charts">
+				<div class="col-md-4">
+					<div class="chart first">
+						<div class="quantity">
+							<span class="dollar">$</span>
+							<span class="price">29</span>
+							<span class="period">/month</span>
+						</div>
+						<div class="plan-name">Freelance</div>
+						<div class="specs">
+							<div class="spec">
+								<span class="variable">5</span>
+								team members
+							</div>
+							<div class="spec">
+								<span class="variable">Digital</span>
+								recurring billing
+							</div>
+							<div class="spec">
+								<span class="variable">Virtual</span>
+								online terminal
+							</div>
+							<div class="spec">
+								<span class="variable">10</span>
+								total products
+							</div>
+							<div class="spec">
+								<span class="variable">1.0%</span>
+								Transaction fee
+							</div>
+						</div>
+						<a class="btn-signup button-clear" href="signup.html">
+							<span>Start free trial</span>
+						</a>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="chart featured">
+						<div class="popular">Most popular</div>
+						<div class="quantity">
+							<span class="dollar">$</span>
+							<span class="price">79</span>
+							<span class="period">/month</span>
+						</div>
+						<div class="plan-name">Profesional</div>
+						<div class="specs">
+							<div class="spec">
+								<span class="variable">15</span>
+								team members
+							</div>
+							<div class="spec">
+								<span class="variable">Digital</span>
+								recurring billing
+							</div>
+							<div class="spec">
+								<span class="variable">Virtual</span>
+								online terminal
+							</div>
+							<div class="spec">
+								<span class="variable">15</span>
+								total products
+							</div>
+							<div class="spec">
+								<span class="variable">0.5%</span>
+								Transaction fee
+							</div>
+						</div>
+						<a class="btn-signup button-clear" href="signup.html">
+							<span>Start free trial</span>
+						</a>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="chart last">
+						<div class="quantity">
+							<span class="dollar">$</span>
+							<span class="price">119</span>
+							<span class="period">/month</span>
+						</div>
+						<div class="plan-name">Premium</div>
+						<div class="specs">
+							<div class="spec">
+								<span class="variable">Unlimited</span>
+								team members
+							</div>
+							<div class="spec">
+								<span class="variable">Digital</span>
+								recurring billing
+							</div>
+							<div class="spec">
+								<span class="variable">Virtual</span>
+								online terminal
+							</div>
+							<div class="spec">
+								<span class="variable">25</span>
+								total products
+							</div>
+							<div class="spec">
+								<span class="variable">No</span>
+								Transaction fee
+							</div>
+						</div>
+						<a class="btn-signup button-clear" href="signup.html">
+							<span>Start free trial</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="slider">
+		<div class="container">
+			<div class="row header">
+				<div class="col-md-12">
+					<h3>Includes all pages that a complete theme should have</h3>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 slide-wrapper">
+					<div class="slideshow">
+						<div class="btn-nav prev"></div>
+						<div class="btn-nav next"></div>
+						<div class="slide active">
+							<img src="/media/images2/slider/slide3.png" alt="slide3" />
+						</div>
+						<div class="slide">
+							<img src="/media/images2/slider/slide4.png" alt="slide4" />
+						</div>
+						<div class="slide">
+							<img src="/media/images2/slider/slide1.png" alt="slide1" />
+						</div>
+						<div class="slide">
+							<img src="/media/images2/slider/slide5.png" alt="slide5" />
+						</div>
+						<div class="slide">
+							<img src="/media/images2/slider/slide2.png" alt="slide2" />
+						</div>
+					</div>
+				</div>	
+			</div>
+		</div>
+	</div>
+
+	<div id="testimonials">
+		<div class="container">
+			<div class="row header">
+				<div class="col-md-12">
+					<h3>Trusted by a lot businesses around the world:</h3>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="testimonial pull-right">
+						<div class="quote">
+							I am just quoting some stuff but I am seriously happy about this product. Has a lot of powerful
+							features and is so easy to set up, I could stay customizing it day and night, it's just so much fun!
+							<div class="arrow-down">
+				                <div class="arrow"></div>
+				                <div class="arrow-border"></div>
+				            </div>
+						</div>
+						<div class="author">
+							<img src="/media/images2/testimonials/testimonial1.jpg" class="pic" alt="testimonial1" />
+							<div class="name">John McClane</div>
+							<div class="company">Microsoft</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="testimonial">
+						<div class="quote">
+							This thing is one of those tools that everybody should be using. I really like it and with this ease to use, you can kickstart your projects and apps and just focus on your business!
+							<div class="arrow-down">
+				                <div class="arrow"></div>
+				                <div class="arrow-border"></div>
+				            </div>
+						</div>
+						<div class="author">
+							<img src="/media/images2/testimonials/testimonial2.jpg" class="pic" alt="testimonial2" />
+							<div class="name">Karen Jones</div>
+							<div class="company">Pixar Co.</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="cta">
+		<p>
+			Start your free 14 day trial! 
+		</p>
+		<a href="signup.html">
+			Sign up for free
+		</a>
+	</div>
+	-->
+	<div id="clients">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<h3>About Us</h3>
+					<p>
+						Tesorio is a marketplace for democratization of working capital finance. It was built by a diverse team of innovators driven to empower buyers and suppliers to help each other grow and unlock value. Tesorio was accepted into the highly selective Wharton Venture Initiation Program, which serves as a start-up incubator, and is based in Philadelphia, Pennsylvania.
+					</p>
+					<!--<div class="logos">
+						<img src="/media/images2/logos/google.png">
+						<img src="/media/images2/logos/facebook.png">
+						<img src="/media/images2/logos/apple.png">
+						<img src="/media/images2/logos/stripe.png">
+						<img src="/media/images2/logos/yahoo.png">
+					</div>-->
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="footer-white">
+		<div class="container">
+			<div class="row">
+			</div>
+			<div class="row credits">
+				<div class="col-md-12">
+					Copyright © 2014. Tesorio, LLC
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
 </html>

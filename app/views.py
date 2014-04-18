@@ -58,10 +58,26 @@ class TesorioTemplateView(TemplateView):
 class IndexView(TesorioTemplateView):
     template_name = "index.jinja"
 
-
     def get(self, request, *args, **kwargs):
         return self.render()
 
+    def post(self, request, *args, **kwargs):
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        company_type = request.POST.get('type')
+
+        subject = "Tesorio | Index page form submission"
+        body = "Name: " + name + ". Email: " + email + ". Company Type: " + company_type
+
+        utils.email_admins(subject, body)
+
+        return HttpResponseRedirect('/thanks')
+
+class ThanksView(TesorioTemplateView):
+    template_name = "thanks.jinja"
+
+    def get(self, request, *args, **kwargs):
+        return self.render()
 
 class LoginView(FormView):
     """
