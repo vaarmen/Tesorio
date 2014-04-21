@@ -4,11 +4,12 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 admin.autodiscover()
 
+import settings
+
 # import views
 from app import views
 
 import django_jinja.views
-
 # handler403 = django_jinja.views.PermissionDenied.as_view()
 handler403 = django_jinja.views.PageNotFound.as_view() # for now
 handler404 = django_jinja.views.PageNotFound.as_view()
@@ -83,3 +84,9 @@ urlpatterns = patterns('',
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns += patterns('',
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+    )
