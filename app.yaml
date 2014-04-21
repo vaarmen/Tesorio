@@ -33,9 +33,8 @@ handlers:
   static_dir: tesorio/media/
   secure: always
 
-# grapelli uses static url, so we just point it to grapelli.
 - url: /static
-  static_dir: tesorio/deps/grappelli/static/
+  static_dir: tesorio/static/
   secure: always
 
 - url: /_ah/devcon/.*
